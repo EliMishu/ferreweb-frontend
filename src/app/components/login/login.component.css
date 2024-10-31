@@ -1,0 +1,50 @@
+.background {
+    background: url(/assets/images/fondo_login.avif) no-repeat center center fixed;
+    background-size: cover;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    h3 {
+        font-family: 'Arial Black', sans-serif;
+        color: #003b5c;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 400px;
+        padding: 2rem;
+        margin: 2rem;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.65);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3) !important;
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            .form-control {
+                border-radius: 5px;
+            }
+
+            .text-right {
+                text-align: right;
+            }
+            
+            .btn-primary {
+                width: 100%;
+                background-color: #003b5c;
+                border: none;
+                font-weight: bold;
+            }
+    
+            .btn-primary:hover {
+                background-color: #005082;
+            }
+        }
+    }
+}

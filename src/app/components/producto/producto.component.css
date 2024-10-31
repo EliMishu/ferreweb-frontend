@@ -1,0 +1,9 @@
+.card-container {
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+.card {
+    width: 200px;
+    background-color: #cae9ff;
+}
