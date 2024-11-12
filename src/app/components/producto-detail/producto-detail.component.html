@@ -1,0 +1,27 @@
+<div class="container">
+    <h3>Detalles del Producto</h3>
+    <div *ngIf="producto">
+      <div class="form-group">
+        <label>Nombre:</label>
+        <p>{{ producto.nombre }}</p>
+      </div>
+      <div class="form-group">
+        <label>Descripción:</label>
+        <p>{{ producto.descripcion }}</p>
+      </div>
+      <div class="form-group">
+        <label>Categoría:</label>
+        <p>{{ producto.categoria.nombre }}</p>
+      </div>
+      <div class="form-group">
+        <label>Unidad por Defecto:</label>
+        <p>{{ producto.unidadPorDefecto.nombre }}</p>
+      </div>
+      <div class="form-group">
+        <label>Stock:</label>
+        <p>{{ producto.stock }}</p>
+      </div>
+      <button class="btn btn-secondary" (click)="regresar()">Volver a la lista</button>
+    </div>
+  </div>
+  

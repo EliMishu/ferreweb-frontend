@@ -1,0 +1,10 @@
+li {
+    cursor: pointer;
+    padding: 10px;
+  }
+  
+  li.selected {
+    background-color: #007bff; 
+    color: white;
+  }
+  

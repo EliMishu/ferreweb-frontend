@@ -3,5 +3,4 @@ export interface Categoria {
     nombre: string;
     descripcion: string;
     rutaImagen?: string;
-    fechaEliminado?: Date;
 }
