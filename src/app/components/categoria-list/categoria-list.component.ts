@@ -18,7 +18,7 @@ export class CategoriaListComponent implements OnInit {
   constructor(private categoriaService: CategoriaService) {}
 
   ngOnInit(): void {
-    this.obtenerCategorias();
+    this.obtenerCategorias(); 
   }
 
   obtenerCategorias(): void {
