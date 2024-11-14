@@ -1,1 +1,27 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&family=Secular+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+:root {
+    --white: #FFF;
+    --black: #000;
+    --primary-color: #FB8500;
+    --secondary-color: #023047;
+    --hover-primary: #ee6b00;
+    --hover-secondary: #005082;
+    --bg-color: #CAE9FF;
+    --primary-font: "Secular One", Arial, sans-serif;
+    --secondary-font: "Rubik", Tahoma, sans-serif;
+}
+
+header {
+    background-color: var(--secondary-color);
+    color: var(--white);
+}
+
+html, body {
+    background-color: var(--bg-color);
+    font-family: var(--secondary-font);
+    height: 100vh;
+    margin: 0;
+}

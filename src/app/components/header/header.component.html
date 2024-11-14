@@ -1,31 +1,75 @@
-<header class="navbar navbar-expand-sm bg-dark navbar-dark">
-    <div class="logo-container navbar-brand">
-        <img class="logo" src="/assets/images/logo_lg.png" alt="">
+<header class="navbar navbar-expand-md px-3 mr-0">
+    <div class="container-fluid row p-0 m-0">
+        <div class="col justify-content-start">
+            <button class="navbar-toggler d-md-none" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapsibleNavbar" aria-controls="collapsibleNavbar" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <i class="bi bi-list fs-2"></i>
+            </button>
+            <div class="d-none d-md-block logo-container navbar-brand">
+                <img class="logo" src="/assets/images/logo_lg.png" alt="">
+            </div>
+        </div>
+        <nav id="collapsibleNavbar" class="col-5 justify-content-center collapse navbar-collapse">
+            <!-- Admin Section -->
+            <ul class="navbar-nav gap-3" *ngIf="rol=='ADMIN'">
+                <li class="nav-item">
+                    <a class="nav-link d-flex flex-md-column gap-md-0 gap-1 align-items-center" href="">
+                        <i class="bi bi-people fs-3"></i>
+                        GESTIÓN
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex flex-md-column gap-md-0 gap-1 align-items-center" href="">
+                        <i class="bi bi-box-seam fs-3"></i>
+                        PRODUCTOS
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex flex-md-column gap-md-0 gap-1 align-items-center" href="">
+                        <i class="bi bi-shop fs-3"></i>
+                        COMPRAS
+                    </a>
+                </li>
+            </ul>
+            <!-- Default Section -->
+            <ul class="navbar-nav gap-3" *ngIf="rol=='USER'">
+                <li class="nav-item">
+                    <a class="nav-link d-flex flex-md-column gap-md-0 gap-1 align-items-center" href="">
+                        <i class="bi bi-house-door fs-3"></i>
+                        INICIO
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex flex-md-column gap-md-0 gap-1 align-items-center" href="">
+                        <i class="bi bi-bag-heart fs-3"></i>
+                        CATALOGO
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex flex-md-column gap-md-0 gap-1 align-items-center" href="">
+                        <i class="bi bi-cart3 fs-3"></i>
+                        CARRITO
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="col account-header d-flex flex-row justify-content-end align-items-center gap-3">
+            <div class="dropdown">
+                <button class="nav-link account-dropdown" type="button" id="dropdownMenuButton"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    Mi cuenta <i class="bi bi-caret-down-square"></i>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" *ngIf="isAuthenticated">
+                    <li><a class="dropdown-item" href="#">Perfil</a></li>
+                    <li><a class="dropdown-item" href="#">Configuración</a></li>
+                    <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
+                </ul>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" *ngIf="!isAuthenticated">
+                    <li><a class="dropdown-item" [routerLink]="['login']">Iniciar Sesión</a></li>
+                    <li><a class="dropdown-item" [routerLink]="['register']">Registrarse</a></li>
+                </ul>
+                </div>
+        </div>
     </div>
-    <nav id="collapsibleNavbar">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="">
-                    <i data-feather="home"></i>
-                    INICIO
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="">
-                    <i data-feather="truck"></i>
-                    DELIVERY
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="">
-                    <i data-feather="map-pin"></i>
-                    UBICACIÓN
-                </a>
-            </li>
-        </ul>
-    </nav>
-    <div class="account-header">
-        Mi cuenta
-    </div>
-    
 </header>

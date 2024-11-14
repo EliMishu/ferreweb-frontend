@@ -1,4 +1,4 @@
-export interface AlmacenRequest {
+export interface AlmacenDTO {
     nombre: string;
     direccion: string;
   }

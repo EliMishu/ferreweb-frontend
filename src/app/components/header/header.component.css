@@ -1,3 +1,12 @@
+.navbar-toggler {
+    max-width: 50px;
+    border-color: var(--white);
+
+    i {
+        color: var(--white);
+    }
+}
+
 .logo-container {
     display: flex;
     justify-content: center;
@@ -7,6 +16,66 @@
     height: 90px;
 
     .logo {
-        width: 350px;
+        width: 200px;
+    }
+}
+
+.nav-item {
+    .nav-link {
+        font-family: var(--primary-font);
+        color: var(--white);
+        transition: all 0.3s;
+    
+        i {
+            color: var(--primary-color);
+            transition: all 0.3s;
+        }
+    }
+
+    &:hover {
+        .nav-link {
+            color: var(--hover-primary);
+        
+            i {
+                color: var(--hover-primary);
+            }
+        }
+    }
+}
+
+.account-dropdown {
+    display: flex;
+    border-radius: 15px;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    width: 140px;
+    height: 40px;
+    transition: all 0.3s;
+
+    i {
+        transition: all 0.3;
+    }
+
+    &:hover {
+        background-color: var(--bg-color);
+        color: var(--hover-secondary);
+        
+        i {
+            color: var(--hover-secondary);
+        }
+    }
+}
+
+.dropdown-menu {
+    min-width: 140px !important;
+}
+
+@media (max-width: 767px) {
+    .account-header {
+        width: 200px;
+        position: absolute;
+        top: 7px;
+        right: 10px;
     }
 }

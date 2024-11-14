@@ -3,15 +3,12 @@ import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-header',
+  selector: 'app-rol-list',
   standalone: true,
   imports: [CommonModule, RouterModule],
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  templateUrl: './rol-list.component.html',
+  styleUrl: './rol-list.component.css'
 })
-export class HeaderComponent {
-  public isAuthenticated:boolean = false;
-  public rol:string  = "USER";
-
-
+export class RolListComponent {
+  c
 }

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment.prod';
-import { ProductoRequest } from '../models/producto-request.model';
+import { ProductoDTO } from '../models/producto-dto.model';
 import { Producto } from '../models/producto.model';
 
 @Injectable({
@@ -21,11 +21,11 @@ export class ProductoService {
     return this.http.get<Producto>(`${this.apiUrl}/${id}`);
   }
 
-  crearProducto(request: ProductoRequest): Observable<Producto> {
+  crearProducto(request: ProductoDTO): Observable<Producto> {
     return this.http.post<Producto>(this.apiUrl, request);
   }
 
-  actualizarProducto(id: number, request: ProductoRequest): Observable<Producto> {
+  actualizarProducto(id: number, request: ProductoDTO): Observable<Producto> {
     return this.http.put<Producto>(`${this.apiUrl}/${id}`, request);
   }
 

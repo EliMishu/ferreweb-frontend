@@ -2,20 +2,22 @@
     <div class="card shadow-lg">
         <h3 class="text-center mb-2 title">INICIAR SESIÓN</h3>
         <form [formGroup]="loginForm" (ngSubmit)="login()">
-            <div class="form-group">
-                <label for="user">Usuario</label>
-                <input formControlName="user" type="text" class="form-control" id="user" placeholder="Correo o teléfono">
-                <div *ngIf="loginForm.get('user')?.invalid && (loginForm.get('user')?.touched || loginForm.get('user')?.dirty)">
-                    <small *ngIf="loginForm.get('user')?.errors?.['required']" class="text-danger">El campo Usuario es obligatorio.</small>
-                    <small *ngIf="loginForm.get('user')?.errors?.['pattern']" class="text-danger">Ingrese un correo o teléfono válido.</small>
+            <div class="row row-cols-1 gy-3">
+                <div class="col form-group">
+                    <label for="user">Usuario</label>
+                    <input formControlName="user" type="text" class="form-control" id="user" placeholder="Correo o teléfono">
+                    <div *ngIf="loginForm.get('user')?.invalid && (loginForm.get('user')?.touched || loginForm.get('user')?.dirty)">
+                        <small *ngIf="loginForm.get('user')?.errors?.['required']" class="text-danger">El campo Usuario es obligatorio.</small>
+                        <small *ngIf="loginForm.get('user')?.errors?.['pattern']" class="text-danger">Ingrese un correo o teléfono válido.</small>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="contrasena">Contraseña</label>
-                <input formControlName="contrasena" type="password" class="form-control" id="contrasena" placeholder="Contraseña">
-                <div *ngIf="loginForm.get('contrasena')?.invalid && (loginForm.get('contrasena')?.touched || loginForm.get('contrasena')?.dirty)">
-                    <small *ngIf="loginForm.get('contrasena')?.errors?.['required']" class="text-danger">El campo Contraseña es obligatorio.</small>
-                    <small *ngIf="loginForm.get('contrasena')?.errors?.['minlength']" class="text-danger">La Contraseña debe tener al menos 6 caracteres.</small>
+                <div class="col form-group">
+                    <label for="contrasena">Contraseña</label>
+                    <input formControlName="contrasena" type="password" class="form-control" id="contrasena" placeholder="Contraseña">
+                    <div *ngIf="loginForm.get('contrasena')?.invalid && (loginForm.get('contrasena')?.touched || loginForm.get('contrasena')?.dirty)">
+                        <small *ngIf="loginForm.get('contrasena')?.errors?.['required']" class="text-danger">El campo Contraseña es obligatorio.</small>
+                        <small *ngIf="loginForm.get('contrasena')?.errors?.['minlength']" class="text-danger">La Contraseña debe tener al menos 6 caracteres.</small>
+                    </div>
                 </div>
             </div>
             <div class="text-right">
