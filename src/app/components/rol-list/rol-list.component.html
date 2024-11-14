@@ -1,6 +1,6 @@
 <div class="rol-list">
     <div class="subheader">
-        <h3>Lista de Categorías</h3>
+        <h3>Lista de Roles</h3>
         <div class="buttons-list">
             <button [routerLink]="['/roles/new']" class="btn btn-primary">
                 <i class="bi bi-plus-square"></i>
@@ -15,7 +15,7 @@
 
     <div class="container">
         <div class="row gap-3 row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
-            <div class="card p-0" *ngFor="let rol of roles" (click)="seleccionarRol(rol.id)"
+            <div class="col card p-0" *ngFor="let rol of roles" (click)="seleccionarRol(rol.id)"
             [ngClass]="{'selected': idRol === rol.id}">
             <img class="card-img-top" [src]="rol.rutaImagen" [alt]="rol.tipo.toLowerCase()">
             <div class="card-body">

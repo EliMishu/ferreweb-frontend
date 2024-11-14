@@ -39,7 +39,7 @@
         <div class="form-group">
             <label for="almacen">Almacén</label>
             <select formControlName="almacen" class="form-control" id="almacen">
-                <option *ngFor="let almacen of almacenes" [value]="almacen.id">{{almacen.nombre}}</option>
+                <option *ngFor="let almacen of almacenes" [value]="almacen.idAlmacen">{{almacen.nombre}}</option>
             </select>
             <div *ngIf="productoForm.get('almacen')?.invalid && (productoForm.get('almacen')?.touched || productoForm.get('almacen')?.dirty)">
                 <small *ngIf="productoForm.get('almacen')?.errors?.['required']">Debe seleccionar un almacén.</small>
@@ -50,7 +50,7 @@
         <div class="form-group">
             <label for="categoria">Categoría</label>
             <select formControlName="categoria" class="form-control" id="categoria">
-                <option *ngFor="let categoria of categorias" [value]="categoria.id">{{categoria.nombre}}</option>
+                <option *ngFor="let categoria of categorias" [value]="categoria.idCategoria">{{categoria.nombre}}</option>
             </select>
             <div *ngIf="productoForm.get('categoria')?.invalid && (productoForm.get('categoria')?.touched || productoForm.get('categoria')?.dirty)">
                 <small *ngIf="productoForm.get('categoria')?.errors?.['required']">Debe seleccionar una categoría.</small>

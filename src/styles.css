@@ -71,6 +71,29 @@ a {
     }
 }
 
+.btn-secondary {
+    background-color: var(--secondary-color);
+    border: none !important;
+    
+    &:hover {
+        background-color: var(--hover-secondary);
+        border: none !important;
+    }
+
+    &:active, &:focus::after, &:focus-visible {
+        background-color: var(--darken-secondary) !important;
+        border: none !important;
+    }
+}
+
 small {
     color: #dc3545;
 }
+
+.card{
+    max-width: 300px;
+    max-height: 450px;
+    &.selected{
+      background-color: #a1dbff;
+    }
+  }
