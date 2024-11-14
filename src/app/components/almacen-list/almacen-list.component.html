@@ -1,1 +1,19 @@
-<p>almacen-list works!</p>
+<div class="categoria-list">
+    <h3>Lista de Almacenes</h3>
+    <i class="bi bi-trash3"></i>
+    <a [routerLink]="['/almacenes/new']" class="btn btn-primary">Agregar Almacen</a>
+
+    <div class="container">
+        <div class="row gap-3 row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+            <div class="card p-0" *ngFor="let almacen of almacenes" (click)="seleccionarAlmacen(almacen.idAlmacen)"
+            [ngClass]="{'selected': idAlmacen === almacen.idAlmacen}">
+            <img class="card-img-top" [src]="almacen.rutaImagen" alt="Card image">
+            <div class="card-body">
+                <h4 class="card-title">{{almacen.nombre}}</h4>
+                <p class="card-text">{{almacen.descripcion}}</p>
+                <a [routerLink]="['/almacen', almacen.idAlmacen]" class="btn btn-primary">Ver Detalle</a>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
