@@ -13,7 +13,6 @@ export class AuthService {
   private LOGIN_URL = environment.apiUrl + "/auth/login";
   private REGISTER_URL = environment.apiUrl + "/auth/register";
   private tokenKey = 'authToken';
-  private usuario: UsuarioDTO | null = null;
   
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -22,7 +21,6 @@ export class AuthService {
       tap (response => {
         if (response.token) {
           this.setToken(response.token);
-          this.usuario = response.usuario;
         }
       })
     )
@@ -72,9 +70,5 @@ export class AuthService {
   logout(): void {
     sessionStorage.removeItem(this.tokenKey);
     this.router.navigate(['/'])
-  }
-
-  getUser(): UsuarioDTO | null {
-    return this.usuario;
   }
 }

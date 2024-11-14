@@ -5,6 +5,7 @@ export interface UsuarioDTO {
     nombre: string;
     apellidoPat: string;
     apellidoMat: string;
+    direccion: string;
     roles: string[];
     rutaImagen: string;
 }
