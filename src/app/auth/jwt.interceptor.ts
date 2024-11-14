@@ -6,7 +6,7 @@ export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
   const token = authService.getToken();
 
-  if (token && !(token.length > 0)) {
+  if (authService.isAuthenticated()) {
     const clonedRequest = req.clone({
       setHeaders: {
         Authorization: `Bearer ${token}`

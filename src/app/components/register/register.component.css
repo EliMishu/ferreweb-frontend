@@ -1,25 +1,39 @@
+:host {
+    display: block;
+    flex-grow: 1;
+}
+
 .background {
     background: url(/assets/images/fondo_login.avif) no-repeat center center fixed;
     background-size: cover;
-    font-family: Arial, sans-serif;
-    min-height: 100vh;
+    font-family: var(--secondary-font);
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 
+    a {
+        color: var(--secondary-color);
+
+        &:hover {
+            color: var(--hover-secondary);
+        }
+    }
+
     h3 {
-        font-family: 'Arial Black', sans-serif;
-        color: #003b5c;
+        font-family: var(--primary-font);
+        font-weight: bolder;
+        color: var(--secondary-color);
     }
 
     .card {
         width: 100%;
-        max-width: 400px;
+        max-width: 800px;
         padding: 2rem;
         margin: 2rem;
         border-radius: 10px;
-        background: rgba(255, 255, 255, 0.65);
+        backdrop-filter: blur(10px);
+        background: rgba(255, 255, 255, 0.3);
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3) !important;
 
         form {
@@ -37,13 +51,13 @@
             
             .btn-primary {
                 width: 100%;
-                background-color: #003b5c;
+                background-color: var(--secondary-color);
                 border: none;
-                font-weight: bold;
+                font-family: var(--primary-font);
             }
     
             .btn-primary:hover {
-                background-color: #005082;
+                background-color: var(--hover-secondary);
             }
         }
     }

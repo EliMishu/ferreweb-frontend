@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { environment } from '../../environments/environment.prod';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,6 @@ export class AuthService {
     return this.http.post<any>(this.LOGIN_URL, {user, contrasena}).pipe(
       tap (response => {
         if (response.token) {
-          console.log(response);
           this.setToken(response.token);
         }
       })
@@ -31,7 +31,6 @@ export class AuthService {
         {user, contrasena, dni, nombre, apellidoPaterno, apellidoMaterno}).pipe(
           tap (response => {
             if (response.token) {
-              console.log(response);
               this.setToken(response.token);
             }
             catchError ((err) => throwError(() => new Error(err)))
@@ -41,12 +40,12 @@ export class AuthService {
 
   private setToken(token: string): void {
     if (typeof window !== 'undefined')
-    localStorage.setItem(this.tokenKey, token);
+    sessionStorage.setItem(this.tokenKey, token);
   }
 
   getToken(): string | null {
     if (typeof window !== 'undefined') {
-      return localStorage.getItem(this.tokenKey);
+      return sessionStorage.getItem(this.tokenKey);
     } else {
       return null;
     }
@@ -58,6 +57,9 @@ export class AuthService {
     if (!token) {
       return false;
     }
+
+    const decode = jwtDecode(token);
+    console.log(decode);
 
     const payload = JSON.parse(atob(token.split(".")[1]));
     const expiracion = payload.exp * 1000;
