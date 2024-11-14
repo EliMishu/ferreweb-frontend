@@ -1,13 +1,19 @@
 <div class="categoria-list">
     <h3>Lista de Categorías</h3>
+    <i class="bi bi-trash3"></i>
     <a routerLink="/categorias/new" class="btn btn-primary">Agregar Categoría</a>
 
-    <ul>
-        <li *ngFor="let categoria of categorias" (click)="seleccionarCategoria(categoria.idCategoria)"
+    <div class="container">
+        <div class="row gap-3 row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+            <div class="card p-0" *ngFor="let categoria of categorias" (click)="seleccionarCategoria(categoria.idCategoria)"
             [ngClass]="{'selected': idCategoria === categoria.idCategoria}">
-            {{ categoria.nombre }} - {{ categoria.descripcion }}
-            <button (click)="eliminarCategoria(categoria.idCategoria); $event.stopPropagation()">Eliminar</button>
-            <a [routerLink]="['/categoria', categoria.idCategoria]">Ver Detalle</a>
-        </li>
-    </ul>
+            <img class="card-img-top" [src]="categoria.rutaImagen" alt="Card image">
+            <div class="card-body">
+                <h4 class="card-title">{{categoria.nombre}}</h4>
+                <p class="card-text">{{categoria.descripcion}}</p>
+                <a [routerLink]="['/categoria', categoria.idCategoria]" class="btn btn-primary">Ver Detalle</a>
+            </div>
+        </div>
+        </div>
+    </div>
 </div>
