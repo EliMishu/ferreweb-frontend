@@ -1,4 +1,4 @@
-export interface CategoriaRequest {
+export interface CategoriaDTO {
     nombre: string;
     descripcion: string;
 }

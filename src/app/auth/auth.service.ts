@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { environment } from '../../environments/environment.prod';
 import { jwtDecode } from 'jwt-decode';
+import { UsuarioDTO } from '../models/usuario-dto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ export class AuthService {
   private LOGIN_URL = environment.apiUrl + "/auth/login";
   private REGISTER_URL = environment.apiUrl + "/auth/register";
   private tokenKey = 'authToken';
+  private usuario: UsuarioDTO | null = null;
   
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -20,6 +22,7 @@ export class AuthService {
       tap (response => {
         if (response.token) {
           this.setToken(response.token);
+          this.usuario = response.usuario;
         }
       })
     )
@@ -37,7 +40,7 @@ export class AuthService {
           })
         )
   }
-
+  
   private setToken(token: string): void {
     if (typeof window !== 'undefined')
     sessionStorage.setItem(this.tokenKey, token);
@@ -67,7 +70,11 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem(this.tokenKey);
+    sessionStorage.removeItem(this.tokenKey);
     this.router.navigate(['/'])
+  }
+
+  getUser(): UsuarioDTO | null {
+    return this.usuario;
   }
 }

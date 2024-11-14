@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CategoriaRequest } from '../../models/categoria-request.model';
+import { CategoriaDTO } from '../../models/categoria-dto.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CategoriaService } from '../../services/categoria.service';
 import { Categoria } from '../../models/categoria.models';
