@@ -11,7 +11,7 @@ export interface Producto {
     nombre: string;
     descripcion: string;
     stock: number;
-
+    rutaImagen?: string;
 }
 
 export interface UnidadPermitida {
