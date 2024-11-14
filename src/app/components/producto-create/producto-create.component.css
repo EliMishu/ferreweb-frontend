@@ -1,0 +1,42 @@
+/* Contenedor principal */
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Título */
+.container h2 {
+    text-align: center;
+    color: #333;
+}
+
+/* Mensajes de validación */
+small {
+    color: #d9534f;
+}
+
+/* Botones */
+.btn-primary {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.btn-secondary {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Adaptabilidad para dispositivos pequeños */
+@media (max-width: 576px) {
+    .container {
+        padding: 15px;
+    }
+
+    .form-group label {
+        font-size: 0.9rem;
+    }
+}
