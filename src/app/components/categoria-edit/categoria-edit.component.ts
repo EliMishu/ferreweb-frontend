@@ -31,7 +31,8 @@ export class CategoriaEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.categoriaId = Number(this.route.snapshot.paramMap.get('id'));
+    this.categoriaId = Number(this.route.snapshot.paramMap.get('idCategoria'));
+    console.log(this.categoriaId);
     this.cargarCategoria();
   }
 

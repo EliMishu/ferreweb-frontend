@@ -21,11 +21,23 @@ export class ProductoService {
     return this.http.get<Producto>(`${this.apiUrl}/${id}`);
   }
 
-  crearProducto(request: ProductoDTO): Observable<Producto> {
-    return this.http.post<Producto>(this.apiUrl, request);
+  crearProducto(request: ProductoDTO, imagen: File): Observable<Producto> {
+    const formData: FormData = new FormData();
+    formData.append('request', new Blob([JSON.stringify(request)], { type: 'application/json'}));
+    if (imagen) {
+      formData.append('imagen', imagen, imagen.name);
+    }
+
+    return this.http.post<Producto>(this.apiUrl, formData);
   }
 
-  actualizarProducto(id: number, request: ProductoDTO): Observable<Producto> {
+  actualizarProducto(id: number, request: ProductoDTO, imagen: File): Observable<Producto> {
+    const formData: FormData = new FormData();
+    formData.append('request', new Blob([JSON.stringify(request)], { type: 'application/json'}));
+    if (imagen) {
+      formData.append('imagen', imagen, imagen.name);
+    }
+
     return this.http.put<Producto>(`${this.apiUrl}/${id}`, request);
   }
 

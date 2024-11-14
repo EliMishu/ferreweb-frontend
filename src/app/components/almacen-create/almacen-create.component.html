@@ -1,13 +1,13 @@
 <div class="container">
     <h2>Crear Nuevo Almacen</h2>
-    <form [formGroup]="AlmacenForm" (ngSubmit)="crearAlmacen()">
+    <form [formGroup]="almacenForm" (ngSubmit)="crearAlmacen()">
         <div class="form-group">
             <label for="nombre">Nombre</label>
             <input formControlName="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre">
             <div
-                *ngIf="AlmacenForm.get('nombre')?.invalid && (AlmacenForm.get('nombre')?.touched || AlmacenForm.get('nombre')?.dirty)">
-                <small *ngIf="AlmacenForm.get('nombre')?.errors?.['required']">El campo Nombre es obligatorio.</small>
-                <small *ngIf="AlmacenForm.get('nombre')?.errors?.['minlength']">El Nombre debe tener al menos 2
+                *ngIf="almacenForm.get('nombre')?.invalid && (almacenForm.get('nombre')?.touched || almacenForm.get('nombre')?.dirty)">
+                <small *ngIf="almacenForm.get('nombre')?.errors?.['required']">El campo Nombre es obligatorio.</small>
+                <small *ngIf="almacenForm.get('nombre')?.errors?.['minlength']">El Nombre debe tener al menos 2
                     caracteres.</small>
             </div>
         </div>
@@ -17,18 +17,14 @@
             <textarea formControlName="descripcion" class="form-control" id="descripcion"
                 placeholder="Descripción"></textarea>
             <div
-                *ngIf="AlmacenForm.get('descripcion')?.invalid && (AlmacenForm.get('descripcion')?.touched || AlmacenForm.get('descripcion')?.dirty)">
-                <small *ngIf="AlmacenForm.get('descripcion')?.errors?.['required']">El campo Descripción es
+                *ngIf="almacenForm.get('descripcion')?.invalid && (almacenForm.get('descripcion')?.touched || almacenForm.get('descripcion')?.dirty)">
+                <small *ngIf="almacenForm.get('descripcion')?.errors?.['required']">El campo Descripción es
                     obligatorio.</small>
             </div>
         </div>
-
-        <div class="form-group">
-            <label for="imagen">Imagen</label>
-            <input type="file" (change)="onFileChange($event)" class="form-control" id="imagen">
+        <div class="d-flex flex-row justify-content-between align-items-center">
+            <button type="submit" class="btn btn-primary">Crear Almacen</button>
+            <button type="button" class="btn btn-secondary" (click)="cancelarCreacion()">Cancelar</button>
         </div>
-
-        <button type="submit" class="btn btn-primary">Crear Almacen</button>
-        <button type="button" class="btn btn-secondary" (click)="cancelarCreacion()">Cancelar</button>
     </form>
 </div>
