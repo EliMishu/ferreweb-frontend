@@ -1,1 +1,21 @@
-<p>producto-list works!</p>
+<div class="producto-list">
+    <h3>Lista de Productos</h3>
+    <div class="icono-boton">
+        <i class="bi bi-trash3"></i>
+        <a routerLink="/productos/new" class="btn btn-primary">Agregar Producto</a>
+    </div>
+    
+    <div class="container">
+        <div class="row gap-3 row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+            <div class="card p-0" *ngFor="let producto of productos" (click)="seleccionarProducto(producto.idProducto)" 
+                [ngClass]="{'selected': idProducto === producto.idProducto}">
+                <img class="card-img-top" [src]="producto.rutaImagen" alt="Card image">
+                <div class="card-body">
+                    <h4 class="card-title">{{producto.nombre}}</h4>
+                    <p class="card-text">{{producto.descripcion}}</p>
+                    <a [routerLink]="['/producto', producto.idProducto]" class="btn btn-primary">Ver Detalle</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

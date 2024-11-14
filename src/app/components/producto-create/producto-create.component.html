@@ -1,1 +1,71 @@
-<p>producto-create works!</p>
+<div class="container">
+    <h2>Crear Nuevo Producto</h2>
+    <form [formGroup]="productoForm" (ngSubmit)="crearProducto()">
+        <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input formControlName="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre">
+            <div 
+                *ngIf="productoForm.get('nombre')?.invalid && (productoForm.get('nombre')?.touched || productoForm.get('nombre')?.dirty)">
+                <small *ngIf="productoForm.get('nombre')?.errors?.['required']">El campo Nombre es obligatorio.</small>
+                <small *ngIf="productoForm.get('nombre')?.errors?.['minlength']">El Nombre debe tener al menos 2 caracteres.</small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="descripcion">Descripción</label>
+            <textarea formControlName="descripcion" class="form-control" id="descripcion" ></textarea>
+            <div *ngIf="productoForm.get('descripcion')?.invalid && (productoForm.get('descripcion')?.touched || productoForm.get('descripcion')?.dirty)">
+                <small *ngIf="productoForm.get('descripcion')?.errors?.['required']">El campo Descripción es obligatorio.</small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="precio">Precio</label>
+            <input formControlName="precio" type="number" class="form-control" id="precio" >
+            <div *ngIf="productoForm.get('precio')?.invalid && (productoForm.get('precio')?.touched || productoForm.get('precio')?.dirty)">
+                <small *ngIf="productoForm.get('precio')?.errors?.['required']">El campo Precio es obligatorio.</small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="stock">Stock</label>
+            <input formControlName="stock" type="number" class="form-control" id="stock" >
+            <div *ngIf="productoForm.get('stock')?.invalid && (productoForm.get('stock')?.touched || productoForm.get('stock')?.dirty)">
+                <small *ngIf="productoForm.get('stock')?.errors?.['required']">El campo Stock es obligatorio.</small>
+            </div>
+        </div>
+
+        <!-- Selección de Almacén -->
+        <div class="form-group">
+            <label for="almacen">Almacén</label>
+            <select formControlName="almacen" class="form-control" id="almacen">
+                <option *ngFor="let almacen of almacenes" [value]="almacen.id">{{almacen.nombre}}</option>
+            </select>
+            <div *ngIf="productoForm.get('almacen')?.invalid && (productoForm.get('almacen')?.touched || productoForm.get('almacen')?.dirty)">
+                <small *ngIf="productoForm.get('almacen')?.errors?.['required']">Debe seleccionar un almacén.</small>
+            </div>
+        </div>
+
+        <!-- Selección de Categoría -->
+        <div class="form-group">
+            <label for="categoria">Categoría</label>
+            <select formControlName="categoria" class="form-control" id="categoria">
+                <option *ngFor="let categoria of categorias" [value]="categoria.id">{{categoria.nombre}}</option>
+            </select>
+            <div *ngIf="productoForm.get('categoria')?.invalid && (productoForm.get('categoria')?.touched || productoForm.get('categoria')?.dirty)">
+                <small *ngIf="productoForm.get('categoria')?.errors?.['required']">Debe seleccionar una categoría.</small>
+            </div>
+        </div>
+
+        <!-- Imagen del Producto -->
+        <div class="form-group">
+            <label for="imagen">Imagen</label>
+            <input type="file" (change)="onFileChange($event)" class="form-control" id="imagen">
+        </div>
+
+        <!-- Botones -->
+        <button type="submit" class="btn btn-primary">Crear Producto</button>
+        <button type="button" class="btn btn-secondary" (click)="cancelarCreacion()">Cancelar</button>
+    </form>
+</div>
+
