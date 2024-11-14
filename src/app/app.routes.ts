@@ -16,10 +16,21 @@ import { ProductoCreateComponent } from './components/producto-create/producto-c
 import { ModuloProductosComponent } from './components/modulo-productos/modulo-productos.component';
 import { authenticatedGuard } from './guards/authenticated.guard';
 import { authGuard } from './guards/auth.guard';
+import { RolListComponent } from './components/rol-list/rol-list.component';
+import { RolEditComponent } from './components/rol-edit/rol-edit.component';
 
 export const routes: Routes = [
+    // Login routes
     {path: 'login', loadComponent: () => LoginComponent, canActivate:[authenticatedGuard]},
     {path: 'register', loadComponent: () => RegisterComponent, canActivate:[authenticatedGuard]},
+
+    // Module Gestion routes
+    {path: 'roles', loadComponent: () => RolListComponent, canActivate:[authGuard]},
+
+    
+    {path: 'rol/edit/:idRol', loadComponent: () => RolEditComponent, canActivate:[authGuard]},
+
+    // Module Productos routes
     {path: 'modProductos', loadComponent: () => ModuloProductosComponent, canActivate:[authGuard]},
     {path: 'categorias', loadComponent: () => CategoriaListComponent, canActivate:[authGuard]},
     {path: 'categoria/:idCategoria', loadComponent: () => CategoriaDetailComponent, canActivate:[authGuard]},

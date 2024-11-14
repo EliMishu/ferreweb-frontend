@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="subheader">
+        <h2>Editar Rol</h2>
+    </div>
+    <form [formGroup]="rolForm" (ngSubmit)="guardarRol()" class="d-flex flex-column gap-3">
+        <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input formControlName="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre">
+            <div
+                *ngIf="rolForm.get('nombre')?.invalid && (rolForm.get('nombre')?.touched || rolForm.get('nombre')?.dirty)">
+                <small *ngIf="rolForm.get('nombre')?.errors?.['required']">El campo Nombre es obligatorio.</small>
+                <small *ngIf="rolForm.get('nombre')?.errors?.['minlength']">El Nombre debe tener al menos 2
+                    caracteres.</small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="imagen">Imagen</label>
+            <input type="file" (change)="onFileChange($event)" class="form-control" id="imagen">
+        </div>
+
+        <div class="d-flex flex-row gap-3 mt-2">
+            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+            <button type="button" class="btn btn-danger" (click)="cancelarEdicion()">Cancelar</button>
+        </div>
+    </form>
+</div>

@@ -40,9 +40,10 @@ export class CategoriaListComponent implements OnInit {
   @HostListener('document:click', ['$event'])
   handleClickOutside(event: MouseEvent): void {
     const target = event.target as HTMLElement;
-    const listaCategorias = document.querySelector('.categoria-container');
+    const cardClicked = target.closest('.card');
+    const buttonClicked = target.closest('.btn')
 
-    if (listaCategorias && !listaCategorias.contains(target)) {
+    if (!cardClicked && !buttonClicked) {
       this.idCategoria = -1;
     }
   }

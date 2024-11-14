@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { Rol } from '../../models/rol.model';
+import { RolService } from '../../services/rol.service';
 
 @Component({
   selector: 'app-rol-list',
@@ -9,6 +11,40 @@ import { RouterModule } from '@angular/router';
   templateUrl: './rol-list.component.html',
   styleUrl: './rol-list.component.css'
 })
-export class RolListComponent {
-  c
+export class RolListComponent implements OnInit {
+  roles: Rol[] = [];
+  idRol: number = -1;
+
+  constructor(private rolService: RolService) {}
+
+  ngOnInit(): void {
+    this.obtenerRoles();
+  }
+
+  obtenerRoles(): void {
+    this.rolService.obtenerRoles().subscribe((data) => {
+      this.roles = data;
+    })
+  }
+
+  eliminarRol(id: number): void {
+    this.rolService.eliminarRol(id).subscribe(() => {
+      this.obtenerRoles();
+    })
+  }
+
+  seleccionarRol(id: number): void {
+    this.idRol = id;
+  }
+
+  @HostListener('document:click', ['$event'])
+  handleClickOutside(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    const cardClicked = target.closest('.card');
+    const buttonClicked = target.closest('.btn')
+
+    if (!cardClicked && !buttonClicked) {
+      this.idRol = -1;
+    }
+  }
 }
