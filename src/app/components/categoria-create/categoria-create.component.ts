@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import { CategoriaService } from '../../services/categoria.service';
 import { CommonModule } from '@angular/common';
- 
+  
 @Component({
   selector: 'app-categoria-create',
   standalone: true,

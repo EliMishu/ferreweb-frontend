@@ -1,1 +1,34 @@
-<p>almacen-create works!</p>
+<div class="container">
+    <h2>Crear Nuevo Almacen</h2>
+    <form [formGroup]="AlmacenForm" (ngSubmit)="crearAlmacen()">
+        <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input formControlName="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre">
+            <div
+                *ngIf="AlmacenForm.get('nombre')?.invalid && (AlmacenForm.get('nombre')?.touched || AlmacenForm.get('nombre')?.dirty)">
+                <small *ngIf="AlmacenForm.get('nombre')?.errors?.['required']">El campo Nombre es obligatorio.</small>
+                <small *ngIf="AlmacenForm.get('nombre')?.errors?.['minlength']">El Nombre debe tener al menos 2
+                    caracteres.</small>
+            </div>
+        </div>
+  
+        <div class="form-group">
+            <label for="descripcion">Descripción</label>
+            <textarea formControlName="descripcion" class="form-control" id="descripcion"
+                placeholder="Descripción"></textarea>
+            <div
+                *ngIf="AlmacenForm.get('descripcion')?.invalid && (AlmacenForm.get('descripcion')?.touched || AlmacenForm.get('descripcion')?.dirty)">
+                <small *ngIf="AlmacenForm.get('descripcion')?.errors?.['required']">El campo Descripción es
+                    obligatorio.</small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="imagen">Imagen</label>
+            <input type="file" (change)="onFileChange($event)" class="form-control" id="imagen">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Crear Almacen</button>
+        <button type="button" class="btn btn-secondary" (click)="cancelarCreacion()">Cancelar</button>
+    </form>
+</div>

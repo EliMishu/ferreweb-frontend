@@ -1,4 +1,4 @@
-/* Contenedor principal */
+
 .container {
     max-width: 600px;
     margin: 0 auto;
@@ -8,29 +8,29 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Título */
+
 .container h2 {
     text-align: center;
     color: #333;
 }
 
-/* Mensajes de validación */
+
 small {
     color: #d9534f;
 }
 
-/* Botones */
+
 .btn-primary {
-    width: 100%;
+    width: 50%;
     margin-top: 10px;
 }
 
 .btn-secondary {
-    width: 100%;
+    width: 50%;
     margin-top: 10px;
 }
 
-/* Adaptabilidad para dispositivos pequeños */
+
 @media (max-width: 576px) {
     .container {
         padding: 15px;

@@ -1,0 +1,6 @@
+.card{
+    max-width: 300px;
+    &.selected{
+      background-color: #a1dbff;
+    }
+  }
