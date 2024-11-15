@@ -27,10 +27,14 @@ export class RolListComponent implements OnInit {
     })
   }
 
-  eliminarRol(id: number): void {
+  eliminarRolPorId(id: number): void {
     this.rolService.eliminarRol(id).subscribe(() => {
       this.obtenerRoles();
     })
+  }
+
+  eliminarRol(): void {
+    this.eliminarRolPorId(this.idRol);
   }
 
   seleccionarRol(id: number): void {

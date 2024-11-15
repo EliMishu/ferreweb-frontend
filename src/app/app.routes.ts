@@ -18,6 +18,9 @@ import { authenticatedGuard } from './guards/authenticated.guard';
 import { authGuard } from './guards/auth.guard';
 import { RolListComponent } from './components/rol-list/rol-list.component';
 import { RolEditComponent } from './components/rol-edit/rol-edit.component';
+import { ModuloGestionComponent } from './components/modulo-gestion/modulo-gestion.component';
+import { RolCreateComponent } from './components/rol-create/rol-create.component';
+import { RolDetailComponent } from './components/rol-detail/rol-detail.component';
 
 export const routes: Routes = [
     // Login routes
@@ -25,10 +28,12 @@ export const routes: Routes = [
     {path: 'register', loadComponent: () => RegisterComponent, canActivate:[authenticatedGuard]},
 
     // Module Gestion routes
+    {path: 'modGestion', loadComponent: () => ModuloGestionComponent, canActivate:[authGuard]},
     {path: 'roles', loadComponent: () => RolListComponent, canActivate:[authGuard]},
-
-    
+    {path: 'rol/:idRol', loadComponent: () => RolDetailComponent, canActivate:[authGuard]},
     {path: 'rol/edit/:idRol', loadComponent: () => RolEditComponent, canActivate:[authGuard]},
+    {path: 'roles/new', loadComponent: () => RolCreateComponent, canActivate:[authGuard]},
+    
 
     // Module Productos routes
     {path: 'modProductos', loadComponent: () => ModuloProductosComponent, canActivate:[authGuard]},

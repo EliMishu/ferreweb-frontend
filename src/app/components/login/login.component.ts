@@ -14,7 +14,7 @@ import { CommonModule } from '@angular/common';
 export class LoginComponent {
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder,private authService: AuthService, private router: Router) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginForm = this.fb.group({
       user: ['', Validators.required],
       contrasena: ['', Validators.required]
@@ -25,7 +25,7 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       const { user, contrasena } = this.loginForm.value;
       console.log(user);
-  
+
       this.authService.login(user, contrasena).subscribe({
         next: () => this.router.navigate(['/modProductos']),
         error: (err) => console.error('Login failed', err)

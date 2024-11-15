@@ -12,15 +12,15 @@
         </div>
         <nav id="collapsibleNavbar" class="col-5 justify-content-center collapse navbar-collapse">
             <!-- Admin Section -->
-            <ul class="navbar-nav gap-3" *ngIf="rol=='ADMIN'">
+            <ul class="navbar-nav gap-3" *ngIf="getRol()=='ADMIN'">
                 <li class="nav-item">
-                    <a class="nav-link d-flex flex-md-column gap-md-0 gap-1 align-items-center" href="">
+                    <a class="nav-link d-flex flex-md-column gap-md-0 gap-1 align-items-center" [routerLink]="['modGestion']">
                         <i class="bi bi-people fs-3"></i>
                         GESTIÓN
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link d-flex flex-md-column gap-md-0 gap-1 align-items-center" href="">
+                    <a class="nav-link d-flex flex-md-column gap-md-0 gap-1 align-items-center" [routerLink]="['modProductos']">
                         <i class="bi bi-box-seam fs-3"></i>
                         PRODUCTOS
                     </a>
@@ -33,7 +33,7 @@
                 </li>
             </ul>
             <!-- Default Section -->
-            <ul class="navbar-nav gap-3" *ngIf="rol=='USER'">
+            <ul class="navbar-nav gap-3" *ngIf="getRol()=='USER'">
                 <li class="nav-item">
                     <a class="nav-link d-flex flex-md-column gap-md-0 gap-1 align-items-center" href="">
                         <i class="bi bi-house-door fs-3"></i>
@@ -60,14 +60,14 @@
                     data-bs-toggle="dropdown" aria-expanded="false">
                     Mi cuenta <i class="bi bi-caret-down-square"></i>
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" *ngIf="isAuthenticated">
-                    <li><a class="dropdown-item" href="#">Perfil</a></li>
-                    <li><a class="dropdown-item" href="#">Configuración</a></li>
-                    <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" *ngIf="isAuthenticated()">
+                    <li><button class="dropdown-item" >Perfil</button></li>
+                    <li><button class="dropdown-item" >Configuración</button></li>
+                    <li><button class="dropdown-item" (click)="logout()">Cerrar sesión</button></li>
                 </ul>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" *ngIf="!isAuthenticated">
-                    <li><a class="dropdown-item" [routerLink]="['login']">Iniciar Sesión</a></li>
-                    <li><a class="dropdown-item" [routerLink]="['register']">Registrarse</a></li>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" *ngIf="!isAuthenticated()">
+                    <li><button class="dropdown-item" [routerLink]="['login']">Iniciar Sesión</button></li>
+                    <li><button class="dropdown-item" [routerLink]="['register']">Registrarse</button></li>
                 </ul>
                 </div>
         </div>

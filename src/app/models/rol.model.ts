@@ -1,5 +1,5 @@
 export interface Rol {
-    id: number,
+    idRol: number,
     tipo: string,
     rutaImagen: string
 }

@@ -25,20 +25,20 @@ export class RolEditComponent {
     private alertService: AlertService
   ) {
     this.rolForm = this.fb.group({
-      nombre: ['', [Validators.required, Validators.minLength(2)]],
+      tipo: ['', [Validators.required, Validators.minLength(2)]],
       imagen: [null]
     });
   }
 
   ngOnInit(): void {
-    this.rolId = Number(this.route.snapshot.paramMap.get('id'));
+    this.rolId = Number(this.route.snapshot.paramMap.get('idRol'));
     this.cargarRol();
   }
 
   cargarRol(): void {
     this.rolService.obtenerRolporId(this.rolId).subscribe((data: Rol) => {
       this.rolForm.patchValue({
-        nombre: data.tipo
+        tipo: data.tipo
       });
     });
   }
@@ -56,8 +56,8 @@ export class RolEditComponent {
       const imagen = this.rolForm.get('imagen')?.value;
 
       this.rolService.actualizarRol(this.rolId, request, imagen).subscribe({
-        next: () => this.router.navigate(['/categorias']),
-        error: (err) => this.alertService.show("Error al actualizar la categoría.")
+        next: () => this.router.navigate(['/roles']),
+        error: (err) => this.alertService.show("Error al actualizar el rol.")
       });
     }
   }

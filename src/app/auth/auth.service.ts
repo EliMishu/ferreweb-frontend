@@ -60,7 +60,6 @@ export class AuthService {
     }
 
     const decode = jwtDecode(token);
-    console.log(decode);
 
     const payload = JSON.parse(atob(token.split(".")[1]));
     const expiracion = payload.exp * 1000;
@@ -69,6 +68,6 @@ export class AuthService {
 
   logout(): void {
     sessionStorage.removeItem(this.tokenKey);
-    this.router.navigate(['/'])
+    this.router.navigate(['/']);
   }
 }
