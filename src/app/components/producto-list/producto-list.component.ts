@@ -3,7 +3,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Producto } from '../../models/producto.model';
 import { ProductoService } from '../../services/producto.service';
-
+ 
 @Component({
   selector: 'app-producto-list',
   standalone: true,
@@ -24,17 +24,23 @@ export class ProductoListComponent implements OnInit {
   obtenerProductos(): void {
     this.productoService.obtenerProductos().subscribe((data) => {
       this.productos = data;
-    })
+    });
   }
 
-  eliminarProducto(id: number): void {
+  eliminarProductoPorID(id: number): void {
     this.productoService.eliminarProducto(id).subscribe(() => {
+      this.obtenerProductos();
+    });
+  }
+
+  eliminarProducto(): void {
+    this.productoService.eliminarProducto(this.idProducto).subscribe(() => {
       this.obtenerProductos();
     })
   }
 
   seleccionarProducto(id: number): void {
-    this.idProducto = id;
+    this.idProducto = id; 
   }
 
   @HostListener('document:click', ['$event'])

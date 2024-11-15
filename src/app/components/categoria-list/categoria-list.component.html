@@ -13,27 +13,27 @@
             </button>
         </div>
     </div>
-
+  
     <div class="container">
         <div class="row gap-3 row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
             <div class="card p-0" *ngFor="let categoria of categorias" (click)="seleccionarCategoria(categoria.idCategoria)"
-            [ngClass]="{'selected': idCategoria === categoria.idCategoria}">
-            <img class="card-img-top" [src]="categoria.rutaImagen" alt="Card image">
-            <div class="card-body">
-                <h4 class="card-title">{{categoria.nombre}}</h4>
-                <p class="card-text">{{categoria.descripcion}}</p>
-                <div class="row gap-2 mx-1">
-                    <button [routerLink]="['/categoria', categoria.idCategoria]" class="btn btn-secondary col">
-                        <i class="bi bi-info-square"></i>
-                        Detalles
-                    </button>
-                    <button [routerLink]="['/categoria/edit', categoria.idCategoria]" class="btn btn-primary col">
-                        <i class="bi bi-pencil-square"></i>
-                        Editar
-                    </button>
+                [ngClass]="{'selected': idCategoria === categoria.idCategoria}">
+                <img class="card-img-top" [src]="categoria.rutaImagen" alt="Card image">
+                <div class="card-body">
+                    <h4 class="card-title">{{categoria.nombre}}</h4>
+                    <p class="card-text">{{categoria.descripcion}}</p>
+                    <div class="row gap-2 mx-1">
+                        <button [routerLink]="['/categoria', categoria.idCategoria]" class="btn btn-secondary col">
+                            <i class="bi bi-info-square"></i>
+                            Detalles
+                        </button>
+                        <button [routerLink]="['/categoria/edit', categoria.idCategoria]" class="btn btn-primary col">
+                            <i class="bi bi-pencil-square"></i>
+                         Editar
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
         </div>
     </div> 
 </div>
