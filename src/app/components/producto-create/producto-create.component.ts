@@ -17,9 +17,13 @@ import { CategoriaService } from '../../services/categoria.service';
 })
 export class ProductoCreateComponent implements OnInit  {
   productoForm: FormGroup;
+<<<<<<< HEAD
+ 
+=======
   categorias: Categoria[] = [];
   almacenes: Almacen[] = [];
 
+>>>>>>> b8facd9e2b296ab6e947650ef87abce8a84b53c5
   constructor(
     private fb: FormBuilder,
     private productoService: ProductoService,
