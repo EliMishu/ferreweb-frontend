@@ -21,11 +21,7 @@ export class AlmacenCreateComponent implements OnInit {
   ) {
     this.almacenForm = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(2)]],
-      descripcion: ['', [Validators.required]],
-      stock: [null, [Validators.required, Validators.min(0)]],
-      almacen: [null, Validators.required],
-      categoria: [null, Validators.required],
-      imagen: [null]
+      direccion: ['', [Validators.required]]
     });
   }
 
@@ -41,7 +37,6 @@ export class AlmacenCreateComponent implements OnInit {
   crearAlmacen(): void {
     if (this.almacenForm.valid) {
       const request = this.almacenForm.value;
-      const imagen = this.almacenForm.get('imagen')?.value;
 
       this.almacenService.crearAlmacen(request).subscribe({
         next: () => this.router.navigate(['/almacenes']),

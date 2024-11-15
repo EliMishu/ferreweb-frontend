@@ -27,8 +27,14 @@ export class AlmacenListComponent {
     })
   }
 
-  eliminarAlmacen(id: number): void {
+  eliminarAlmacenPorId(id: number): void {
     this.almacenService.eliminarAlmacen(id).subscribe(() => {
+      this.obtenerAlmacenes();
+    })
+  }
+
+  eliminarAlmacen(): void {
+    this.almacenService.eliminarAlmacen(this.idAlmacen).subscribe(() => {
       this.obtenerAlmacenes();
     })
   }

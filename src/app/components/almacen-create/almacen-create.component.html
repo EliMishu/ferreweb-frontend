@@ -13,12 +13,12 @@
         </div>
   
         <div class="form-group">
-            <label for="descripcion">Descripción</label>
-            <textarea formControlName="descripcion" class="form-control" id="descripcion"
-                placeholder="Descripción"></textarea>
+            <label for="direccion">Dirección</label>
+            <textarea formControlName="direccion" class="form-control" id="direccion"
+                placeholder="Dirección"></textarea>
             <div
-                *ngIf="almacenForm.get('descripcion')?.invalid && (almacenForm.get('descripcion')?.touched || almacenForm.get('descripcion')?.dirty)">
-                <small *ngIf="almacenForm.get('descripcion')?.errors?.['required']">El campo Descripción es
+                *ngIf="almacenForm.get('direccion')?.invalid && (almacenForm.get('direccion')?.touched || almacenForm.get('direccion')?.dirty)">
+                <small *ngIf="almacenForm.get('direccion')?.errors?.['required']">El campo Dirección es
                     obligatorio.</small>
             </div>
         </div>
