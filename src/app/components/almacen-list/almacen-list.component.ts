@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Almacen } from '../../models/almacen.model';
 import { AlmacenService } from '../../services/almacen.service';
@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './almacen-list.component.html',
   styleUrl: './almacen-list.component.css'
 })
-export class AlmacenListComponent {
+export class AlmacenListComponent implements OnInit {
   almacenes: Almacen[] = [];
   idAlmacen: number = -1;
 

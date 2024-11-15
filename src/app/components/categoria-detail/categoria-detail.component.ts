@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CategoriaService } from '../../services/categoria.service';
 
 @Component({
   selector: 'app-categoria-detail',
@@ -8,5 +10,5 @@ import { Component } from '@angular/core';
   styleUrl: './categoria-detail.component.css'
 })
 export class CategoriaDetailComponent {
-
+  
 }

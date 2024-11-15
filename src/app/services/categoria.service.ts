@@ -20,7 +20,7 @@ export class CategoriaService {
   obtenerCategoria(id: number): Observable<Categoria> {
     return this.http.get<Categoria>(`${this.apiUrl}/${id}`);
   }
-
+ 
   crearCategoria(request: CategoriaDTO, imagen: File): Observable<Categoria> {
     const formData: FormData = new FormData();
     formData.append('request', new Blob([JSON.stringify(request)], { type: 'application/json' }));

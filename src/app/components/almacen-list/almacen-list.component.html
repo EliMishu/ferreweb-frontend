@@ -13,21 +13,21 @@
             </button>
         </div>
     </div>
-
+ 
     <div class="container">
         <div class="row gap-3 row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
             <div class="card p-0" *ngFor="let almacen of almacenes" (click)="seleccionarAlmacen(almacen.idAlmacen)"
             [ngClass]="{'selected': idAlmacen === almacen.idAlmacen}">
-            <i class="card-img-top bi bi-shop-window fs-1"></i>
+            
             <div class="card-body">
                 <h4 class="card-title">{{almacen.nombre}}</h4>
                 <p class="card-text">{{almacen.direccion}}</p>
                 <div class="row gap-2 mx-1">
-                    <button [routerLink]="['/categoria', almacen.idAlmacen]" class="btn btn-secondary col">
+                    <button [routerLink]="['/almacen', almacen.idAlmacen]" class="btn btn-secondary col">
                         <i class="bi bi-info-square"></i>
                         Detalles
                     </button>
-                    <button [routerLink]="['/categoria/edit', almacen.idAlmacen]" class="btn btn-primary col">
+                    <button [routerLink]="['/almacen/edit', almacen.idAlmacen]" class="btn btn-primary col">
                         <i class="bi bi-pencil-square"></i>
                         Editar
                     </button>

@@ -29,16 +29,16 @@ export class AlmacenEditComponent {
   }
 
   ngOnInit(): void {
-    this.almacenId = Number(this.route.snapshot.paramMap.get('idCategoria'));
+    this.almacenId = Number(this.route.snapshot.paramMap.get('idAlmacen'));
     console.log(this.almacenId);
-    this.cargarCategoria();
+    this.cargarAlmacen();
   }
 
-  cargarCategoria(): void {
+  cargarAlmacen(): void {
     this.almacenService.obtenerAlmacen(this.almacenId).subscribe((data: Almacen) => {
       this.almacenForm.patchValue({
         nombre: data.nombre,
-        descripcion: data.direccion,
+        direccion: data.direccion,
       });
     });
   }
@@ -50,19 +50,19 @@ export class AlmacenEditComponent {
     });
   }
 
-  guardarCategoria(): void {
+  guardarAlmacen(): void {
     if (this.almacenForm.valid) {
       const request = this.almacenForm.value;
       const imagen = this.almacenForm.get('imagen')?.value;
 
       this.almacenService.actualizarAlmacen(this.almacenId, request).subscribe({
         next: () => this.router.navigate(['/almacenes']),
-        error: (err) => console.error('Error al actualizar la categoría', err)
+        error: (err) => console.error('Error al actualizar el almacen', err)
       });
     }
   }
 
   cancelarEdicion(): void {
-    this.router.navigate(['/categorias']);
+    this.router.navigate(['/almacenes']);
   }
 }

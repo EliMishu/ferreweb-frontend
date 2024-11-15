@@ -35,7 +35,6 @@
             </div>
         </div>
 
-        <!-- Selección de Almacén -->
         <div class="form-group">
             <label for="almacen">Almacén</label>
             <select formControlName="almacen" class="form-control" id="almacen">
@@ -46,7 +45,6 @@
             </div>
         </div>
 
-        <!-- Selección de Categoría -->
         <div class="form-group">
             <label for="categoria">Categoría</label>
             <select formControlName="categoria" class="form-control" id="categoria">
@@ -57,13 +55,11 @@
             </div>
         </div>
 
-        <!-- Imagen del Producto -->
         <div class="form-group">
             <label for="imagen">Imagen</label>
             <input type="file" (change)="onFileChange($event)" class="form-control" id="imagen">
         </div>
 
-        <!-- Botones -->
         <button type="submit" class="btn btn-primary">Crear Producto</button>
         <button type="button" class="btn btn-secondary" (click)="cancelarCreacion()">Cancelar</button>
     </form>
