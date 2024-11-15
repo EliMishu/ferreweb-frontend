@@ -1,8 +1,17 @@
 <div class="producto-list">
-    <h3>Lista de Productos</h3>
-    <div class="icono-boton">
-        <i class="bi bi-trash3"></i>
-        <a routerLink="/productos/new" class="btn btn-primary">Agregar Producto</a>
+    <div class="subheader">
+        <h3>Lista de productos</h3>
+        <div class="buttons-list">
+            <button [routerLink]="['/productos/new']" class="btn btn-primary">
+                <i class="bi bi-plus-square"></i>
+                Agregar Producto
+            </button>
+            <button class="btn btn-danger" [ngClass]="this.idProducto===-1 ? 'disabled': ''"
+            (click)="eliminarProducto()">
+                <i class="bi bi-trash3"></i>
+                Eliminar Producto
+            </button>
+        </div>
     </div>
     
     <div class="container">
@@ -13,7 +22,16 @@
                 <div class="card-body">
                     <h4 class="card-title">{{producto.nombre}}</h4>
                     <p class="card-text">{{producto.descripcion}}</p>
-                    <a [routerLink]="['/producto', producto.idProducto]" class="btn btn-primary">Ver Detalle</a>
+                    <div class="row gap-2 mx-1">
+                        <button [routerLink]="['/producto', producto.idProducto]" class="btn btn-secondary col">
+                            <i class="bi bi-info-square"></i>
+                            Detalles
+                        </button>
+                        <button [routerLink]="['/producto/edit', producto.idProducto]" class="btn btn-primary col">
+                            <i class="bi bi-pencil-square"></i>
+                            Editar
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

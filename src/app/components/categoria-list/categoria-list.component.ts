@@ -1,8 +1,8 @@
+import { CommonModule } from '@angular/common';
 import { Component, HostListener, OnInit } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { Categoria } from '../../models/categoria.models';
 import { CategoriaService } from '../../services/categoria.service';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-categoria-list',
