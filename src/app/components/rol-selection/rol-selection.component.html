@@ -1,0 +1,17 @@
+<div class="categoria-list">
+    <div class="subheader">
+        <h3>¿Cómo desea ingresar?</h3>
+    </div>
+
+    <div class="container">
+        <div class="d-flex flex-wrap gap-3 justify-content-center align-items-center">
+            <div class="card p-0" *ngFor="let rol of roles">
+            <img class="card-img-top" [src]="rol.rutaImagen" alt="Card image">
+            <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                <h4 class="card-title">{{rol.tipo}}</h4>
+                <button (click)="seleccionarRol(rol.tipo)" class="btn btn-primary">Ingresar</button>
+            </div>
+        </div>
+        </div>
+    </div> 
+</div>

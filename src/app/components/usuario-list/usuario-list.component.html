@@ -1,0 +1,40 @@
+<div class="usuario-list">
+    <div class="subheader">
+        <h3>Lista de Usuarios</h3>
+        <div class="buttons-list">
+            <button [routerLink]="['/usuarios/new']" class="btn btn-primary">
+                <i class="bi bi-plus-square"></i>
+                Agregar Usuario
+            </button>
+            <button class="btn btn-danger" [ngClass]="this.idUsuario===-1 ? 'disabled': ''"
+            (click)="eliminarUsuario()">
+                <i class="bi bi-trash3"></i>
+                Eliminar Usuario
+            </button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row gap-3 row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+            <div class="card p-0" *ngFor="let usuario of usuarios" (click)="seleccionarUsuario(usuario.id)"
+                [ngClass]="{'selected': idUsuario === usuario.id}" [ngClass]="{'disabled': usuario.fechaEliminacion || usuario.fechaEliminacion !== ''}">
+                <img class="card-img-top" [src]="usuario.rutaImagen? usuario.rutaImagen : '/assets/images/usuarios/default.webp'" alt="Card image">
+                <div class="card-body">
+                    <h4 class="card-title">{{usuario.nombre + " " + usuario.apellidoPat + " " + usuario.apellidoMat}}</h4>
+                    <h6 class="card-subtitle text-muted">{{usuario.username}}</h6>
+                    <p class="card-text">{{usuario.dni}}</p>
+                    <div class="row gap-2 mx-1">
+                        <button [routerLink]="['/usuario', usuario.id]" class="btn btn-secondary col">
+                            <i class="bi bi-info-square"></i>
+                            Detalles
+                        </button>
+                        <button [routerLink]="['/usuario/edit', usuario.id]" class="btn btn-primary col">
+                            <i class="bi bi-pencil-square"></i>
+                         Editar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+</div>

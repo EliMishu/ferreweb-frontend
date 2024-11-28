@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment.prod';
-import { ProductoDTO } from '../models/producto-dto.model';
+import { ProductoRequest } from '../models/producto-req.model';
 import { Producto } from '../models/producto.model';
 
 @Injectable({
@@ -21,7 +21,7 @@ export class ProductoService {
     return this.http.get<Producto>(`${this.apiUrl}/${id}`);
   }
 
-  crearProducto(request: ProductoDTO, imagen: File): Observable<Producto> {
+  crearProducto(request: ProductoRequest, imagen: File): Observable<Producto> {
     const formData: FormData = new FormData();
     formData.append('request', new Blob([JSON.stringify(request)], { type: 'application/json'}));
     if (imagen) {
@@ -31,7 +31,7 @@ export class ProductoService {
     return this.http.post<Producto>(this.apiUrl, formData);
   }
 
-  actualizarProducto(id: number, request: ProductoDTO, imagen: File): Observable<Producto> {
+  actualizarProducto(id: number, request: ProductoRequest, imagen: File): Observable<Producto> {
     const formData: FormData = new FormData();
     formData.append('request', new Blob([JSON.stringify(request)], { type: 'application/json'}));
     if (imagen) {

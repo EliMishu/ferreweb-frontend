@@ -1,26 +1,27 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, Observable, tap, throwError } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment.prod';
 import { jwtDecode } from 'jwt-decode';
-import { UsuarioDTO } from '../models/usuario-dto.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private LOGIN_URL = environment.apiUrl + "/auth/login";
-  private REGISTER_URL = environment.apiUrl + "/auth/register";
-  private tokenKey = 'authToken';
+  private apiUrl = environment.apiUrl + "/auth";
+  private readonly tokenKey = "authToken";
   
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient,
+      private router: Router) { }
 
   login(user: string, contrasena: string): Observable<any> {
-    return this.http.post<any>(this.LOGIN_URL, {user, contrasena}).pipe(
+    return this.http.post<any>(`${this.apiUrl}/login`, {user, contrasena}).pipe(
       tap (response => {
         if (response.token) {
-          this.setToken(response.token);
+          console.log(response);
+          this.establecerToken(response.token);
+          this.redirect(response);
         }
       })
     )
@@ -28,23 +29,33 @@ export class AuthService {
 
   register(user:string, contrasena: string, dni: string, nombre: string,
     apellidoPaterno: string, apellidoMaterno: string) : Observable<any> {
-      return this.http.post<any>(this.REGISTER_URL, 
+      return this.http.post<any>(`${this.apiUrl}/register`, 
         {user, contrasena, dni, nombre, apellidoPaterno, apellidoMaterno}).pipe(
           tap (response => {
             if (response.token) {
-              this.setToken(response.token);
+              this.establecerToken(response.token);
+              this.redirect(response);
             }
-            catchError ((err) => throwError(() => new Error(err)))
           })
         )
   }
+
+  private redirect(response: any) {
+    if (response.usuario.roles.length > 1) {
+      this.router.navigate(['/rol/selection'])
+      .then(() => window.location.reload());
+    } else {
+      this.router.navigate(['/'])
+      .then(() => window.location.reload());
+    }
+  }
   
-  private setToken(token: string): void {
+  private establecerToken(token: string): void {
     if (typeof window !== 'undefined')
     sessionStorage.setItem(this.tokenKey, token);
   }
 
-  getToken(): string | null {
+  obtenerToken(): string | null {
     if (typeof window !== 'undefined') {
       return sessionStorage.getItem(this.tokenKey);
     } else {
@@ -53,7 +64,7 @@ export class AuthService {
   } 
 
   isAuthenticated(): boolean {
-    const token = this.getToken();
+    const token = this.obtenerToken();
 
     if (!token) {
       return false;
@@ -61,13 +72,17 @@ export class AuthService {
 
     const decode = jwtDecode(token);
 
-    const payload = JSON.parse(atob(token.split(".")[1]));
-    const expiracion = payload.exp * 1000;
-    return Date.now() < expiracion;
+    return decode.exp != null && Date.now() < decode.exp * 1000;
+  }
+
+  limpiarToken(): void {
+    if (typeof window !== 'undefined')
+    sessionStorage.removeItem(this.tokenKey);
   }
 
   logout(): void {
-    sessionStorage.removeItem(this.tokenKey);
-    this.router.navigate(['/']);
+    this.limpiarToken();
+    this.router.navigate(['/'])
+    .then(() => window.location.reload());
   }
 }

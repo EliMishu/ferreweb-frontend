@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment.prod';
 import { Almacen } from '../models/almacen.model';
-import { AlmacenDTO } from '../models/almacen-dto.model';
+import { AlmacenRequest } from '../models/almacen-req.model';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -21,11 +21,11 @@ export class AlmacenService {
     return this.http.get<Almacen>(`${this.apiUrl}/${id}`);
   }
 
-  crearAlmacen(request: AlmacenDTO): Observable<Almacen> {
+  crearAlmacen(request: AlmacenRequest): Observable<Almacen> {
     return this.http.post<Almacen>(this.apiUrl, request);
   }
 
-  actualizarAlmacen(id: number, request: AlmacenDTO): Observable<Almacen> {
+  actualizarAlmacen(id: number, request: AlmacenRequest): Observable<Almacen> {
     return this.http.put<Almacen>(`${this.apiUrl}/${id}`, request);
   }
 

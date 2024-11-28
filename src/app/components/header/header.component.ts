@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../auth/auth.service';
+import { RolService } from '../../services/rol.service';
 
 @Component({
   selector: 'app-header',
@@ -10,31 +11,38 @@ import { AuthService } from '../../auth/auth.service';
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-export class HeaderComponent implements OnInit, OnChanges {
-  isAuth: boolean = false;
-  rol: string = "ADMIN";
+export class HeaderComponent implements OnInit {
+  rol: string | null = null;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private rolService: RolService) {}
 
   ngOnInit(): void {
-    this.isAuth = this.authService.isAuthenticated();
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    
-    throw new Error('Method not implemented.');
+    this.rol = this.rolService.obtenerRolSeleccionado();
   }
 
   isAuthenticated(): boolean {
     return this.authService.isAuthenticated();
   }
 
-  getRol(): string {
-    return "ADMIN";
+  getSelectedRol(): string {
+    if (this.rol) {
+      return this.rol;
+    } else {
+      return "";
+    }
   }
 
   logout(): void {
     this.authService.logout();
-    this.isAuth = false;
+    this.rolService.limpiarRolSeleccionado();
+    window.location.reload();
+  }
+
+  obtenerInicio(): string {
+    if (this.rol) {
+      if (this.rol === "ADMIN") return "admin";
+    } 
+
+    return "/";
   }
 }

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { CategoriaDTO } from '../../models/categoria-dto.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CategoriaService } from '../../services/categoria.service';
 import { Categoria } from '../../models/categoria.models';
@@ -32,7 +31,6 @@ export class CategoriaEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.categoriaId = Number(this.route.snapshot.paramMap.get('idCategoria'));
-    console.log(this.categoriaId);
     this.cargarCategoria();
   }
 

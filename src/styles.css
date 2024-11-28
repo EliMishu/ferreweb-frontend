@@ -1,99 +1,160 @@
 /* You can add global styles to this file, and also import other style files */
-@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&family=Secular+One&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&family=Secular+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
 
 :root {
-    --white: #FFF;
-    --black: #000;
-    --primary-color: #ee6b00;
-    --secondary-color: #023047;
-    --hover-primary: #FB8500;
-    --hover-secondary: #005082;
-    --darken-primary: #e05a00;
-    --darken-secondary: #012638;
-    --bg-color: #CAE9FF;
-    --primary-font: "Secular One", Arial, sans-serif;
-    --secondary-font: "Rubik", Tahoma, sans-serif;
+  --white: #fff;
+  --black: #000;
+  --primary-color: #ee6b00;
+  --secondary-color: #023047;
+  --hover-primary: #fb8500;
+  --hover-secondary: #005082;
+  --darken-primary: #e05a00;
+  --darken-secondary: #012638;
+  --primary-disable: #e9b489;
+  --secondary-disable: #4c6c7c;
+  --bg-color: #cae9ff;
+  --primary-font: "Secular One", Arial, sans-serif;
+  --secondary-font: "Rubik", Tahoma, sans-serif;
 }
 
 header {
-    background-color: var(--secondary-color);
-    color: var(--white);
+  background-color: var(--secondary-color);
+  color: var(--white);
 }
 
-html, body {
-    background-color: var(--bg-color);
-    font-family: var(--secondary-font);
-    height: 100vh;
-    margin: 0;
+html,
+body {
+  background-color: var(--bg-color);
+  font-family: var(--secondary-font);
+  height: 100vh;
+  margin: 0;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    font-family: var(--primary-font);
-    font-weight: bolder;
-    color: var(--secondary-color);
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--primary-font);
+  font-weight: bolder;
+  color: var(--secondary-color);
 }
 
 a {
-    color: var(--secondary-color);
+  color: var(--secondary-color);
 
-    &:hover {
-        color: var(--hover-secondary);
-    }
+  &:hover {
+    color: var(--hover-secondary);
+  }
+}
+
+.subheader-table {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3rem 1rem;
+  margin-bottom: 0.5rem;
+
+  h3 {
+    margin: auto 0;
+  }
 }
 
 .subheader {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem;
+  margin-bottom: 0.5rem;
+
+  .buttons-list {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 3rem;
-    margin-bottom: 0.5rem;
-
-    .buttons-list {
-        display: flex;
-        gap: 1rem;
-    }
+    gap: 1rem;
+  }
 }
 
-.btn-primary {
-    background-color: var(--primary-color);
-    border: none !important;
-    
-    &:hover {
-        background-color: var(--hover-primary);
-        border: none !important;
-    }
+.btn.btn-primary {
+  background-color: var(--primary-color);
+  border: none !important;
 
-    &:active, &:focus::after, &:focus-visible {
-        background-color: var(--darken-primary) !important;
-        border: none !important;
-    }
+  .disabled {
+    background-color: var(--primary-disable) !important;
+  }
+
+  &:hover {
+    background-color: var(--hover-primary);
+    border: none !important;
+  }
+
+  &:active,
+  &:focus::after,
+  &:focus-visible {
+    background-color: var(--darken-primary) !important;
+    border: none !important;
+  }
 }
 
-.btn-secondary {
-    background-color: var(--secondary-color);
-    border: none !important;
-    
-    &:hover {
-        background-color: var(--hover-secondary);
-        border: none !important;
-    }
+.btn.btn-secondary {
+  background-color: var(--secondary-color);
+  border: none !important;
 
-    &:active, &:focus::after, &:focus-visible {
-        background-color: var(--darken-secondary) !important;
-        border: none !important;
-    }
+  .disabled {
+    background-color: var(--secondary-disable) !important;
+  }
+
+  &:hover {
+    background-color: var(--hover-secondary);
+    border: none !important;
+  }
+
+  &:active,
+  &:focus::after,
+  &:focus-visible {
+    background-color: var(--darken-secondary) !important;
+    border: none !important;
+  }
 }
 
 small {
-    color: #dc3545;
+  color: #dc3545;
 }
 
-.card{
-    max-width: 300px;
-    max-height: 450px;
-    &.selected{
-      background-color: #a1dbff;
-    }
+.card {
+  max-width: 300px;
+  max-height: 500px;
+
+  .card-img-top {
+    margin: 10px auto;
+    max-width: 90%;
+    max-height: 250px;
+    object-fit: contain;
   }
+
+  &.selected {
+    background-color: #a1dbff;
+  }
+
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.6;
+  }
+}
+
+.table-img {
+  max-width: 40px;
+  max-height: 36px;
+}
+
+.table-actions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+}

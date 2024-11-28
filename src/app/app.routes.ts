@@ -21,32 +21,41 @@ import { RolEditComponent } from './components/rol-edit/rol-edit.component';
 import { ModuloGestionComponent } from './components/modulo-gestion/modulo-gestion.component';
 import { RolCreateComponent } from './components/rol-create/rol-create.component';
 import { RolDetailComponent } from './components/rol-detail/rol-detail.component';
+import { RolSelectionComponent } from './components/rol-selection/rol-selection.component';
+import { AdminHomeComponent } from './components/admin-home/admin-home.component';
+import { HomeComponent } from './components/home/home.component';
+import { UsuarioListComponent } from './components/usuario-list/usuario-list.component';
+import { adminGuard } from './guards/admin.guard';
 
 export const routes: Routes = [
     // Login routes
     {path: 'login', loadComponent: () => LoginComponent, canActivate:[authenticatedGuard]},
     {path: 'register', loadComponent: () => RegisterComponent, canActivate:[authenticatedGuard]},
+    {path: 'rol/selection', loadComponent: () => RolSelectionComponent, canActivate:[authGuard]},
+    {path: '', loadComponent: () => HomeComponent, canActivate:[]},
+    {path: 'admin', loadComponent: () => AdminHomeComponent, canActivate:[authGuard]},
 
     // Module Gestion routes
-    {path: 'modGestion', loadComponent: () => ModuloGestionComponent, canActivate:[authGuard]},
-    {path: 'roles', loadComponent: () => RolListComponent, canActivate:[authGuard]},
-    {path: 'rol/:idRol', loadComponent: () => RolDetailComponent, canActivate:[authGuard]},
-    {path: 'rol/edit/:idRol', loadComponent: () => RolEditComponent, canActivate:[authGuard]},
-    {path: 'roles/new', loadComponent: () => RolCreateComponent, canActivate:[authGuard]},
+    {path: 'modGestion', loadComponent: () => ModuloGestionComponent, canActivate:[adminGuard]},
+    {path: 'roles', loadComponent: () => RolListComponent, canActivate:[adminGuard]},
+    {path: 'rol/:idRol', loadComponent: () => RolDetailComponent, canActivate:[adminGuard]},
+    {path: 'rol/edit/:idRol', loadComponent: () => RolEditComponent, canActivate:[adminGuard]},
+    {path: 'roles/new', loadComponent: () => RolCreateComponent, canActivate:[adminGuard]},
+    {path: 'usuarios', loadComponent: () => UsuarioListComponent, canActivate:[adminGuard]},
     
 
     // Module Productos routes
-    {path: 'modProductos', loadComponent: () => ModuloProductosComponent, canActivate:[authGuard]},
-    {path: 'categorias', loadComponent: () => CategoriaListComponent, canActivate:[authGuard]},
-    {path: 'categoria/:idCategoria', loadComponent: () => CategoriaDetailComponent, canActivate:[authGuard]},
-    {path: 'categoria/edit/:idCategoria', loadComponent: () => CategoriaEditComponent, canActivate:[authGuard]},
-    {path: 'categorias/new', loadComponent: () => CategoriaCreateComponent, canActivate:[authGuard]},
-    {path: 'almacenes', loadComponent: () => AlmacenListComponent, canActivate:[authGuard]},
-    {path: 'almacen/:idAlmacen', loadComponent: () => AlmacenDetailComponent, canActivate:[authGuard]},
-    {path: 'almacen/edit/:idAlmacen', loadComponent: () => AlmacenEditComponent, canActivate:[authGuard]},
-    {path: 'almacenes/new', loadComponent: () => AlmacenCreateComponent, canActivate:[authGuard]},
-    {path: 'productos', loadComponent: () => ProductoListComponent, canActivate:[authGuard]},
-    {path: 'producto/:idProducto', loadComponent: () => ProductoDetailComponent, canActivate:[authGuard]},
-    {path: 'producto/edit/:idProducto', loadComponent: () => ProductoEditComponent, canActivate:[authGuard]},
-    {path: 'productos/new', loadComponent: () => ProductoCreateComponent, canActivate:[authGuard]}
+    {path: 'modProductos', loadComponent: () => ModuloProductosComponent, canActivate:[adminGuard]},
+    {path: 'categorias', loadComponent: () => CategoriaListComponent, canActivate:[adminGuard]},
+    {path: 'categoria/:idCategoria', loadComponent: () => CategoriaDetailComponent, canActivate:[adminGuard]},
+    {path: 'categoria/edit/:idCategoria', loadComponent: () => CategoriaEditComponent, canActivate:[adminGuard]},
+    {path: 'categorias/new', loadComponent: () => CategoriaCreateComponent, canActivate:[adminGuard]},
+    {path: 'almacenes', loadComponent: () => AlmacenListComponent, canActivate:[adminGuard]},
+    {path: 'almacen/:idAlmacen', loadComponent: () => AlmacenDetailComponent, canActivate:[adminGuard]},
+    {path: 'almacen/edit/:idAlmacen', loadComponent: () => AlmacenEditComponent, canActivate:[adminGuard]},
+    {path: 'almacenes/new', loadComponent: () => AlmacenCreateComponent, canActivate:[adminGuard]},
+    {path: 'productos', loadComponent: () => ProductoListComponent, canActivate:[adminGuard]},
+    {path: 'producto/:idProducto', loadComponent: () => ProductoDetailComponent, canActivate:[adminGuard]},
+    {path: 'producto/edit/:idProducto', loadComponent: () => ProductoEditComponent, canActivate:[adminGuard]},
+    {path: 'productos/new', loadComponent: () => ProductoCreateComponent, canActivate:[adminGuard]}
 ];

@@ -39,11 +39,10 @@ export class RegisterComponent implements OnInit {
       this.authService.register(
         user, contrasena, dni, nombre, apellidoPaterno, apellidoMaterno
       ).subscribe({
-        next: () => this.router.navigate(['/modProductos']),
-        error: (err) => this.alertService.show(err.error.details)
+        error: (err) => this.alertService.show(err.error.message)
       });
     } else {
-      this.alertService.show("Formulario inválido");
+      this.alertService.show("Complete todos los campos");
     }
   }
 }

@@ -16,6 +16,7 @@ import { CommonModule } from '@angular/common';
 export class RolEditComponent {
   rolForm: FormGroup;
   rolId!: number;
+  isSubmiting: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -52,12 +53,24 @@ export class RolEditComponent {
 
   guardarRol(): void {
     if (this.rolForm.valid) {
+      this.isSubmiting = true;
+      this.rolForm.disable();
+
       const request = this.rolForm.value;
       const imagen = this.rolForm.get('imagen')?.value;
 
       this.rolService.actualizarRol(this.rolId, request, imagen).subscribe({
         next: () => this.router.navigate(['/roles']),
-        error: (err) => this.alertService.show("Error al actualizar el rol.")
+        error: (err) => {
+          this.alertService.show("Error al actualizar el rol.");
+          this.isSubmiting = false;
+          this.rolForm.enable();
+          console.log(err);
+        },
+        complete: () => {
+          this.isSubmiting = false;
+          this.rolForm.enable();
+        }
       });
     }
   }

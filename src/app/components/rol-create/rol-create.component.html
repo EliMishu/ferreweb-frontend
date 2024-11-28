@@ -1,1 +1,23 @@
-<p>rol-create works!</p>
+<div class="container">
+    <h2>Crear Nuevo Rol</h2>
+    <form [formGroup]="rolForm" (ngSubmit)="crearRol()">
+        <div class="form-group">
+            <label for="tipo">Nombre</label>
+            <input formControlName="tipo" type="text" class="form-control" id="tipo" placeholder="Nombre">
+            <div
+                *ngIf="rolForm.get('tipo')?.invalid && (rolForm.get('tipo')?.touched || rolForm.get('tipo')?.dirty)">
+                <small *ngIf="rolForm.get('tipo')?.errors?.['required']">El campo Tipo es obligatorio.</small>
+                <small *ngIf="rolForm.get('tipo')?.errors?.['minlength']">El Tipo debe tener al menos 2
+                    caracteres.</small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="imagen">Imagen</label>
+            <input type="file" (change)="onFileChange($event)" class="form-control" id="imagen">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Crear Rol</button>
+        <button type="button" class="btn btn-secondary" (click)="cancelarCreacion()">Cancelar</button>
+    </form>
+</div>

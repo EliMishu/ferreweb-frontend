@@ -7,52 +7,58 @@
                 <i class="bi bi-list fs-2"></i>
             </button>
             <div class="d-none d-md-block logo-container navbar-brand">
-                <img class="logo" src="/assets/images/logo_lg.png" alt="">
+                <a [routerLink]="[obtenerInicio()]"><img class="logo" src="/assets/images/logo_lg.png" alt=""></a>
             </div>
         </div>
         <nav id="collapsibleNavbar" class="col-5 justify-content-center collapse navbar-collapse">
             <!-- Admin Section -->
-            <ul class="navbar-nav gap-3" *ngIf="getRol()=='ADMIN'">
-                <li class="nav-item">
-                    <a class="nav-link d-flex flex-md-column gap-md-0 gap-1 align-items-center" [routerLink]="['modGestion']">
-                        <i class="bi bi-people fs-3"></i>
-                        GESTIÓN
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link d-flex flex-md-column gap-md-0 gap-1 align-items-center" [routerLink]="['modProductos']">
-                        <i class="bi bi-box-seam fs-3"></i>
-                        PRODUCTOS
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link d-flex flex-md-column gap-md-0 gap-1 align-items-center" href="">
-                        <i class="bi bi-shop fs-3"></i>
-                        COMPRAS
-                    </a>
-                </li>
-            </ul>
+            <ng-template [ngIf]="getSelectedRol()==='ADMIN'" [ngIfElse]="defaultSection">
+                <ul class="navbar-nav gap-3">
+                    <li class="nav-item">
+                        <a class="nav-link d-flex flex-md-column gap-md-0 gap-1 align-items-center" [routerLink]="['modGestion']">
+                            <i class="bi bi-people fs-3"></i>
+                            GESTIÓN
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link d-flex flex-md-column gap-md-0 gap-1 align-items-center" [routerLink]="['modProductos']">
+                            <i class="bi bi-box-seam fs-3"></i>
+                            PRODUCTOS
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link d-flex flex-md-column gap-md-0 gap-1 align-items-center" href="">
+                            <i class="bi bi-shop fs-3"></i>
+                            COMPRAS
+                        </a>
+                    </li>
+                </ul>
+            </ng-template>
+            
             <!-- Default Section -->
-            <ul class="navbar-nav gap-3" *ngIf="getRol()=='USER'">
-                <li class="nav-item">
-                    <a class="nav-link d-flex flex-md-column gap-md-0 gap-1 align-items-center" href="">
-                        <i class="bi bi-house-door fs-3"></i>
-                        INICIO
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link d-flex flex-md-column gap-md-0 gap-1 align-items-center" href="">
-                        <i class="bi bi-bag-heart fs-3"></i>
-                        CATALOGO
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link d-flex flex-md-column gap-md-0 gap-1 align-items-center" href="">
-                        <i class="bi bi-cart3 fs-3"></i>
-                        CARRITO
-                    </a>
-                </li>
-            </ul>
+            <ng-template #defaultSection>
+                <ul class="navbar-nav gap-3">
+                    <li class="nav-item">
+                        <a class="nav-link d-flex flex-md-column gap-md-0 gap-1 align-items-center" href="">
+                            <i class="bi bi-house-door fs-3"></i>
+                            INICIO
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link d-flex flex-md-column gap-md-0 gap-1 align-items-center" href="">
+                            <i class="bi bi-bag-heart fs-3"></i>
+                            CATALOGO
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link d-flex flex-md-column gap-md-0 gap-1 align-items-center" href="">
+                            <i class="bi bi-cart3 fs-3"></i>
+                            CARRITO
+                        </a>
+                    </li>
+                </ul>
+            </ng-template>
+            
         </nav>
         <div class="col account-header d-flex flex-row justify-content-end align-items-center gap-3">
             <div class="dropdown">
@@ -60,15 +66,22 @@
                     data-bs-toggle="dropdown" aria-expanded="false">
                     Mi cuenta <i class="bi bi-caret-down-square"></i>
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" *ngIf="isAuthenticated()">
-                    <li><button class="dropdown-item" >Perfil</button></li>
-                    <li><button class="dropdown-item" >Configuración</button></li>
-                    <li><button class="dropdown-item" (click)="logout()">Cerrar sesión</button></li>
-                </ul>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" *ngIf="!isAuthenticated()">
-                    <li><button class="dropdown-item" [routerLink]="['login']">Iniciar Sesión</button></li>
-                    <li><button class="dropdown-item" [routerLink]="['register']">Registrarse</button></li>
-                </ul>
+                <!-- Dropdown Autenticado -->
+                <ng-template [ngIf]="isAuthenticated()" [ngIfElse]="defaultDropdown">
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <li><button class="dropdown-item" >Perfil</button></li>
+                        <li><button class="dropdown-item" >Configuración</button></li>
+                        <li><button class="dropdown-item" (click)="logout()">Cerrar sesión</button></li>
+                    </ul>
+                </ng-template>
+
+                <!-- Dropdown por defecto -->
+                <ng-template #defaultDropdown>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <li><button class="dropdown-item" [routerLink]="['login']">Iniciar Sesión</button></li>
+                        <li><button class="dropdown-item" [routerLink]="['register']">Registrarse</button></li>
+                    </ul>
+                </ng-template>
                 </div>
         </div>
     </div>

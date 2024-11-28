@@ -11,6 +11,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: auto;
 
     a {
         color: var(--secondary-color);
@@ -29,6 +30,7 @@
     .card {
         width: 100%;
         max-width: 800px;
+        max-height: none;
         padding: 2rem;
         margin: 2rem;
         border-radius: 10px;
@@ -43,21 +45,6 @@
 
             .form-control {
                 border-radius: 5px;
-            }
-
-            .text-right {
-                text-align: right;
-            }
-            
-            .btn-primary {
-                width: 100%;
-                background-color: var(--secondary-color);
-                border: none;
-                font-family: var(--primary-font);
-            }
-    
-            .btn-primary:hover {
-                background-color: var(--hover-secondary);
             }
         }
     }
