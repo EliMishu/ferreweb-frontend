@@ -30,10 +30,10 @@ export class LoginComponent {
       const { user, contrasena } = this.loginForm.value;
 
       this.authService.login(user, contrasena).subscribe({
-        error: (err) => this.alertService.show(err.error.message)
+        error: (err) => this.alertService.showError(err.error.message)
       });
     } else {
-      this.alertService.show("Complete todos los campos")
+      this.alertService.showError("Complete todos los campos")
     }
   }
 }

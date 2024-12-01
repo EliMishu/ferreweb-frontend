@@ -39,10 +39,10 @@ export class RegisterComponent implements OnInit {
       this.authService.register(
         user, contrasena, dni, nombre, apellidoPaterno, apellidoMaterno
       ).subscribe({
-        error: (err) => this.alertService.show(err.error.message)
+        error: (err) => this.alertService.showError(err.error.message)
       });
     } else {
-      this.alertService.show("Complete todos los campos");
+      this.alertService.showError("Complete todos los campos");
     }
   }
 }

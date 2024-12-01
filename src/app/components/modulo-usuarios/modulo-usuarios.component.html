@@ -1,0 +1,79 @@
+<div class="gestion-list">
+  <div class="subheader">
+    <h3>MODULO DE USUARIOS</h3>
+  </div>
+
+  <div class="container">
+    <div
+      class="d-flex flex-row flex-wrap justify-content-center align-items-center gap-2 p-3"
+    >
+      <div class="card roles-card">
+        <div class="card-body">
+          <div class="d-flex flex-row justify-content-between">
+            <div>
+              <h5 class="card-title">
+                {{ rolesInfo }}
+              </h5>
+              <h6 class="card-subtitle mb-2">Roles</h6>
+            </div>
+            <i class="icon-info bi bi-file-earmark-person-fill"></i>
+          </div>
+        </div>
+        <a [routerLink]="['/roles']" class="card-link mb-0 mx-0">
+          Más info &rarr;
+        </a>
+      </div>
+
+      <div class="card employees-card">
+        <div class="card-body">
+          <div class="d-flex flex-row justify-content-between">
+            <div>
+              <h5 class="card-title">
+                {{ empleadosInfo }}
+              </h5>
+              <h6 class="card-subtitle mb-2">Empleados</h6>
+            </div>
+            <i class="icon-info bi bi-person-fill-gear"></i>
+          </div>
+        </div>
+        <a [routerLink]="['/usuarios']" class="card-link mb-0 mx-0">
+          Más info &rarr;
+        </a>
+      </div>
+
+      <div class="card activos-card">
+        <div class="card-body">
+          <div class="d-flex flex-row justify-content-between">
+            <div>
+              <h5 class="card-title">
+                {{ usuariosActivosInfo }}
+              </h5>
+              <h6 class="card-subtitle mb-2">Usuarios Activos</h6>
+            </div>
+            <i class="icon-info bi bi-people-fill"></i>
+          </div>
+        </div>
+        <a [routerLink]="['/usuarios']" class="card-link mb-0 mx-0">
+          Más info &rarr;
+        </a>
+      </div>
+
+      <div class="card inactivos-card">
+        <div class="card-body">
+          <div class="d-flex flex-row justify-content-between">
+            <div>
+              <h5 class="card-title">
+                {{ usuariosInactivosInfo }}
+              </h5>
+              <h6 class="card-subtitle mb-2">Usuarios Inactivos</h6>
+            </div>
+            <i class="icon-info bi bi-person-fill-x"></i>
+          </div>
+        </div>
+        <a [routerLink]="['/usuarios']" class="card-link mb-0 mx-0">
+          Más info &rarr;
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

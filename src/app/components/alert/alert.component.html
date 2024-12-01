@@ -1,4 +1,14 @@
-<div *ngIf="message" [ngClass]="{'fade-out': fading}" class="alert alert-warning">
-    {{ message }}
-</div>
+<div *ngFor="let toast of toasts" class="toast-container position-static end-0 p-3">
+    <div class="toast show">
+        <div class="toast-header">
+            <div class="rounded" [ngClass]="getClassForToast(toast.type)" style="width: 10px; height: 10px;"></div>
+            &nbsp;
+            <strong class="me-auto">{{ toast.title }}</strong>
+            <button type="button" class="btn-close" (click)="removeToast(toast)"></button>
+          </div>
+          <div class="toast-body">
+            {{ toast.message }}
+          </div>
+    </div>
+  </div>
   

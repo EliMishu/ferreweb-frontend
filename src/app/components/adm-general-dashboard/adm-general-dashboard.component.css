@@ -1,0 +1,153 @@
+:host {
+  --employees-color-primary: #ffd723;
+  --employees-color-secondary: #e0a708;
+  --employees-color-hover: #d49c02;
+  --products-color-primary: #57caff;
+  --products-color-secondary: #239fd8;
+  --products-color-hover: #048ac9;
+  --ventas-color-primary: #f79d16;
+  --ventas-color-secondary: #e77103;
+  --ventas-color-hover: #cf6604;
+  --total-ventas-color-primary: #ff2222;
+  --total-ventas-color-secondary: #e70303;
+  --total-ventas-color-hover: #cf0404;
+  
+  display: flex;
+  flex-direction: column;
+}
+
+.card {
+    min-width: 250px;
+}
+
+.icon-info {
+  font-size: 4rem;
+}
+
+.employees-card {
+  background-color: var(--employees-color-primary);
+
+  .card-title {
+    font-size: 2rem;
+    color: var(--black);
+  }
+
+  .card-subtitle {
+    color: var(--black);
+  }
+
+  .icon-info {
+    color: var(--employees-color-secondary);
+  }
+
+  .card-link {
+    text-decoration: none;
+    color: var(--black);
+    background-color: var(--employees-color-secondary);
+    padding: 0.5rem;
+    text-align: center;
+    border-radius: 0 0 0.25rem 0.25rem;
+    width: 100%;
+
+    &:hover {
+        background-color: var(--employees-color-hover);
+        transition: all 0.4s ease;
+    }
+  }
+}
+
+.products-card {
+  background-color: var(--products-color-primary);
+
+  .card-title {
+    font-size: 2rem;
+    color: var(--black);
+  }
+
+  .card-subtitle {
+    color: var(--black);
+  }
+
+  .icon-info {
+    color: var(--products-color-secondary);
+  }
+
+  .card-link {
+    text-decoration: none;
+    color: var(--black);
+    background-color: var(--products-color-secondary);
+    padding: 0.5rem;
+    text-align: center;
+    border-radius: 0 0 0.25rem 0.25rem;
+    width: 100%;
+
+    &:hover {
+        background-color: var(--products-color-hover);
+        transition: all 0.4s ease;
+    }
+  }
+}
+
+.ventas-card {
+  background-color: var(--ventas-color-primary);
+
+  .card-title {
+    font-size: 2rem;
+    color: var(--black);
+  }
+
+  .card-subtitle {
+    color: var(--black);
+  }
+
+  .icon-info {
+    color: var(--ventas-color-secondary);
+  }
+
+  .card-link {
+    text-decoration: none;
+    color: var(--black);
+    background-color: var(--ventas-color-secondary);
+    padding: 0.5rem;
+    text-align: center;
+    border-radius: 0 0 0.25rem 0.25rem;
+    width: 100%;
+
+    &:hover {
+        background-color: var(--ventas-color-hover);
+        transition: all 0.4s ease;
+    }
+  }
+}
+
+.total-ventas-card {
+  background-color: var(--total-ventas-color-primary);
+
+  .card-title {
+    font-size: 2rem;
+    color: var(--black);
+  }
+
+  .card-subtitle {
+    color: var(--black);
+  }
+
+  .icon-info {
+    color: var(--total-ventas-color-secondary);
+  }
+
+  .card-link {
+    text-decoration: none;
+    color: var(--black);
+    background-color: var(--total-ventas-color-secondary);
+    padding: 0.5rem;
+    text-align: center;
+    border-radius: 0 0 0.25rem 0.25rem;
+    width: 100%;
+
+    &:hover {
+        background-color: var(--total-ventas-color-hover);
+        transition: all 0.4s ease;
+    }
+  }
+}

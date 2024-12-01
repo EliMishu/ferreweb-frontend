@@ -62,10 +62,9 @@ export class RolEditComponent {
       this.rolService.actualizarRol(this.rolId, request, imagen).subscribe({
         next: () => this.router.navigate(['/roles']),
         error: (err) => {
-          this.alertService.show("Error al actualizar el rol.");
+          this.alertService.showErrorWithTitle(err.statusText, err.error.message);
           this.isSubmiting = false;
           this.rolForm.enable();
-          console.log(err);
         },
         complete: () => {
           this.isSubmiting = false;

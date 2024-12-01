@@ -18,7 +18,7 @@ import { authenticatedGuard } from './guards/authenticated.guard';
 import { authGuard } from './guards/auth.guard';
 import { RolListComponent } from './components/rol-list/rol-list.component';
 import { RolEditComponent } from './components/rol-edit/rol-edit.component';
-import { ModuloGestionComponent } from './components/modulo-gestion/modulo-gestion.component';
+import { ModuloGestionComponent } from './components/modulo-usuarios/modulo-usuarios.component';
 import { RolCreateComponent } from './components/rol-create/rol-create.component';
 import { RolDetailComponent } from './components/rol-detail/rol-detail.component';
 import { RolSelectionComponent } from './components/rol-selection/rol-selection.component';
@@ -26,6 +26,8 @@ import { AdminHomeComponent } from './components/admin-home/admin-home.component
 import { HomeComponent } from './components/home/home.component';
 import { UsuarioListComponent } from './components/usuario-list/usuario-list.component';
 import { adminGuard } from './guards/admin.guard';
+import { routeCaseInsensitiveGuard } from './guards/route-case-insensitive.guard';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 export const routes: Routes = [
     // Login routes
@@ -36,8 +38,8 @@ export const routes: Routes = [
     {path: 'admin', loadComponent: () => AdminHomeComponent, canActivate:[authGuard]},
 
     // Module Gestion routes
-    {path: 'modGestion', loadComponent: () => ModuloGestionComponent, canActivate:[adminGuard]},
-    {path: 'roles', loadComponent: () => RolListComponent, canActivate:[adminGuard]},
+    {path: 'modulo/gestion', loadComponent: () => ModuloGestionComponent, canActivate:[adminGuard]},
+    {path: 'roles', loadComponent: () => RolListComponent, canActivate:[adminGuard, routeCaseInsensitiveGuard]},
     {path: 'rol/:idRol', loadComponent: () => RolDetailComponent, canActivate:[adminGuard]},
     {path: 'rol/edit/:idRol', loadComponent: () => RolEditComponent, canActivate:[adminGuard]},
     {path: 'roles/new', loadComponent: () => RolCreateComponent, canActivate:[adminGuard]},
@@ -45,7 +47,7 @@ export const routes: Routes = [
     
 
     // Module Productos routes
-    {path: 'modProductos', loadComponent: () => ModuloProductosComponent, canActivate:[adminGuard]},
+    {path: 'modulo/productos', loadComponent: () => ModuloProductosComponent, canActivate:[adminGuard]},
     {path: 'categorias', loadComponent: () => CategoriaListComponent, canActivate:[adminGuard]},
     {path: 'categoria/:idCategoria', loadComponent: () => CategoriaDetailComponent, canActivate:[adminGuard]},
     {path: 'categoria/edit/:idCategoria', loadComponent: () => CategoriaEditComponent, canActivate:[adminGuard]},
@@ -57,5 +59,8 @@ export const routes: Routes = [
     {path: 'productos', loadComponent: () => ProductoListComponent, canActivate:[adminGuard]},
     {path: 'producto/:idProducto', loadComponent: () => ProductoDetailComponent, canActivate:[adminGuard]},
     {path: 'producto/edit/:idProducto', loadComponent: () => ProductoEditComponent, canActivate:[adminGuard]},
-    {path: 'productos/new', loadComponent: () => ProductoCreateComponent, canActivate:[adminGuard]}
+    {path: 'productos/new', loadComponent: () => ProductoCreateComponent, canActivate:[adminGuard]},
+    
+    // Error route
+    {path: '**', loadComponent: () => NotFoundComponent, canActivate:[routeCaseInsensitiveGuard]},
 ];

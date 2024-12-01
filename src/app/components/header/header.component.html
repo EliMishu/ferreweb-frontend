@@ -15,13 +15,13 @@
             <ng-template [ngIf]="getSelectedRol()==='ADMIN'" [ngIfElse]="defaultSection">
                 <ul class="navbar-nav gap-3">
                     <li class="nav-item">
-                        <a class="nav-link d-flex flex-md-column gap-md-0 gap-1 align-items-center" [routerLink]="['modGestion']">
+                        <a class="nav-link d-flex flex-md-column gap-md-0 gap-1 align-items-center" [routerLink]="['modulo/gestion']">
                             <i class="bi bi-people fs-3"></i>
-                            GESTIÓN
+                            USUARIOS
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link d-flex flex-md-column gap-md-0 gap-1 align-items-center" [routerLink]="['modProductos']">
+                        <a class="nav-link d-flex flex-md-column gap-md-0 gap-1 align-items-center" [routerLink]="['modulo/productos']">
                             <i class="bi bi-box-seam fs-3"></i>
                             PRODUCTOS
                         </a>

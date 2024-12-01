@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.prod';
-import { Observable, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { Rol } from '../models/rol.model';
 import { RolRequest } from '../models/rol-req.model';
 import { UsuarioService } from './usuario.service';
@@ -19,6 +19,14 @@ export class RolService {
 
   obtenerRoles(): Observable<Rol[]> {
     return this.http.get<Rol[]>(this.apiUrl);
+  }
+
+  contarRoles(): Observable<number> {
+    return this.obtenerRoles().pipe(
+      map((roles) => {
+        return roles.length;
+      })
+    )
   }
 
   obtenerRolporId(id: number): Observable<Rol> {
