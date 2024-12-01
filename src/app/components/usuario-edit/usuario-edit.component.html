@@ -1,0 +1,54 @@
+<div class="container">
+    <h2>Editar Usuario</h2>
+    <form [formGroup]="usuarioForm" (ngSubmit)="guardarUsuario()">
+
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input formControlName="username" type="text" class="form-control" id="username" placeholder="Username" [readonly]="true">
+        </div>
+
+        <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input formControlName="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre" [readonly]="true">
+        </div>
+
+        <div class="form-group">
+            <label for="apellidoPat">Apellido Paterno</label>
+            <input formControlName="apellidoPat" type="text" class="form-control" id="apellidoPat" placeholder="Apellido Paterno" [readonly]="true">
+        </div>
+
+        <div class="form-group">
+            <label for="apellidoMat">Apellido Materno</label>
+            <input formControlName="apellidoMat" type="text" class="form-control" id="apellidoMat" placeholder="Apellido Materno" [readonly]="true">
+        </div>
+
+        <div class="form-group">
+            <label for="dni">DNI</label>
+            <input formControlName="dni" type="text" class="form-control" id="dni" placeholder="DNI" [readonly]="true">
+        </div>
+
+        <div class="form-group">
+            <label>Roles</label>
+            <div *ngFor="let rol of roles">
+                <div class="form-check">
+                    <input 
+                        type="checkbox" 
+                        class="form-check-input"
+                        (change)="onRolPressed(rol)"
+                        [value]="rol" 
+                        [checked]="rolesSeleccionados.includes(rol)"
+                        [disabled]="rol === 'USUARIO'">
+                    <label class="form-check-label">{{ rol }}</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="imagen">Imagen</label>
+            <input type="file" (change)="onFileChange($event)" class="form-control" id="imagen">
+        </div>
+
+        <button type="submit" class="btn btn-primary" [ngClass]="usuarioForm.invalid || isSubmiting ? 'disabled' : ''" [textContent]="isSubmiting ? 'Guardando' : 'Guardar Cambios'">Guardar Cambios</button>
+        <button type="button" class="btn btn-secondary" (click)="cancelarEdicion()">Cancelar</button>
+    </form>
+</div>

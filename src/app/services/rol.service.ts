@@ -4,7 +4,6 @@ import { environment } from '../../environments/environment.prod';
 import { map, Observable, tap } from 'rxjs';
 import { Rol } from '../models/rol.model';
 import { RolRequest } from '../models/rol-req.model';
-import { UsuarioService } from './usuario.service';
 
 @Injectable({
   providedIn: 'root'

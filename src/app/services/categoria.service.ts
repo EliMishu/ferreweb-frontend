@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.prod';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Categoria } from '../models/categoria.models';
 import { CategoriaRequest } from '../models/categoria-req.model';
 
@@ -19,6 +19,18 @@ export class CategoriaService {
 
   obtenerCategoria(id: number): Observable<Categoria> {
     return this.http.get<Categoria>(`${this.apiUrl}/${id}`);
+  }
+
+  filtrarCategorias(searchTerm: string): Observable<Categoria[]> {
+    return this.obtenerCategorias().pipe(
+      map(categorias => {
+        return categorias.filter((categoria) => {
+          return (categoria.idCategoria.toString().includes(searchTerm.toLowerCase()) ||
+            categoria.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            categoria.descripcion.toLowerCase().includes(searchTerm.toLowerCase()));
+        })
+      })
+    )
   }
  
   crearCategoria(request: CategoriaRequest, imagen: File): Observable<Categoria> {

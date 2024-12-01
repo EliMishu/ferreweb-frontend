@@ -1,5 +1,4 @@
 export interface UsuarioRequest {
-    id: number;
     dni: string;
     username: string;
     nombre: string;
@@ -7,6 +6,5 @@ export interface UsuarioRequest {
     apellidoMat: string;
     direccion: string | null;
     roles: string[];
-    rutaImagen: string | null;
     fechaEliminacion: string | null;
 }

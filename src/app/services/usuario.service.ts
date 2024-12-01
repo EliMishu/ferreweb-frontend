@@ -3,6 +3,7 @@ import { environment } from '../../environments/environment.prod';
 import { Usuario } from '../models/usuario.model';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable, of } from 'rxjs';
+import { UsuarioRequest } from '../models/usuario-req.model';
 
 @Injectable({
   providedIn: 'root'
@@ -28,31 +29,111 @@ export class UsuarioService {
     );
   }
 
-  contarEmpleados(): Observable<number> {
+  filtrarUsuarios(searchTerm: string, rol: string, estado: string): Observable<Usuario[]> {
+    let usuarios = this.obtenerUsuarios();
+
+    if (rol.trim() !== "") {
+      if (rol === "empleado") {
+        usuarios = usuarios.pipe(
+          map((usuarios) => {
+            const empleados = usuarios.filter((usuario) => {
+              return usuario.roles.length > 1;
+            })
+    
+            return empleados
+          })
+        )
+      } else {
+        usuarios = usuarios.pipe(
+          map(usuarios => {
+            return usuarios.filter(usuario => {
+              return usuario.roles.some(userRol => userRol.tipo.toLowerCase() === rol.toLowerCase())
+            })
+          })
+        )
+      }
+    }
+
+    if (estado.trim() !== "") {
+      if (estado === "activo") {
+        usuarios = usuarios.pipe(
+          map(usuarios => {
+            return usuarios.filter(usuario => {
+              return usuario.fechaEliminacion === null || usuario.fechaEliminacion === ""
+            })
+          })
+        )
+      } else {
+        usuarios = usuarios.pipe(
+          map(usuarios => {
+            return usuarios.filter(usuario => {
+              return usuario.fechaEliminacion !== null && usuario.fechaEliminacion !== ""
+            })
+          })
+        )
+      }
+    }
+
+    if (searchTerm.trim() !== "") {
+      let searchTerms = searchTerm.split(" ");
+
+      searchTerms.forEach(term => {
+        usuarios = usuarios.pipe(
+          map(usuarios => {
+            return usuarios.filter(usuario => {
+              return (
+                usuario.username.toLowerCase().includes(term.toLowerCase()) ||
+                usuario.nombre.toLowerCase().includes(term.toLowerCase()) ||
+                usuario.dni.toLowerCase().includes(term.toLowerCase()) ||
+                usuario.apellidoPat.toLowerCase().includes(term.toLowerCase()) ||
+                usuario.apellidoMat.toLowerCase().includes(term.toLowerCase())
+              )
+            })
+          })
+        )
+      })
+    }
+
+    return usuarios;
+  }
+
+  obtenerEmpleados(): Observable<Usuario[]> {
     return this.obtenerUsuarios().pipe(
       map((usuarios) => {
         const empleados = usuarios.filter((usuario) => {
           return usuario.roles.length > 1;
         })
 
-        return empleados.length
+        return empleados
       })
     )
   }
 
-  contarUsuariosActivos(): Observable<number> {
+  contarEmpleados(): Observable<number> {
+    return this.obtenerEmpleados().pipe(
+      map(empleados => empleados.length)
+    )
+  }
+
+  obtenerUsuariosActivos(): Observable<Usuario[]> {
     return this.obtenerUsuarios().pipe(
       map((usuarios) => {
         const activos = usuarios.filter((usuario) => {
           return usuario.fechaEliminacion === null || usuario.fechaEliminacion === "";
         })
 
-        return activos.length
+        return activos
       })
     )
   }
-  
-  contarUsuariosInactivos(): Observable<number> {
+
+  contarUsuariosActivos(): Observable<number> {
+    return this.obtenerUsuariosActivos().pipe(
+      map(activos => activos.length)
+    )
+  }
+
+  obtenerUsuariosInactivos(): Observable<Usuario[]> {
     return this.obtenerUsuarios().pipe(
       map((usuarios) => {
         console.log(usuarios)
@@ -60,8 +141,14 @@ export class UsuarioService {
           return usuario.fechaEliminacion !== null && usuario.fechaEliminacion !== "";
         })
 
-        return inactivos.length
+        return inactivos
       })
+    )
+  }
+  
+  contarUsuariosInactivos(): Observable<number> {
+    return this.obtenerUsuariosInactivos().pipe(
+      map(inactivos => inactivos.length)
     )
   }
   
@@ -73,7 +160,7 @@ export class UsuarioService {
     return this.http.get<Usuario>(`${this.apiUrl}/${id}`);
   }
 
-  crearUsuario(request: Usuario, imagen: File): Observable<Usuario> {
+  crearUsuario(request: UsuarioRequest, imagen: File): Observable<Usuario> {
     const formData: FormData = new FormData();
     formData.append('request', new Blob([JSON.stringify(request)], { type: 'application/json' }));
     if (imagen) {
@@ -82,7 +169,7 @@ export class UsuarioService {
     return this.http.post<Usuario>(this.apiUrl, formData);
   }
 
-  actualizarUsuario(id: number, request: Usuario, imagen: File): Observable<Usuario> {
+  actualizarUsuario(id: number, request: UsuarioRequest, imagen: File): Observable<Usuario> {
     const formData: FormData = new FormData();
     formData.append('request', new Blob([JSON.stringify(request)], { type: 'application/json'}));
     if (imagen) {

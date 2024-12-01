@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Params, Router, RouterModule } from '@angular/router';
 import { UsuarioService } from '../../services/usuario.service';
 import { ProductoService } from '../../services/producto.service';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
@@ -19,6 +19,7 @@ export class AdmGeneralDashboardComponent implements OnInit {
   ventasDiariasInfo = 0;
 
   constructor (
+    private router: Router,
     private usuarioService: UsuarioService,
     private productoService: ProductoService
   ) {}
@@ -47,5 +48,9 @@ export class AdmGeneralDashboardComponent implements OnInit {
   
   cargarInfoDeVentasDiarias(): void {
     this.ventasDiariasInfo = 100;
+  }
+
+  redirigirConFiltros(ruta: string[], queryParams: Params): void {
+    this.router.navigate(ruta, { queryParams });
   }
 }

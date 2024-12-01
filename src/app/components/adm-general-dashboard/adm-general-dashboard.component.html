@@ -11,7 +11,7 @@
         <i class="icon-info bi bi-person-fill-gear"></i>
       </div>
     </div>
-    <a [routerLink]="['/usuarios']" class="card-link mb-0 mx-0"> Más info &rarr; </a>
+    <a (click)="redirigirConFiltros(['/usuarios'], {rol: 'empleado', estado: 'activo'})" class="btn card-link mb-0 mx-0"> Más info &rarr; </a>
   </div>
   
   <div class="card products-card">
@@ -26,7 +26,7 @@
         <i class="icon-info bi bi-box-seam-fill"></i>
       </div>
     </div>
-    <a [routerLink]="['/productos']" class="card-link mb-0 mx-0"> Más info &rarr; </a>
+    <a [routerLink]="['/productos']" class=" btn card-link mb-0 mx-0"> Más info &rarr; </a>
   </div>
 
   <div class="card ventas-card">
@@ -41,7 +41,7 @@
         <i class="icon-info bi bi-cash-coin"></i>
       </div>
     </div>
-    <a [routerLink]="['/ventas']" class="card-link mb-0 mx-0"> Más info &rarr; </a>
+    <a [routerLink]="['/ventas']" class="btn card-link mb-0 mx-0"> Más info &rarr; </a>
   </div>
   
   <div class="card total-ventas-card">
@@ -56,7 +56,7 @@
         <i class="icon-info bi bi-bank2"></i>
       </div>
     </div>
-    <a [routerLink]="['/ventas']" class="card-link mb-0 mx-0"> Más info &rarr; </a>
+    <a [routerLink]="['/ventas']" class="btn card-link mb-0 mx-0"> Más info &rarr; </a>
   </div>
 </div>
 

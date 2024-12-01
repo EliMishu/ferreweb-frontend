@@ -28,6 +28,7 @@ import { UsuarioListComponent } from './components/usuario-list/usuario-list.com
 import { adminGuard } from './guards/admin.guard';
 import { routeCaseInsensitiveGuard } from './guards/route-case-insensitive.guard';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { UsuarioEditComponent } from './components/usuario-edit/usuario-edit.component';
 
 export const routes: Routes = [
     // Login routes
@@ -44,7 +45,7 @@ export const routes: Routes = [
     {path: 'rol/edit/:idRol', loadComponent: () => RolEditComponent, canActivate:[adminGuard]},
     {path: 'roles/new', loadComponent: () => RolCreateComponent, canActivate:[adminGuard]},
     {path: 'usuarios', loadComponent: () => UsuarioListComponent, canActivate:[adminGuard]},
-    
+    {path: 'usuario/edit/:idUsuario', loadComponent: () => UsuarioEditComponent, canActivate:[adminGuard]},
 
     // Module Productos routes
     {path: 'modulo/productos', loadComponent: () => ModuloProductosComponent, canActivate:[adminGuard]},

@@ -19,7 +19,7 @@
             <i class="icon-info bi bi-file-earmark-person-fill"></i>
           </div>
         </div>
-        <a [routerLink]="['/roles']" class="card-link mb-0 mx-0">
+        <a [routerLink]="['/roles']" class="btn card-link mb-0 mx-0">
           Más info &rarr;
         </a>
       </div>
@@ -36,7 +36,8 @@
             <i class="icon-info bi bi-person-fill-gear"></i>
           </div>
         </div>
-        <a [routerLink]="['/usuarios']" class="card-link mb-0 mx-0">
+        <a (click)="redirigirConFiltros(['/usuarios'], {rol: 'empleado', estado: 'activo'})" 
+          class="btn card-link mb-0 mx-0">
           Más info &rarr;
         </a>
       </div>
@@ -53,7 +54,7 @@
             <i class="icon-info bi bi-people-fill"></i>
           </div>
         </div>
-        <a [routerLink]="['/usuarios']" class="card-link mb-0 mx-0">
+        <a (click)="redirigirConFiltros(['/usuarios'], {estado: 'activo'})" class="btn card-link mb-0 mx-0">
           Más info &rarr;
         </a>
       </div>
@@ -70,7 +71,7 @@
             <i class="icon-info bi bi-person-fill-x"></i>
           </div>
         </div>
-        <a [routerLink]="['/usuarios']" class="card-link mb-0 mx-0">
+        <a (click)="redirigirConFiltros(['/usuarios'], {estado: 'inactivo'})" class="btn card-link mb-0 mx-0">
           Más info &rarr;
         </a>
       </div>

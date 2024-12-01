@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Params, Router, RouterModule } from '@angular/router';
 import { UsuarioService } from '../../services/usuario.service';
 import { RolService } from '../../services/rol.service';
 
@@ -17,6 +17,7 @@ export class ModuloGestionComponent {
   rolesInfo = 0;
 
   constructor (
+    private router: Router,
     private usuarioService: UsuarioService,
     private rolService: RolService
   ) {}
@@ -58,5 +59,9 @@ export class ModuloGestionComponent {
         this.rolesInfo = conteo;
       }
     )
+  }
+
+  redirigirConFiltros(ruta: string[], queryParams: Params): void {
+    this.router.navigate(ruta, { queryParams });
   }
 }

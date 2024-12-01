@@ -6,8 +6,8 @@
             <input formControlName="tipo" type="text" class="form-control" id="tipo" placeholder="Nombre">
             <div
                 *ngIf="rolForm.get('tipo')?.invalid && (rolForm.get('tipo')?.touched || rolForm.get('tipo')?.dirty)">
-                <small *ngIf="rolForm.get('tipo')?.errors?.['required']">El campo Tipo es obligatorio.</small>
-                <small *ngIf="rolForm.get('tipo')?.errors?.['minlength']">El Tipo debe tener al menos 2
+                <small *ngIf="rolForm.get('tipo')?.errors?.['required']">El campo Nombre es obligatorio.</small>
+                <small *ngIf="rolForm.get('tipo')?.errors?.['minlength']">El Nombre debe tener al menos 2
                     caracteres.</small>
             </div>
         </div>
