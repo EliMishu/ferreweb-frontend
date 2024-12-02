@@ -11,6 +11,7 @@ export interface ProductoRequest {
 export interface UnidadPermitidaRequest {
   nombreUnidad: string;
   precioPorUnidad: number;
+  equivalencia: number;
 }
 
 export interface AlmacenProductoRequest {

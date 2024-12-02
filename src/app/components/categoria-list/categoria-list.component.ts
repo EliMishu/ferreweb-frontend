@@ -23,17 +23,9 @@ export class CategoriaListComponent implements OnInit {
   }
 
   obtenerCategorias(): void {
-    this.categoriaService.obtenerCategorias().subscribe((data) => {
+    this.categoriaService.filtrarCategorias(this.searchTerm).subscribe((data) => {
       this.categorias = data;
     });
-  }
-
-  filtrarCategorias(): void {
-    if (this.searchTerm.length >= 2) {
-      this.categoriaService.filtrarCategorias(this.searchTerm).subscribe((data) => {
-        this.categorias = data;
-      })
-    }
   }
 
   eliminarCategoriaPorId(id: number): void {

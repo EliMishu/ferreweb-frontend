@@ -20,6 +20,23 @@ export class RolService {
     return this.http.get<Rol[]>(this.apiUrl);
   }
 
+  filtrarRoles(searchTerm: string): Observable<Rol[]> {
+    let roles = this.obtenerRoles();
+
+    if (searchTerm === '') {
+      return roles;
+    } else {
+      return roles.pipe(
+        map(roles => {
+          return roles.filter(rol => {
+            return (rol.idRol.toString().includes(searchTerm.toLowerCase()) || 
+            rol.tipo.toLowerCase().includes(searchTerm.toLowerCase()))
+          })
+        })
+      )
+    }
+  }
+
   contarRoles(): Observable<number> {
     return this.obtenerRoles().pipe(
       map((roles) => {

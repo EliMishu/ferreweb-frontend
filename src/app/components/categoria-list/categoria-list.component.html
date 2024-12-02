@@ -18,7 +18,7 @@
               class="form-control"
               placeholder="Buscar"
               [(ngModel)]="searchTerm"
-              (ngModelChange)="filtrarCategorias()"
+              (ngModelChange)="obtenerCategorias()"
               id="searchInput"
             />
           </div>
@@ -40,10 +40,12 @@
             <th scope="row" class="text-center">{{ categoria.idCategoria }}</th>
             <td class="text-center">
               <img
+                *ngIf="categoria.rutaImagen"
                 class="table-img"
                 [src]="categoria.rutaImagen"
                 [alt]="categoria.nombre"
               />
+              <p *ngIf="!categoria.rutaImagen">No disponible</p>
             </td>
             <td class="text-center">{{ categoria.nombre }}</td>
             <td class="text-center">{{ categoria.descripcion }}</td>

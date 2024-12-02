@@ -22,15 +22,21 @@ export class CategoriaService {
   }
 
   filtrarCategorias(searchTerm: string): Observable<Categoria[]> {
-    return this.obtenerCategorias().pipe(
-      map(categorias => {
-        return categorias.filter((categoria) => {
-          return (categoria.idCategoria.toString().includes(searchTerm.toLowerCase()) ||
-            categoria.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            categoria.descripcion.toLowerCase().includes(searchTerm.toLowerCase()));
+    let categorias = this.obtenerCategorias();
+
+    if (searchTerm === '') {
+      return categorias;
+    } else {
+      return categorias.pipe(
+        map(categorias => {
+          return categorias.filter((categoria) => {
+            return (categoria.idCategoria.toString().includes(searchTerm.toLowerCase()) ||
+              categoria.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+              categoria.descripcion.toLowerCase().includes(searchTerm.toLowerCase()));
+          })
         })
-      })
-    )
+      )
+    }
   }
  
   crearCategoria(request: CategoriaRequest, imagen: File): Observable<Categoria> {

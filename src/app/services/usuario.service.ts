@@ -59,7 +59,9 @@ export class UsuarioService {
         usuarios = usuarios.pipe(
           map(usuarios => {
             return usuarios.filter(usuario => {
-              return usuario.fechaEliminacion === null || usuario.fechaEliminacion === ""
+              return usuario.fechaEliminacion === null || 
+              usuario.fechaEliminacion === "" ||
+              usuario.fechaEliminacion === "null"
             })
           })
         )
@@ -67,7 +69,9 @@ export class UsuarioService {
         usuarios = usuarios.pipe(
           map(usuarios => {
             return usuarios.filter(usuario => {
-              return usuario.fechaEliminacion !== null && usuario.fechaEliminacion !== ""
+              return usuario.fechaEliminacion !== null && 
+              usuario.fechaEliminacion !== "" &&
+              usuario.fechaEliminacion !== "null"
             })
           })
         )
@@ -119,7 +123,9 @@ export class UsuarioService {
     return this.obtenerUsuarios().pipe(
       map((usuarios) => {
         const activos = usuarios.filter((usuario) => {
-          return usuario.fechaEliminacion === null || usuario.fechaEliminacion === "";
+          return (usuario.fechaEliminacion === null || 
+                  usuario.fechaEliminacion === "" ||
+                  usuario.fechaEliminacion === "null");
         })
 
         return activos
@@ -138,7 +144,9 @@ export class UsuarioService {
       map((usuarios) => {
         console.log(usuarios)
         const inactivos = usuarios.filter((usuario) => {
-          return usuario.fechaEliminacion !== null && usuario.fechaEliminacion !== "";
+          return (usuario.fechaEliminacion !== null && 
+                  usuario.fechaEliminacion !== "" && 
+                  usuario.fechaEliminacion !== "null");
         })
 
         return inactivos
