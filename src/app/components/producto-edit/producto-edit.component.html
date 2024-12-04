@@ -1,1 +1,130 @@
-<p>producto-edit works!</p>
+<div class="container">
+    <h2>Editar Producto</h2>
+    <form [formGroup]="productoForm" (ngSubmit)="actualizarProducto()">
+      <!-- Nombre -->
+      <div class="form-group">
+        <label for="nombre">Nombre</label>
+        <input formControlName="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre">
+        <div *ngIf="productoForm.get('nombre')?.invalid && (productoForm.get('nombre')?.touched || productoForm.get('nombre')?.dirty)">
+          <small *ngIf="productoForm.get('nombre')?.errors?.['required']">El campo Nombre es obligatorio.</small>
+          <small *ngIf="productoForm.get('nombre')?.errors?.['minlength']">El Nombre debe tener al menos 2 caracteres.</small>
+        </div>
+      </div>
+  
+      <!-- Categoría -->
+      <div class="form-group">
+        <label for="categoria">Categoría</label>
+        <select formControlName="categoria" class="form-control" id="categoria">
+          <option *ngFor="let categoria of categorias" [value]="categoria">{{categoria}}</option>
+        </select>
+        <div *ngIf="productoForm.get('categoria')?.invalid && (productoForm.get('categoria')?.touched || productoForm.get('categoria')?.dirty)">
+          <small *ngIf="productoForm.get('categoria')?.errors?.['required']">Debe seleccionar una categoría.</small>
+        </div>
+      </div>
+  
+      <!-- Descripción -->
+      <div class="form-group">
+        <label for="descripcion">Descripción</label>
+        <textarea formControlName="descripcion" class="form-control" id="descripcion"></textarea>
+        <div *ngIf="productoForm.get('descripcion')?.invalid && (productoForm.get('descripcion')?.touched || productoForm.get('descripcion')?.dirty)">
+          <small *ngIf="productoForm.get('descripcion')?.errors?.['required']">El campo Descripción es obligatorio.</small>
+        </div>
+      </div>
+  
+      <!-- Unidades Permitidas -->
+      <div class="form-group">
+        <label for="unidadDef">Unidad por defecto</label>
+        <div formArrayName="unidadesPermitidas">
+          <div formGroupName="0">
+            <div class="input-group">
+              <select name="unidadDef" class="form-control" id="unidadDef" formControlName="nombreUnidad" (change)="onUnidadChange($event)">
+                <option value="" disabled selected>Elegir unidad</option>
+                <option *ngFor="let unidad of unidades" [value]="unidad.nombre">{{ unidad.nombre }}</option>
+              </select>
+              <input type="number" placeholder="Precio" class="form-control" formControlName="precioPorUnidad">
+            </div>
+          </div>
+        </div>
+        <div *ngIf="unidadesPermitidas.at(0).get('nombreUnidad')?.invalid && (unidadesPermitidas.at(0).get('nombreUnidad')?.touched || unidadesPermitidas.at(0).get('nombreUnidad')?.dirty)">
+          <small *ngIf="unidadesPermitidas.at(0).get('nombreUnidad')?.errors?.['required']">La unidad por defecto es obligatoria.</small>
+        </div>
+        <div *ngIf="unidadesPermitidas.at(0).get('precioPorUnidad')?.invalid && (unidadesPermitidas.at(0).get('precioPorUnidad')?.touched || unidadesPermitidas.at(0).get('precioPorUnidad')?.dirty)">
+          <small *ngIf="unidadesPermitidas.at(0).get('precioPorUnidad')?.errors?.['required']">El precio es obligatorio.</small>
+          <small *ngIf="unidadesPermitidas.at(0).get('precioPorUnidad')?.errors?.['min']">El precio no puede ser negativo.</small>
+        </div>
+      </div>
+  
+      <!-- Unidades permitidas -->
+      <div class="form-group">
+        <label for="unidadDef">Unidades permitidas</label>
+        <div formArrayName="unidadesPermitidas">
+          <div *ngFor="let unidad of unidadesPermitidas.controls; let i = index">
+            <div *ngIf="i != 0">
+              <div class="input-group" [formGroupName]="i">
+                <select name="unidadDef" class="form-control" id="unidadDef" formControlName="nombreUnidad">
+                  <option value="" disabled selected>Elegir unidad</option>
+                  <option *ngFor="let unidad of unidades" [value]="unidad.nombre">{{ unidad.nombre }}</option>
+                </select>
+                <input type="number" placeholder="Precio" class="form-control" formControlName="precioPorUnidad">
+                <input type="number" placeholder="Equivalencia" class="form-control" formControlName="equivalencia">
+                <button type="button" class="btn btn-danger" (click)="eliminarUnidad(i)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+              <div *ngIf="unidad.get('nombreUnidad')?.invalid && (unidad.get('nombreUnidad')?.touched || unidad.get('nombreUnidad')?.dirty)">
+                <small *ngIf="unidad.get('nombreUnidad')?.errors?.['required']">Seleccione una unidad.</small>
+                <small *ngIf="unidad.get('nombreUnidad')?.errors?.['unidadRepetida']">La unidad ya existe.</small>
+              </div>
+              <div *ngIf="unidad.get('precioPorUnidad')?.invalid && (unidad.get('precioPorUnidad')?.touched || unidad.get('precioPorUnidad')?.dirty)">
+                <small *ngIf="unidad.get('precioPorUnidad')?.errors?.['required']">El precio es obligatorio.</small>
+                <small *ngIf="unidad.get('precioPorUnidad')?.errors?.['min']">El precio no puede ser negativo.</small>
+              </div>
+              <div *ngIf="unidad.get('equivalencia')?.invalid && (unidad.get('equivalencia')?.touched || unidad.get('equivalencia')?.dirty)">
+                <small *ngIf="unidad.get('equivalencia')?.errors?.['required']">La equivalencia es obligatoria.</small>
+                <small *ngIf="unidad.get('equivalencia')?.errors?.['min']">La equivalencia no puede ser negativa.</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button type="button" class="btn btn-secondary m-2" (click)="agregarUnidad()">Agregar Unidad</button>
+      </div>
+  
+      <!-- Almacenes -->
+      <div class="form-group">
+        <label for="almacen">Almacenes</label>
+        <div formArrayName="almacenes">
+          <div *ngFor="let almacen of almacenesSeleccionados.controls; let i = index">
+            <div class="input-group" [formGroupName]="i">
+              <select name="unidadDef" class="form-control" id="unidadDef" formControlName="nombreAlmacen">
+                <option value="" disabled selected>Elegir almacen</option>
+                <option *ngFor="let almacen of almacenes" [value]="almacen.nombre">{{ almacen.nombre }}</option>
+              </select>
+              <input type="number" placeholder="Cantidad" class="form-control" formControlName="cantidadProductos">
+              <button type="button" class="btn btn-danger" (click)="eliminarAlmacen(i)">
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+            <div *ngIf="almacen.get('nombreAlmacen')?.invalid && (almacen.get('nombreAlmacen')?.touched || almacen.get('nombreAlmacen')?.dirty)">
+              <small *ngIf="almacen.get('nombreAlmacen')?.errors?.['required']">Seleccione un almacén.</small>
+              <small *ngIf="almacen.get('nombreAlmacen')?.errors?.['almacenRepetido']">El almacén ya existe.</small>
+            </div>
+            <div *ngIf="almacen.get('cantidadProductos')?.invalid && (almacen.get('cantidadProductos')?.touched || almacen.get('cantidadProductos')?.dirty)">
+              <small *ngIf="almacen.get('cantidadProductos')?.errors?.['required']">La cantidad es obligatoria.</small>
+              <small *ngIf="almacen.get('cantidadProductos')?.errors?.['min']">La cantidad no puede ser negativa.</small>
+            </div>
+          </div>
+        </div>
+        <button type="button" class="btn btn-secondary m-2" (click)="agregarAlmacen()">Agregar Almacén</button>
+      </div>
+  
+      <!-- Imagen -->
+      <div class="form-group">
+        <label for="imagen">Imagen</label>
+        <input type="file" (change)="onFileChange($event)" class="form-control" id="imagen">
+      </div>
+  
+      <!-- Botones -->
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">Actualizar Producto</button>
+        <button type="button" class="btn btn-secondary" (click)="cancelarEdicion()">Cancelar</
+  
