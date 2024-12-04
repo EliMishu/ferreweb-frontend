@@ -14,7 +14,7 @@
         <div class="form-group">
             <label for="categoria">Categoría</label>
             <select formControlName="categoria" class="form-control" id="categoria">
-                <option *ngFor="let categoria of categorias" [value]="categoria.idCategoria">{{categoria.nombre}}</option>
+                <option *ngFor="let categoria of categorias" [value]="categoria.nombre">{{categoria.nombre}}</option>
             </select>
             <div *ngIf="productoForm.get('categoria')?.invalid && (productoForm.get('categoria')?.touched || productoForm.get('categoria')?.dirty)">
                 <small *ngIf="productoForm.get('categoria')?.errors?.['required']">Debe seleccionar una categoría.</small>
@@ -119,7 +119,7 @@
             <input type="file" (change)="onFileChange($event)" class="form-control" id="imagen">
         </div>
 
-        <button type="button" (click)="onSubmit()" class="btn btn-primary">Crear Producto</button>
+        <button type="submit" class="btn btn-primary">Crear Producto</button>
         <button type="button" class="btn btn-secondary" (click)="cancelarCreacion()">Cancelar</button>
     </form>
 </div>

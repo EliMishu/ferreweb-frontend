@@ -1,31 +1,98 @@
-<div class="producto-list">
+<div class="productos-list">
     <div class="subheader">
-        <h3>MODULO DE PRODUCTOS</h3>
+      <h3>MODULO DE PRODUCTOS</h3>
     </div>
-
+  
     <div class="container">
-        <div class="d-flex flex-wrap gap-3 justify-content-center align-items-center">
-            <div class="card p-0">
-                <img class="card-img-top" src="/assets/images/almacenes.png">
-                <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                    <h4 class="card-title">Almacenes</h4>
-                    <a [routerLink]="['/almacenes']" class="btn btn-primary">Administrar</a>
-                </div>
+      <div
+        class="d-flex flex-row flex-wrap justify-content-center align-items-center gap-2 p-3"
+      >
+        <div class="card almacenes-card">
+          <div class="card-body">
+            <div class="d-flex flex-row justify-content-between">
+              <div>
+                <h5 class="card-title">
+                  {{ almacenesInfo }}
+                </h5>
+                <h6 class="card-subtitle mb-2">Almacenes</h6>
+              </div>
+              <i class="icon-info bi bi-buildings-fill"></i>
             </div>
-            <div class="card p-0">
-                <img class="card-img-top" src="/assets/images/categorias.png">
-                <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                    <h4 class="card-title">Categorias</h4>
-                    <a [routerLink]="['/categorias']" class="btn btn-primary">Administrar</a>
-                </div>
-            </div>
-            <div class="card p-0">
-                <img class="card-img-top" src="/assets/images/productos.png">
-                <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                    <h4 class="card-title">Productos</h4>
-                    <a [routerLink]="['/productos']" class="btn btn-primary">Administrar</a>
-                </div>
-            </div>
+          </div>
+          <a [routerLink]="['/almacenes']" class="btn card-link mb-0 mx-0">
+            Más info &rarr;
+          </a>
         </div>
+  
+        <div class="card categorias-card">
+          <div class="card-body">
+            <div class="d-flex flex-row justify-content-between">
+              <div>
+                <h5 class="card-title">
+                  {{ categoriasInfo }}
+                </h5>
+                <h6 class="card-subtitle mb-2">Categorias</h6>
+              </div>
+              <i class="icon-info bi bi-bookmark-star-fill"></i>
+            </div>
+          </div>
+          <a [routerLink]="['/categorias']"
+            class="btn card-link mb-0 mx-0">
+            Más info &rarr;
+          </a>
+        </div>
+  
+        <div class="card productos-card">
+          <div class="card-body">
+            <div class="d-flex flex-row justify-content-between">
+              <div>
+                <h5 class="card-title">
+                  {{ productosInfo }}
+                </h5>
+                <h6 class="card-subtitle mb-2">Productos</h6>
+              </div>
+              <i class="icon-info bi bi-box2-heart-fill"></i>
+            </div>
+          </div>
+          <a [routerLink]="['/productos']" class="btn card-link mb-0 mx-0">
+            Más info &rarr;
+          </a>
+        </div>
+  
+        <div class="card bajo-stock-card">
+          <div class="card-body">
+            <div class="d-flex flex-row justify-content-between">
+              <div>
+                <h5 class="card-title">
+                  {{ stockBajoInfo }}
+                </h5>
+                <h6 class="card-subtitle mb-2">Stock Bajo</h6>
+              </div>
+              <i class="icon-info bi bi-exclamation-triangle-fill"></i>
+            </div>
+          </div>
+          <a (click)="redirigirConFiltros(['/productos'], {estado: 'stockBajo'})" class="btn card-link mb-0 mx-0">
+            Más info &rarr;
+          </a>
+        </div>
+
+        <div class="card unidades-card">
+          <div class="card-body">
+            <div class="d-flex flex-row justify-content-between">
+              <div>
+                <h5 class="card-title">
+                  {{ unidadesInfo }}
+                </h5>
+                <h6 class="card-subtitle mb-2">Unidades</h6>
+              </div>
+              <i class="icon-info bi bi-clipboard2-pulse-fill"></i>
+            </div>
+          </div>
+          <a [routerLink]="['/unidades']" class="btn card-link mb-0 mx-0">
+            Más info &rarr;
+          </a>
+        </div>
+      </div>
     </div>
-</div>
+  </div>
+  

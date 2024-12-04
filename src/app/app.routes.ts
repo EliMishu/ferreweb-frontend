@@ -29,6 +29,10 @@ import { adminGuard } from './guards/admin.guard';
 import { routeCaseInsensitiveGuard } from './guards/route-case-insensitive.guard';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { UsuarioEditComponent } from './components/usuario-edit/usuario-edit.component';
+import { UnidadListComponent } from './components/unidad-list/unidad-list.component';
+import { ModuloComprasComponent } from './components/modulo-compras/modulo-compras.component';
+import { ProveedorListComponent } from './components/proveedor-list/proveedor-list.component';
+import { ProveedorCreateComponent } from './components/proveedor-create/proveedor-create.component';
 
 export const routes: Routes = [
     // Login routes
@@ -61,6 +65,12 @@ export const routes: Routes = [
     {path: 'producto/:idProducto', loadComponent: () => ProductoDetailComponent, canActivate:[adminGuard]},
     {path: 'producto/edit/:idProducto', loadComponent: () => ProductoEditComponent, canActivate:[adminGuard]},
     {path: 'productos/new', loadComponent: () => ProductoCreateComponent, canActivate:[adminGuard]},
+    {path: 'unidades', loadComponent: () => UnidadListComponent, canActivate:[adminGuard]},
+    
+    // Module Compras routes
+    {path: 'modulo/compras', loadComponent: () => ModuloComprasComponent, canActivate:[adminGuard]},
+    {path: 'proveedores', loadComponent: () => ProveedorListComponent, canActivate:[adminGuard]},
+    {path: 'proveedores/new', loadComponent: () => ProveedorCreateComponent, canActivate:[adminGuard]},
     
     // Error route
     {path: '**', loadComponent: () => NotFoundComponent, canActivate:[routeCaseInsensitiveGuard]},

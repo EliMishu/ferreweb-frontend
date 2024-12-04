@@ -1,9 +1,9 @@
-<div class="almacenes-list">
+<div class="proveedor-list">
     <div class="container subheader-table">
-      <h3>Almacenes</h3>
-      <button [routerLink]="['/almacenes/new']" class="btn btn-primary">
+      <h3>Proveedores</h3>
+      <button [routerLink]="['/proveedores/new']" class="btn btn-primary">
         <i class="bi bi-plus-square"></i>
-        Nuevo Almacen
+        Nuevo Proveedor
       </button>
     </div>
   
@@ -18,7 +18,7 @@
                 class="form-control"
                 placeholder="Buscar"
                 [(ngModel)]="searchTerm"
-                (ngModelChange)="obtenerAlmacenes()"
+                (ngModelChange)="obtenerProveedores()"
                 id="searchInput"
               />
             </div>
@@ -29,26 +29,32 @@
           <thead>
             <tr>
               <th scope="col" class="text-center">No.</th>
-              <th scope="col" class="text-center">Nombre</th>
+              <th scope="col" class="text-center">RUC</th>
+              <th scope="col" class="text-center">Razón Social</th>
+              <th scope="col" class="text-center">Email</th>
+              <th scope="col" class="text-center">Teléfono</th>
               <th scope="col" class="text-center">Dirección</th>
               <th scope="col" class="text-center"></th>
             </tr>
           </thead>
           <tbody>
-            <tr class="" *ngFor="let almacen of almacenes">
-              <th scope="row" class="text-center">{{ almacen.idAlmacen }}</th>
-              <td class="text-center">{{ almacen.nombre }}</td>
-              <td class="text-center">{{ almacen.direccion }}</td>
+            <tr class="" *ngFor="let proveedor of proveedores">
+              <th scope="row" class="text-center">{{ proveedor.idProveedor }}</th>
+              <td class="text-center">{{ proveedor.ruc }}</td>
+              <td class="text-center">{{ proveedor.nombreComercial }}</td>
+              <td class="text-center">{{ proveedor.email }}</td>
+              <td class="text-center">{{ proveedor.telefono }}</td>
+              <td class="text-center">{{ proveedor.direccion }}</td>
               <td class="table-actions text-center">
                 <button
-                  [routerLink]="['/almacen/edit', almacen.idAlmacen]"
+                  [routerLink]="['/proveedor/edit', proveedor.idProveedor]"
                   class="btn btn-primary"
                   title="Editar"
                 >
                   <i class="bi bi-pencil-square"></i>
                 </button>
                 <button
-                  (click)="eliminarAlmacenPorId(almacen.idAlmacen)"
+                  (click)="eliminarProveedorPorId(proveedor.idProveedor)"
                   class="btn btn-danger"
                   title="Eliminar"
                 >

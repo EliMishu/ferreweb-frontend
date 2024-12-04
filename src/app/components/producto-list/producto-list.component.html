@@ -1,39 +1,94 @@
-<div class="producto-list">
-    <div class="subheader">
-        <h3>Lista de productos</h3>
-        <div class="buttons-list">
-            <button [routerLink]="['/productos/new']" class="btn btn-primary">
-                <i class="bi bi-plus-square"></i>
-                Agregar Producto
-            </button>
-            <button class="btn btn-danger" [ngClass]="this.idProducto===-1 ? 'disabled': ''"
-            (click)="eliminarProducto()">
-                <i class="bi bi-trash3"></i>
-                Eliminar Producto
-            </button>
-        </div>
+<div class="productos-list">
+    <div class="container subheader-table">
+      <h3>Productos</h3>
+      <button [routerLink]="['/productos/new']" class="btn btn-primary">
+        <i class="bi bi-plus-square"></i>
+        Nuevo Producto
+      </button>
     </div>
-    
+  
     <div class="container">
-        <div class="row gap-3 row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
-            <div class="card p-0" *ngFor="let producto of productos" (click)="seleccionarProducto(producto.idProducto)" 
-                [ngClass]="{'selected': idProducto === producto.idProducto}">
-                <img class="card-img-top" [src]="producto.rutaImagen" alt="Card image">
-                <div class="card-body">
-                    <h4 class="card-title">{{producto.nombre}}</h4>
-                    <p class="card-text">{{producto.descripcion}}</p>
-                    <div class="row gap-2 mx-1">
-                        <button [routerLink]="['/producto', producto.idProducto]" class="btn btn-secondary col">
-                            <i class="bi bi-info-square"></i>
-                            Detalles
-                        </button>
-                        <button [routerLink]="['/producto/edit', producto.idProducto]" class="btn btn-primary col">
-                            <i class="bi bi-pencil-square"></i>
-                            Editar
-                        </button>
-                    </div>
-                </div>
+      <div class="filters mb-4">
+          <div class="input-group">
+              <span class="input-group-text" id="search-addon">
+                <i class="bi bi-search"></i>
+              </span>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Buscar"
+                [(ngModel)]="searchTerm"
+                (ngModelChange)="obtenerProductos()"
+                id="searchInput"
+              />
             </div>
-        </div>
+            <label for="categoria">Categoria:</label>
+          <select name="categoria" id="categoria"
+              [(ngModel)] = "categoria" (ngModelChange)="obtenerProductos()">
+              <option value="">Todas</option>
+              <option *ngFor="let categoria of categorias" [value]="categoria.nombre">{{ categoria.nombre }}</option>
+          </select>  
+          <label for="unidad">Unidad:</label>
+          <select name="unidad" id="unidad"
+              [(ngModel)] = "unidad" (ngModelChange)="obtenerProductos()">
+              <option value="">Todas</option>
+              <option *ngFor="let unidad of unidades" [value]="unidad.nombre">{{ unidad.nombre }}</option>
+          </select>
+          <label for="estado">Estado:</label>
+          <select name="estado" id="estado"
+              [(ngModel)] = "estado" (ngModelChange)="obtenerProductos()">
+              <option value="">Todos</option>
+              <option value="stockBajo">Bajo Stock</option>
+          </select>
+      </div>
+  
+      <div class="table-responsive">
+        <table class="table table-primary table-bordered">
+          <thead>
+            <tr>
+              <th scope="col" class="text-center">No.</th>
+              <th scope="col" class="text-center">Nombre</th>
+              <th scope="col" class="text-center">Categoria</th>
+              <th scope="col" class="text-center">Unidad</th>
+              <th scope="col" class="text-center">Precio</th>
+              <th scope="col" class="text-center">Stock</th>
+              <th scope="col" class="text-center"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="" *ngFor="let producto of productos">
+              <th scope="row" class="text-center">{{ producto.idProducto }}</th>
+              <td class="text-center">{{ producto.nombre }}</td>
+              <td class="text-center">{{ producto.categoria.nombre }}</td>
+              <td class="text-center">{{ producto.unidadPorDefecto.nombre }}</td>
+              <td class="text-center">{{ obtenerPrecio(producto.unidadesPermitidas, producto.unidadPorDefecto) }}</td>
+              <td class="text-center">{{ producto.stock }}</td>
+              <td class="table-actions text-center">
+                <button
+                    [routerLink]="['/producto', producto.idProducto]"
+                    class="btn btn-secondary"
+                    title="Detalles">
+                    <i class="bi bi-info-square"></i>
+                </button>
+                <button
+                  [routerLink]="['/producto/edit', producto.idProducto]"
+                  class="btn btn-primary"
+                  title="Editar"
+                >
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+                <button
+                  (click)="eliminarProductoPorID(producto.idProducto)"
+                  class="btn btn-danger"
+                  title="Eliminar"
+                >
+                  <i class="bi bi-trash3"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-</div>
+  </div>
+  

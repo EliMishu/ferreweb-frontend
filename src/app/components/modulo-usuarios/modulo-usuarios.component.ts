@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Params, Router, RouterModule } from '@angular/router';
 import { UsuarioService } from '../../services/usuario.service';
 import { RolService } from '../../services/rol.service';
@@ -10,7 +10,7 @@ import { RolService } from '../../services/rol.service';
   templateUrl: './modulo-usuarios.component.html',
   styleUrl: './modulo-usuarios.component.css'
 })
-export class ModuloGestionComponent {
+export class ModuloGestionComponent implements OnInit {
   empleadosInfo = 0;
   usuariosActivosInfo = 0;
   usuariosInactivosInfo = 0;

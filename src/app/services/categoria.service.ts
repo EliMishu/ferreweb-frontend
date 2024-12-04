@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.prod';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
-import { Categoria } from '../models/categoria.models';
+import { Categoria } from '../models/categoria.model';
 import { CategoriaRequest } from '../models/categoria-req.model';
 
 @Injectable({
@@ -15,6 +15,14 @@ export class CategoriaService {
 
   obtenerCategorias(): Observable<Categoria[]> {
     return this.http.get<Categoria[]>(this.apiUrl);
+  }
+
+  contarCategorias(): Observable<number> {
+    return this.obtenerCategorias().pipe(
+      map((categorias) => {
+        return categorias.length;
+      })
+    );
   }
 
   obtenerCategoria(id: number): Observable<Categoria> {

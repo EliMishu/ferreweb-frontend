@@ -3,7 +3,7 @@ import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Va
 import { Router } from '@angular/router';
 import { ProductoService } from '../../services/producto.service';
 import { CommonModule } from '@angular/common';
-import { Categoria } from '../../models/categoria.models';
+import { Categoria } from '../../models/categoria.model';
 import { Almacen } from '../../models/almacen.model';
 import { AlmacenService } from '../../services/almacen.service';
 import { CategoriaService } from '../../services/categoria.service';
@@ -41,7 +41,6 @@ export class ProductoCreateComponent implements OnInit  {
       nombre: ['', [Validators.required, Validators.minLength(2)]],
       descripcion: ['', [Validators.required]],
       unidadPorDefecto: ['', Validators.required],
-      stock: [null, [Validators.required, Validators.min(0)]],
       categoria: ['', Validators.required],
       unidadesPermitidas: this.fb.array([controlUnidad]),
       almacenes: this.fb.array([this.crearControlAlmacenes()]),
@@ -111,15 +110,12 @@ export class ProductoCreateComponent implements OnInit  {
         next: () => this.router.navigate(['/productos']),
         error: (err: Error) => console.error('Error al crear el producto', err)
       });
-    }
+    } 
+    console.log(this.productoForm);
   }
 
   cancelarCreacion(): void {
     this.router.navigate(['/productos']);
-  }
-
-  onSubmit() {
-    console.log(this.productoForm.value);
   }
 
   get unidadesPermitidas(): FormArray {

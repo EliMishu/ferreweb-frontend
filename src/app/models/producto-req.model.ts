@@ -9,12 +9,14 @@ export interface ProductoRequest {
 }
 
 export interface UnidadPermitidaRequest {
+  idProducto?: number;
   nombreUnidad: string;
   precioPorUnidad: number;
   equivalencia: number;
 }
 
 export interface AlmacenProductoRequest {
+  idProducto?: number;
   nombreAlmacen: string;
   cantidadProductos: number;
 }

@@ -3,17 +3,18 @@ import { RouterModule } from '@angular/router';
 import { Almacen } from '../../models/almacen.model';
 import { AlmacenService } from '../../services/almacen.service';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-almacen-list',
   standalone: true,
-  imports: [CommonModule ,RouterModule],
+  imports: [CommonModule ,RouterModule, FormsModule],
   templateUrl: './almacen-list.component.html',
   styleUrl: './almacen-list.component.css'
 })
 export class AlmacenListComponent implements OnInit {
   almacenes: Almacen[] = [];
-  idAlmacen: number = -1;
+  searchTerm: string = '';
 
   constructor(private almacenService: AlmacenService) {}
 
@@ -22,7 +23,7 @@ export class AlmacenListComponent implements OnInit {
   }
 
   obtenerAlmacenes(): void {
-    this.almacenService.obtenerAlmacenes().subscribe((data) => {
+    this.almacenService.filtrarAlmacenes(this.searchTerm).subscribe((data) => {
       this.almacenes = data;
     })
   }
@@ -31,26 +32,5 @@ export class AlmacenListComponent implements OnInit {
     this.almacenService.eliminarAlmacen(id).subscribe(() => {
       this.obtenerAlmacenes();
     })
-  }
-
-  eliminarAlmacen(): void {
-    this.almacenService.eliminarAlmacen(this.idAlmacen).subscribe(() => {
-      this.obtenerAlmacenes();
-    })
-  }
-
-  seleccionarAlmacen(id: number): void {
-    this.idAlmacen = id;
-  }
-
-  @HostListener('document:click', ['$event'])
-  handleClickOutside(event: MouseEvent): void {
-    const target = event.target as HTMLElement;
-    const cardClicked = target.closest('.card');
-    const buttonClicked = target.closest('.btn')
-
-    if (!cardClicked && !buttonClicked) {
-      this.idAlmacen = -1;
-    }
   }
 }

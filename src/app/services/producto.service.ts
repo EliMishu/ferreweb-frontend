@@ -17,11 +17,74 @@ export class ProductoService {
     return this.http.get<Producto[]>(this.apiUrl);
   }
 
+  obtenerProductosBajoStock(): Observable<Producto[]> {
+    return this.obtenerProductos().pipe(
+      map((productos) => {
+        return productos.filter((producto) => {
+          return producto.stock <= 10;
+        })
+      })
+    );
+  }
+
+  filtrarProductos(searchTerm: string, categoria: string, unidad: string, estado: string): Observable<Producto[]> {
+    let productos = this.obtenerProductos();
+
+    if (estado.trim() !== '') {
+      if (estado === 'stockBajo') {
+        productos = productos.pipe(
+          map((productos) => {
+            return productos.filter((producto) => {
+              return producto.stock <= 10;
+            });
+          })
+        );
+      }
+    }
+
+    if (categoria.trim() !== '') {
+      productos = productos.pipe(
+        map((productos) => {
+          return productos.filter((producto) => {
+            return producto.categoria.nombre === categoria.trim();
+          })
+        })
+      );
+    }
+
+    if (unidad.trim() !== '') {
+      productos = productos.pipe(
+        map((productos) => {
+          return productos.filter((producto) => {
+            return producto.unidadPorDefecto.nombre === unidad.trim();
+          })
+        })
+      );
+    }
+
+    if (searchTerm.trim() !== '') {
+      let searchTerms = searchTerm.split(" ");
+
+      searchTerms.forEach(term => {
+        productos = productos.pipe(
+          map((productos) => {
+            return productos.filter((producto) => {
+              return (producto.idProducto.toString().includes(term.toLowerCase()) ||
+                      producto.nombre.toLowerCase().includes(term.toLowerCase()));
+            });
+          })
+        )
+      })
+    } 
+
+    return productos;
+  }
+
   obtenerProducto(id: number): Observable<Producto> {
     return this.http.get<Producto>(`${this.apiUrl}/${id}`);
   }
 
-  contarProductosActivos(): Observable<number> {
+  contarProductos(): Observable<number> {
     return this.obtenerProductos().pipe(
       map((productos) => {
         return productos.length;
@@ -37,6 +100,14 @@ export class ProductoService {
         );
         
         return productosFiltrados.length;
+      })
+    );
+  }
+
+  contarProductosBajoStock(): Observable<number> {
+    return this.obtenerProductosBajoStock().pipe(
+      map((productos) => {
+        return productos.length;
       })
     );
   }

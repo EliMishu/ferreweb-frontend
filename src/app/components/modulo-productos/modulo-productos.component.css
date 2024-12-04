@@ -1,9 +1,196 @@
-img {
+:host {
+    --almacenes-color-primary: #1fa70d;
+    --almacenes-color-secondary: #0f7e00;
+    --almacenes-color-hover: #0d5f02;
+    --categorias-color-primary: #ffd723;
+    --categorias-color-secondary: #e0a708;
+    --categorias-color-hover: #d49c02;
+    --productos-color-primary: #5ab8f7;
+    --productos-color-secondary: #2097e7;
+    --productos-color-hover: #117dc5;
+    --bajo-stock-color-primary: #ff2222;
+    --bajo-stock-color-secondary: #e70303;
+    --bajo-stock-color-hover: #cf0404;
+    --unidades-color-primary: #fc802e;
+    --unidades-color-secondary: #eb530d;
+    --unidades-color-hover: #d64604;
+  }
+  
+  .card {
+      min-width: 250px;
+  }
+  
+  .icon-info {
+    font-size: 4rem;
+  }
+  
+  .almacenes-card {
+    background-color: var(--almacenes-color-primary);
+  
+    .card-title {
+      font-size: 2rem;
+      color: var(--black);
+    }
+  
+    .card-subtitle {
+      color: var(--black);
+    }
+  
+    .icon-info {
+      color: var(--almacenes-color-secondary);
+    }
+  
+    .card-link {
+      text-decoration: none;
+      color: var(--black);
+      background-color: var(--almacenes-color-secondary);
+      padding: 0.5rem;
+      text-align: center;
+      border-radius: 0 0 0.25rem 0.25rem;
+      width: 100%;
+  
+      &:hover {
+        background-color: var(--almacenes-color-hover);
+        transition: all 0.4s ease;
+      }
+    }
+  }
+  
+  .categorias-card {
+    background-color: var(--categorias-color-primary);
+  
+    .card-title {
+      font-size: 2rem;
+      color: var(--black);
+    }
+  
+    .card-subtitle {
+      color: var(--black);
+    }
+  
+    .icon-info {
+      color: var(--categorias-color-secondary);
+    }
+  
+    .card-link {
+      text-decoration: none;
+      color: var(--black);
+      background-color: var(--categorias-color-secondary);
+      padding: 0.5rem;
+      text-align: center;
+      border-radius: 0 0 0.25rem 0.25rem;
+      width: 100%;
+  
+      &:hover {
+        background-color: var(--categorias-color-hover);
+        transition: all 0.4s ease;
+      }
+    }
+  }
+  
+  .productos-card {
+    background-color: var(--productos-color-primary);
+  
+    .card-title {
+      font-size: 2rem;
+      color: var(--black);
+    }
+  
+    .card-subtitle {
+      color: var(--black);
+    }
+  
+    .icon-info {
+      color: var(--productos-color-secondary);
+    }
+  
+    .card-link {
+      text-decoration: none;
+      color: var(--black);
+      background-color: var(--productos-color-secondary);
+      padding: 0.5rem;
+      text-align: center;
+      border-radius: 0 0 0.25rem 0.25rem;
+      width: 100%;
+  
+      &:hover {
+        background-color: var(--productos-color-hover);
+        transition: all 0.4s ease;
+      }
+    }
+  }
+  
+  .bajo-stock-card {
+    background-color: var(--bajo-stock-color-primary);
+  
+    .card-title {
+      font-size: 2rem;
+      color: var(--black);
+    }
+  
+    .card-subtitle {
+      color: var(--black);
+    }
+  
+    .icon-info {
+      color: var(--bajo-stock-color-secondary);
+    }
+  
+    .card-link {
+      text-decoration: none;
+      color: var(--black);
+      background-color: var(--bajo-stock-color-secondary);
+      padding: 0.5rem;
+      text-align: center;
+      border-radius: 0 0 0.25rem 0.25rem;
+      width: 100%;
+  
+      &:hover {
+        background-color: var(--bajo-stock-color-hover);
+        transition: all 0.4s ease;
+      }
+    }
+  }
+
+  .unidades-card {
+    background-color: var(--unidades-color-primary);
+  
+    .card-title {
+      font-size: 2rem;
+      color: var(--black);
+    }
+  
+    .card-subtitle {
+      color: var(--black);
+    }
+  
+    .icon-info {
+      color: var(--unidades-color-secondary);
+    }
+  
+    .card-link {
+      text-decoration: none;
+      color: var(--black);
+      background-color: var(--unidades-color-secondary);
+      padding: 0.5rem;
+      text-align: center;
+      border-radius: 0 0 0.25rem 0.25rem;
+      width: 100%;
+  
+      &:hover {
+        background-color: var(--unidades-color-hover);
+        transition: all 0.4s ease;
+      }
+    }
+  }
+  
+  img {
     max-width: 200px;
     max-height: 200px;
     padding: 10px;
-}
-
-.card {
+  }
+  
+  .card {
     min-width: 250px;
-}
+  }
+  

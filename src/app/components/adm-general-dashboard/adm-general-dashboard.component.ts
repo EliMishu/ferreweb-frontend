@@ -39,7 +39,7 @@ export class AdmGeneralDashboardComponent implements OnInit {
   }
 
   cargarInfoDeProductos(): void {
-    this.productoService.contarProductosActivos().subscribe(
+    this.productoService.contarProductos().subscribe(
       (conteo) => {
         this.productosInfo = conteo;
       }

@@ -1,9 +1,9 @@
-<div class="almacenes-list">
+<div class="unidad-list">
     <div class="container subheader-table">
-      <h3>Almacenes</h3>
-      <button [routerLink]="['/almacenes/new']" class="btn btn-primary">
+      <h3>Unidades</h3>
+      <button [routerLink]="['/unidades/new']" class="btn btn-primary">
         <i class="bi bi-plus-square"></i>
-        Nuevo Almacen
+        Nueva Unidad
       </button>
     </div>
   
@@ -18,7 +18,7 @@
                 class="form-control"
                 placeholder="Buscar"
                 [(ngModel)]="searchTerm"
-                (ngModelChange)="obtenerAlmacenes()"
+                (ngModelChange)="obtenerUnidades()"
                 id="searchInput"
               />
             </div>
@@ -29,26 +29,24 @@
           <thead>
             <tr>
               <th scope="col" class="text-center">No.</th>
-              <th scope="col" class="text-center">Nombre</th>
-              <th scope="col" class="text-center">Dirección</th>
+              <th scope="col" class="text-center">Unidad</th>
               <th scope="col" class="text-center"></th>
             </tr>
           </thead>
           <tbody>
-            <tr class="" *ngFor="let almacen of almacenes">
-              <th scope="row" class="text-center">{{ almacen.idAlmacen }}</th>
-              <td class="text-center">{{ almacen.nombre }}</td>
-              <td class="text-center">{{ almacen.direccion }}</td>
+            <tr class="" *ngFor="let unidad of unidades">
+              <th scope="row" class="text-center">{{ unidad.idUnidad }}</th>
+              <td class="text-center">{{ unidad.nombre }}</td>
               <td class="table-actions text-center">
                 <button
-                  [routerLink]="['/almacen/edit', almacen.idAlmacen]"
+                  [routerLink]="['/unidad/edit', unidad.idUnidad]"
                   class="btn btn-primary"
                   title="Editar"
                 >
                   <i class="bi bi-pencil-square"></i>
                 </button>
                 <button
-                  (click)="eliminarAlmacenPorId(almacen.idAlmacen)"
+                  (click)="eliminarUnidadPorId(unidad.idUnidad)"
                   class="btn btn-danger"
                   title="Eliminar"
                 >
