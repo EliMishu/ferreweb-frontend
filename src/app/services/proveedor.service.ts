@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { Proveedor } from '../models/proveedor.model';
 import { ProveedorRequest } from '../models/proveedor-req.model';
+import { CotizacionRequest } from '../models/cotizacion-req.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class ProveedorService {
     return this.http.get<Proveedor[]>(this.apiUrl);
   }
 
-  filtrarProveedores(searchTerm: string) {
+  filtrarProveedores(searchTerm: string): Observable<Proveedor[]> {
     let proveedores = this.obtenerProveedores();
 
     if (searchTerm.trim() !== "") {
@@ -55,6 +56,10 @@ export class ProveedorService {
 
   obtenerProveedorPorId(id: number): Observable<Proveedor> {
     return this.http.get<Proveedor>(`${this.apiUrl}/${id}`)
+  }
+
+  solicitarCotizaciones(request: CotizacionRequest): Observable<String> {
+    return this.http.post<String>(`${this.apiUrl}/proveedores/cotizacion`, request);
   }
 
   crearProveedor(request: ProveedorRequest): Observable<Proveedor> {
