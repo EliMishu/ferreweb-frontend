@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { RolService } from '../../services/rol.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AlertService } from '../../services/alert.service';
 
 @Component({
   selector: 'app-rol-create',
@@ -13,10 +14,12 @@ import { CommonModule } from '@angular/common';
 })
 export class RolCreateComponent {
   rolForm: FormGroup;
+  isSubmiting: boolean = false;
 
   constructor(
     private fb: FormBuilder,
     private rolService: RolService,
+    private alertService: AlertService,
     private router: Router
   ) {
     this.rolForm = this.fb.group({
@@ -34,12 +37,23 @@ export class RolCreateComponent {
 
   crearRol(): void {
     if (this.rolForm.valid) {
+      this.isSubmiting = true;
+      this.rolForm.disable();
+
       const request = this.rolForm.value;
       const imagen = this.rolForm.get('imagen')?.value;
 
       this.rolService.crearRol(request, imagen).subscribe({
         next: () => this.router.navigate(['/roles']),
-        error: (err: Error) => console.error('Error al crear el rol.', err)
+        error: (err) => {
+          this.alertService.showErrorWithTitle(err.statusText, err.error.message);
+          this.isSubmiting = false;
+          this.rolForm.enable();
+        },
+        complete: () => {
+          this.isSubmiting = false;
+          this.rolForm.enable();
+        }
       });
     }
   }

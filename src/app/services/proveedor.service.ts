@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment.prod';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import { map, Observable, of } from 'rxjs';
 import { Proveedor } from '../models/proveedor.model';
 import { ProveedorRequest } from '../models/proveedor-req.model';
 import { CotizacionRequest } from '../models/cotizacion-req.model';
+import { environment } from '../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProveedorService {
-  private apiUrl = environment.apiUrl = "/proveedores";
+  private apiUrl = environment.apiUrl + "/proveedores";
 
   constructor(private http: HttpClient) { }
 
@@ -58,8 +58,8 @@ export class ProveedorService {
     return this.http.get<Proveedor>(`${this.apiUrl}/${id}`)
   }
 
-  solicitarCotizaciones(request: CotizacionRequest): Observable<String> {
-    return this.http.post<String>(`${this.apiUrl}/proveedores/cotizacion`, request);
+  solicitarCotizaciones(request: CotizacionRequest): Observable<string> {
+    return this.http.post<string>(`${this.apiUrl}/cotizacion`, request, { responseType: 'text' as 'json'});
   }
 
   crearProveedor(request: ProveedorRequest): Observable<Proveedor> {

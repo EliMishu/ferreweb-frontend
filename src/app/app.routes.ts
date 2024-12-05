@@ -33,6 +33,7 @@ import { UnidadListComponent } from './components/unidad-list/unidad-list.compon
 import { ModuloComprasComponent } from './components/modulo-compras/modulo-compras.component';
 import { ProveedorListComponent } from './components/proveedor-list/proveedor-list.component';
 import { ProveedorCreateComponent } from './components/proveedor-create/proveedor-create.component';
+import { SolicitudCotizacionComponent } from './components/solicitud-cotizacion/solicitud-cotizacion.component';
 
 export const routes: Routes = [
     // Login routes
@@ -71,6 +72,7 @@ export const routes: Routes = [
     {path: 'modulo/compras', loadComponent: () => ModuloComprasComponent, canActivate:[adminGuard]},
     {path: 'proveedores', loadComponent: () => ProveedorListComponent, canActivate:[adminGuard]},
     {path: 'proveedores/new', loadComponent: () => ProveedorCreateComponent, canActivate:[adminGuard]},
+    {path: 'proveedores/cotizacion', loadComponent: () => SolicitudCotizacionComponent, canActivate:[adminGuard]},
     
     // Error route
     {path: '**', loadComponent: () => NotFoundComponent, canActivate:[routeCaseInsensitiveGuard]},

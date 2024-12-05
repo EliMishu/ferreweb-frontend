@@ -23,7 +23,9 @@ export class ProveedorListComponent implements OnInit {
   }
 
   obtenerProveedores(): void {
-    this.proveedorService.filtrarProveedores(this.searchTerm);
+    this.proveedorService.filtrarProveedores(this.searchTerm).subscribe((data) => {
+      this.proveedores = data;
+    });
   }
 
   eliminarProveedorPorId(id: number): void {

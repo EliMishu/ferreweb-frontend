@@ -17,7 +17,11 @@
             <input type="file" (change)="onFileChange($event)" class="form-control" id="imagen">
         </div>
 
-        <button type="submit" class="btn btn-primary">Crear Rol</button>
-        <button type="button" class="btn btn-secondary" (click)="cancelarCreacion()">Cancelar</button>
+        <button type="submit" class="btn btn-primary" 
+            [ngClass]="rolForm.invalid || isSubmiting ? 'disabled' : ''" 
+            [textContent]="isSubmiting ? 'Creando...' : 'Crear Rol'"></button>
+        <button type="button" class="btn btn-secondary" 
+            [ngClass]="isSubmiting ? 'disabled' : ''"
+            (click)="cancelarCreacion()">Cancelar</button>
     </form>
 </div>

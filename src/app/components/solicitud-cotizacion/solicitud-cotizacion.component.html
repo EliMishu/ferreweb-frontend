@@ -1,0 +1,43 @@
+<div class="container">
+    <h2>Solicitar Cotización</h2>
+    <form [formGroup]="cotizacionForm" (ngSubmit)="solicitarCotizacion()">
+        <div class="form-group">
+            <label for="idProveedores">Proveedores</label>
+            <select formControlName="idProveedores" class="form-control" id="idProveedores" multiple>
+                <option *ngFor="let proveedor of proveedores" [value]="proveedor.idProveedor">
+                    {{ proveedor.nombre }}
+                </option>
+            </select>
+            <div *ngIf="cotizacionForm.get('idProveedores')?.invalid && (cotizacionForm.get('idProveedores')?.touched || cotizacionForm.get('idProveedores')?.dirty)">
+                <small *ngIf="cotizacionForm.get('idProveedores')?.errors?.['required']">El campo Proveedores es obligatorio.</small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="idProductos">Productos</label>
+            <select formControlName="idProductos" class="form-control" id="idProductos" multiple>
+                <option *ngFor="let producto of productos" [value]="producto.idProducto">
+                    {{ producto.nombre }}
+                </option>
+            </select>
+            <div *ngIf="cotizacionForm.get('idProductos')?.invalid && (cotizacionForm.get('idProductos')?.touched || cotizacionForm.get('idProductos')?.dirty)">
+                <small *ngIf="cotizacionForm.get('idProductos')?.errors?.['required']">El campo Productos es obligatorio.</small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="fechaLimite">Fecha Límite</label>
+            <input formControlName="fechaLimite" type="date" class="form-control" id="fechaLimite">
+            <div *ngIf="cotizacionForm.get('fechaLimite')?.invalid && (cotizacionForm.get('fechaLimite')?.touched || cotizacionForm.get('fechaLimite')?.dirty)">
+                <small *ngIf="cotizacionForm.get('fechaLimite')?.errors?.['required']">El campo Fecha Límite es obligatorio.</small>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" 
+            [ngClass]="cotizacionForm.invalid || isSubmitting ? 'disabled' : ''" 
+            [textContent]="isSubmitting ? 'Solicitando...' : 'Solicitar'"></button>
+        <button type="button" class="btn btn-secondary" 
+            [ngClass]="isSubmitting ? 'disabled' : ''"
+            (click)="cancelarSolicitud()">Cancelar</button>
+    </form>
+</div>
