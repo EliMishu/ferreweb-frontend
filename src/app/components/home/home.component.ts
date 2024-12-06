@@ -1,17 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Categoria } from '../../models/categoria.model';
+import { CategoriaService } from '../../services/categoria.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
-  banners = [
-    'assets/images/inicio-1',
-    'assets/images/inicio-2',
-    'assets/images/inicio-3',
-    'assets/images/inicio-4'
-  ];
+export class HomeComponent implements OnInit {
+
+  categorias: Categoria[] = [];
+
+  constructor(
+    private categoriaService: CategoriaService,
+  ) {}
+
+  ngOnInit(): void {
+    this.obtenerCategorias();
+  }
+
+  obtenerCategorias() {
+    this.categoriaService.obtenerCategorias().subscribe((data) => {
+      this.categorias = data;
+    })
+  }
 }

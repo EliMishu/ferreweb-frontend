@@ -41,8 +41,8 @@
     <!-- Lista de Categorías -->
     <div class="categorias-list">
       <div class="categoria-item" *ngFor="let categoria of categorias">
-        <img [src]="categoria.imagen" [alt]="categoria.nombre" class="categoria-img" />
+        <img [src]="categoria.rutaImagen" [alt]="categoria.nombre" class="categoria-img" />
         <p class="categoria-nombre">{{ categoria.nombre }}</p>
       </div>
     </div>
-  </div>   
+  </div>
