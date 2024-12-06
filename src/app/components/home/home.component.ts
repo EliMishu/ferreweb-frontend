@@ -8,5 +8,10 @@ import { Component } from '@angular/core';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-
+  banners = [
+    'assets/images/inicio-1',
+    'assets/images/inicio-2',
+    'assets/images/inicio-3',
+    'assets/images/inicio-4'
+  ];
 }
