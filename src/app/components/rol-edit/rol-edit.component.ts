@@ -69,6 +69,7 @@ export class RolEditComponent {
         complete: () => {
           this.isSubmiting = false;
           this.rolForm.enable();
+          this.alertService.showSuccess("Rol actualizado con éxito.")
         }
       });
     }

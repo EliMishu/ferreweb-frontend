@@ -4,6 +4,8 @@ import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AlertService } from '../../services/alert.service';
+import { Usuario } from '../../models/usuario.model';
+import { delay } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +16,7 @@ import { AlertService } from '../../services/alert.service';
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  isSubmiting: boolean = false;
 
   constructor(private fb: FormBuilder, 
               private authService: AuthService, 
@@ -27,13 +30,38 @@ export class LoginComponent {
 
   login(): void {
     if (this.loginForm.valid) {
+      this.isSubmiting = true;
+      this.loginForm.disable();
       const { user, contrasena } = this.loginForm.value;
 
       this.authService.login(user, contrasena).subscribe({
-        error: (err) => this.alertService.showError(err.error.message)
+        next: (res) => {
+          this.redirect(res.usuario);
+        },
+        error: (err) => {
+          this.alertService.showErrorWithTitle("Login fallido", err.error.message);
+          this.isSubmiting = false;
+          this.loginForm.enable();
+        },
+        complete: () => {
+          this.isSubmiting = false;
+          this.loginForm.enable();
+        }
       });
+    }
+  }
+
+  private redirect(usuario: Usuario) {
+    if (usuario.roles.length > 1) {
+      this.router.navigate(['/rol/selection'])
+        .then(()=> {
+          this.alertService.showSuccessWithTitle("Login Exitoso", `Bienvenido ${usuario.nombre} ${usuario.apellidoPat}`);
+        });
     } else {
-      this.alertService.showError("Complete todos los campos")
+      this.router.navigate(['/'])
+        .then(()=> {
+          this.alertService.showSuccessWithTitle("Login Exitoso", `Bienvenido ${usuario.nombre} ${usuario.apellidoPat}`);
+        });
     }
   }
 }

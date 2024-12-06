@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { AuthService } from '../../auth/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { AlertService } from '../../services/alert.service';
+import { Usuario } from '../../models/usuario.model';
 
 @Component({
   selector: 'app-register',
@@ -15,6 +16,7 @@ import { AlertService } from '../../services/alert.service';
 
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
+  isSubmiting: boolean = false;
 
   constructor(private fb: FormBuilder, 
               private authService: AuthService, 
@@ -34,15 +36,41 @@ export class RegisterComponent implements OnInit {
 
   register(): void {
     if (this.registerForm.valid) {
+      this.isSubmiting = true;
+      this.registerForm.disable();
+
       const { user, contrasena, dni, nombre, apellidoPaterno, apellidoMaterno } = this.registerForm.value;
 
       this.authService.register(
         user, contrasena, dni, nombre, apellidoPaterno, apellidoMaterno
       ).subscribe({
-        error: (err) => this.alertService.showError(err.error.message)
+        next: (res) => {
+          this.redirect(res.usuario);
+        },
+        error: (err) => {
+          this.alertService.showErrorWithTitle("Registro fallido", err.error.message);
+          this.isSubmiting = false;
+          this.registerForm.enable();
+        },
+        complete: () => {
+          this.isSubmiting = false;
+          this.registerForm.enable();
+        }
       });
+    }
+  }
+
+  private redirect(usuario: Usuario) {
+    if (usuario.roles.length > 1) {
+      this.router.navigate(['/rol/selection'])
+        .then(()=> {
+          this.alertService.showSuccessWithTitle("Registro Exitoso", `Bienvenido ${usuario.nombre} ${usuario.apellidoPat}`);
+        });
     } else {
-      this.alertService.showError("Complete todos los campos");
+      this.router.navigate(['/'])
+        .then(()=> {
+          this.alertService.showSuccessWithTitle("Registro Exitoso", `Bienvenido ${usuario.nombre} ${usuario.apellidoPat}`);
+        });
     }
   }
 }

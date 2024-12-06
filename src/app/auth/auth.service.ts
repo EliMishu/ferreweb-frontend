@@ -19,12 +19,10 @@ export class AuthService {
     return this.http.post<any>(`${this.apiUrl}/login`, {user, contrasena}).pipe(
       tap (response => {
         if (response.token) {
-          console.log(response);
           this.establecerToken(response.token);
-          this.redirect(response);
         }
       })
-    )
+    );
   }
 
   register(user:string, contrasena: string, dni: string, nombre: string,
@@ -34,25 +32,16 @@ export class AuthService {
           tap (response => {
             if (response.token) {
               this.establecerToken(response.token);
-              this.redirect(response);
             }
           })
         )
   }
-
-  private redirect(response: any) {
-    if (response.usuario.roles.length > 1) {
-      this.router.navigate(['/rol/selection'])
-      .then(() => window.location.reload());
-    } else {
-      this.router.navigate(['/'])
-      .then(() => window.location.reload());
-    }
-  }
   
   private establecerToken(token: string): void {
-    if (typeof window !== 'undefined')
-    sessionStorage.setItem(this.tokenKey, token);
+    if (token) {
+      if (typeof window !== 'undefined')
+      sessionStorage.setItem(this.tokenKey, token);
+    }
   }
 
   obtenerToken(): string | null {

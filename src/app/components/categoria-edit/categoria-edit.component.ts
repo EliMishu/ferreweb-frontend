@@ -4,6 +4,7 @@ import { CategoriaService } from '../../services/categoria.service';
 import { Categoria } from '../../models/categoria.model';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AlertService } from '../../services/alert.service';
 
 @Component({
   selector: 'app-categoria-edit',
@@ -15,9 +16,11 @@ import { CommonModule } from '@angular/common';
 export class CategoriaEditComponent implements OnInit {
   categoriaForm: FormGroup;
   categoriaId!: number;
+  isSubmiting: boolean = false;
 
   constructor(
     private fb: FormBuilder,
+    private alertService: AlertService,
     private categoriaService: CategoriaService,
     private route: ActivatedRoute,
     private router: Router
@@ -57,7 +60,16 @@ export class CategoriaEditComponent implements OnInit {
 
       this.categoriaService.actualizarCategoria(this.categoriaId, request, imagen).subscribe({
         next: () => this.router.navigate(['/categorias']),
-        error: (err) => console.error('Error al actualizar la categoría', err)
+        error: (err) => {
+          this.alertService.showErrorWithTitle(err.statusText, err.error.message);
+          this.isSubmiting = false;
+          this.categoriaForm.enable();
+        },
+        complete: () => {
+          this.isSubmiting = false;
+          this.categoriaForm.enable();
+          this.alertService.showSuccess("Categoría actualizada con éxito.")
+        }
       });
     }
   }

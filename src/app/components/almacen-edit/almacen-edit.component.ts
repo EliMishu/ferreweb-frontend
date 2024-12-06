@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlmacenService } from '../../services/almacen.service';
 import { Almacen } from '../../models/almacen.model';
+import { AlertService } from '../../services/alert.service';
 
 @Component({
   selector: 'app-almacen-edit',
@@ -15,9 +16,11 @@ import { Almacen } from '../../models/almacen.model';
 export class AlmacenEditComponent {
   almacenForm: FormGroup;
   almacenId!: number;
+  isSubmiting: boolean = false;
 
   constructor(
     private fb: FormBuilder,
+    private alertService: AlertService,
     private almacenService: AlmacenService,
     private route: ActivatedRoute,
     private router: Router
@@ -30,7 +33,6 @@ export class AlmacenEditComponent {
 
   ngOnInit(): void {
     this.almacenId = Number(this.route.snapshot.paramMap.get('idAlmacen'));
-    console.log(this.almacenId);
     this.cargarAlmacen();
   }
 
@@ -52,12 +54,23 @@ export class AlmacenEditComponent {
 
   guardarAlmacen(): void {
     if (this.almacenForm.valid) {
+      this.isSubmiting = true;
+      this.almacenForm.disable();
+
       const request = this.almacenForm.value;
-      const imagen = this.almacenForm.get('imagen')?.value;
 
       this.almacenService.actualizarAlmacen(this.almacenId, request).subscribe({
         next: () => this.router.navigate(['/almacenes']),
-        error: (err) => console.error('Error al actualizar el almacen', err)
+        error: (err) => {
+          this.alertService.showErrorWithTitle(err.statusText, err.error.message);
+          this.isSubmiting = false;
+          this.almacenForm.enable();
+        },
+        complete: () => {
+          this.isSubmiting = false;
+          this.almacenForm.enable();
+          this.alertService.showSuccess("Almacén actualizado con éxito.")
+        }
       });
     }
   }
