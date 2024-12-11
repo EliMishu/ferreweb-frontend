@@ -4,17 +4,25 @@ import { ProveedorService } from '../../services/proveedor.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AlertService } from '../../services/alert.service';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { NgxMatFileInputModule } from '@angular-material-components/file-input';
+import { getImageTypes } from '../../constants/image.constants';
 
 @Component({
   selector: 'app-proveedor-create',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, 
+    ReactiveFormsModule,
+    MatInputModule,
+    MatFormFieldModule
+  ],
   templateUrl: './proveedor-create.component.html',
   styleUrl: './proveedor-create.component.css'
 })
 export class ProveedorCreateComponent implements OnInit {
   proveedorForm: FormGroup;
-  isSubmiting: boolean = false;
+  isSubmitting: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -27,7 +35,7 @@ export class ProveedorCreateComponent implements OnInit {
       nombre: ['', [Validators.required]],
       nombreComercial: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      telefono: ['', [Validators.required]],
+      telefono: ['', [Validators.required, Validators.pattern('^9\\d{8}$')]],
       direccion: ['', [Validators.required]]
     });
   }
@@ -38,7 +46,7 @@ export class ProveedorCreateComponent implements OnInit {
 
   crearProveedor(): void {
     if (this.proveedorForm.valid) {
-      this.isSubmiting = true;
+      this.isSubmitting = true;
       this.proveedorForm.disable();
 
       const request = this.proveedorForm.value;
@@ -47,15 +55,19 @@ export class ProveedorCreateComponent implements OnInit {
         next: () => this.router.navigate(['/proveedores']),
         error: (err) => {
           this.alertService.showErrorWithTitle(err.statusText, err.error.message);
-          this.isSubmiting = false;
+          this.isSubmitting = false;
           this.proveedorForm.enable();
         },
         complete: () => {
-          this.isSubmiting = false;
+          this.isSubmitting = false;
           this.proveedorForm.enable();
         }
       });
     }
+  }
+
+  getImageTypes(): string {
+    return getImageTypes().join(", ");
   }
 
   cancelarCreacion(): void {

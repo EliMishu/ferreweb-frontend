@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RolDetailComponent } from './rol-detail.component';
+import { PagoCompraComponent } from './pago-compra.component';
 
-describe('RolDetailComponent', () => {
-  let component: RolDetailComponent;
-  let fixture: ComponentFixture<RolDetailComponent>;
+describe('PagoCompraComponent', () => {
+  let component: PagoCompraComponent;
+  let fixture: ComponentFixture<PagoCompraComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RolDetailComponent]
+      imports: [PagoCompraComponent]
     })
     .compileComponents();
-    
-    fixture = TestBed.createComponent(RolDetailComponent);
+
+    fixture = TestBed.createComponent(PagoCompraComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

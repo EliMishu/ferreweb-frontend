@@ -5,18 +5,24 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AlmacenService } from '../../services/almacen.service';
 import { Almacen } from '../../models/almacen.model';
 import { AlertService } from '../../services/alert.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-almacen-edit',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, 
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule
+  ],
   templateUrl: './almacen-edit.component.html',
   styleUrl: './almacen-edit.component.css'
 })
 export class AlmacenEditComponent {
   almacenForm: FormGroup;
   almacenId!: number;
-  isSubmiting: boolean = false;
+  isSubmitting: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -54,7 +60,7 @@ export class AlmacenEditComponent {
 
   guardarAlmacen(): void {
     if (this.almacenForm.valid) {
-      this.isSubmiting = true;
+      this.isSubmitting = true;
       this.almacenForm.disable();
 
       const request = this.almacenForm.value;
@@ -62,12 +68,12 @@ export class AlmacenEditComponent {
       this.almacenService.actualizarAlmacen(this.almacenId, request).subscribe({
         next: () => this.router.navigate(['/almacenes']),
         error: (err) => {
-          this.alertService.showErrorWithTitle(err.statusText, err.error.message);
-          this.isSubmiting = false;
+          this.alertService.showWarning(err.error.message);
+          this.isSubmitting = false;
           this.almacenForm.enable();
         },
         complete: () => {
-          this.isSubmiting = false;
+          this.isSubmitting = false;
           this.almacenForm.enable();
           this.alertService.showSuccess("Almacén actualizado con éxito.")
         }

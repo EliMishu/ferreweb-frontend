@@ -16,10 +16,61 @@
                 </h5>
                 <h6 class="card-subtitle mb-2">Proveedores</h6>
               </div>
-              <i class="icon-info bi bi-file-earmark-person-fill"></i>
+              <i class="icon-info bi bi-building-fill"></i>
             </div>
           </div>
           <a [routerLink]="['/proveedores']" class="btn card-link mb-0 mx-0">
+            Más info &rarr;
+          </a>
+        </div>
+
+        <div class="card almacenes-card">
+          <div class="card-body">
+            <div class="d-flex flex-row justify-content-between">
+              <div>
+                <h5 class="card-title">
+                  {{ almacenesInfo }}
+                </h5>
+                <h6 class="card-subtitle mb-2">Almacenes</h6>
+              </div>
+              <i class="icon-info bi bi-buildings-fill"></i>
+            </div>
+          </div>
+          <a [routerLink]="['/almacenes']" class="btn card-link mb-0 mx-0">
+            Más info &rarr;
+          </a>
+        </div>
+
+        <div class="card compras-card">
+          <div class="card-body">
+            <div class="d-flex flex-row justify-content-between">
+              <div>
+                <h5 class="card-title">
+                  {{ comprasInfo }}
+                </h5>
+                <h6 class="card-subtitle mb-2">Compras</h6>
+              </div>
+              <i class="icon-info bi bi-basket2-fill"></i>
+            </div>
+          </div>
+          <a [routerLink]="['/ordenes-compra']" class="btn card-link mb-0 mx-0">
+            Más info &rarr;
+          </a>
+        </div>
+
+        <div class="card product-card">
+          <div class="card-body">
+            <div class="d-flex flex-row justify-content-between">
+              <div>
+                <h5 class="card-title">
+                  {{ stockBajoInfo }}
+                </h5>
+                <h6 class="card-subtitle mb-2">Stock Bajo</h6>
+              </div>
+              <i class="icon-info bi bi-box2-fill"></i>
+            </div>
+          </div>
+          <a (click)="redirigirConFiltros(['productos'], { estado: 'stockBajo' })" class="btn card-link mb-0 mx-0">
             Más info &rarr;
           </a>
         </div>

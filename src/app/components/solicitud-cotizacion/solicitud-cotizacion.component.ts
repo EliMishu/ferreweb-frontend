@@ -7,11 +7,25 @@ import { ProductoService } from '../../services/producto.service';
 import { AlertService } from '../../services/alert.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { CotizacionService } from '../../services/cotizacion.service';
+import { fechaLimiteValidator } from '../../validations/validations';
 
 @Component({
   selector: 'app-solicitud-cotizacion',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, 
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule
+  ],
   templateUrl: './solicitud-cotizacion.component.html',
   styleUrl: './solicitud-cotizacion.component.css'
 })
@@ -24,14 +38,15 @@ export class SolicitudCotizacionComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private proveedorService: ProveedorService,
+    private cotizacionService: CotizacionService,
     private productoService: ProductoService,
     private alertService: AlertService,
     private router: Router
   ) {
     this.cotizacionForm = this.fb.group({
-      idProveedores: [[], [Validators.required]],
+      idProveedores: [[], [Validators.required, Validators.minLength(1)]],
       idProductos: [[], [Validators.required]],
-      fechaLimite: ['', [Validators.required]]
+      fechaLimite: ['', [Validators.required, fechaLimiteValidator(3)]]
     });
   }
 
@@ -59,7 +74,7 @@ export class SolicitudCotizacionComponent implements OnInit {
 
       const request = this.cotizacionForm.value;
 
-      this.proveedorService.solicitarCotizaciones(request).subscribe({
+      this.cotizacionService.solicitarCotizaciones(request).subscribe({
         next: (res) => {
           console.log();
           this.router.navigate(['/proveedores']);

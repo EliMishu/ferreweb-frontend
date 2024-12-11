@@ -5,6 +5,7 @@ import { UsuarioService } from '../../services/usuario.service';
 import { ProductoService } from '../../services/producto.service';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { VentasAñoComponent } from '../../graphics/ventas-año/ventas-año.component';
+import { VentaService } from '../../services/venta.service';
 
 @Component({
   selector: 'app-adm-general-dashboard',
@@ -17,9 +18,11 @@ export class AdmGeneralDashboardComponent implements OnInit {
   empleadosInfo = 0;
   productosInfo = 0;
   ventasDiariasInfo = 0;
+  ventasAnualesInfo = 0;
 
   constructor (
     private router: Router,
+    private ventaService: VentaService,
     private usuarioService: UsuarioService,
     private productoService: ProductoService
   ) {}
@@ -28,6 +31,7 @@ export class AdmGeneralDashboardComponent implements OnInit {
       this.cargarInfoDeEmpleados();
       this.cargarInfoDeProductos();
       this.cargarInfoDeVentasDiarias();
+      this.cargarInfoDeVentasAnuales();
   }
 
   cargarInfoDeEmpleados(): void {
@@ -47,7 +51,15 @@ export class AdmGeneralDashboardComponent implements OnInit {
   }
   
   cargarInfoDeVentasDiarias(): void {
-    this.ventasDiariasInfo = 100;
+    this.ventaService.obtenerGananciaDiaria().subscribe((data) => {
+      this.ventasDiariasInfo = data;
+    });
+  }
+
+  cargarInfoDeVentasAnuales(): void {
+    this.ventaService.obtenerGananciaAnual().subscribe((data) => {
+      this.ventasAnualesInfo = data;
+    });
   }
 
   redirigirConFiltros(ruta: string[], queryParams: Params): void {

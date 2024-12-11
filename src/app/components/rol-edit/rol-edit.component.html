@@ -1,27 +1,66 @@
 <div class="container">
     <h2>Editar Rol</h2>
+  
     <form [formGroup]="rolForm" (ngSubmit)="guardarRol()">
-        <div class="form-group">
-            <label for="tipo">Nombre</label>
-            <input formControlName="tipo" type="text" class="form-control opacity-50" id="tipo" placeholder="Nombre" [readOnly]="true">
-            <div
-                *ngIf="rolForm.get('tipo')?.invalid && (rolForm.get('tipo')?.touched || rolForm.get('tipo')?.dirty)">
-                <small *ngIf="rolForm.get('tipo')?.errors?.['required']">El campo Nombre es obligatorio.</small>
-                <small *ngIf="rolForm.get('tipo')?.errors?.['minlength']">El Nombre debe tener al menos 2
-                    caracteres.</small>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="imagen">Imagen</label>
-            <input type="file" (change)="onFileChange($event)" class="form-control" id="imagen">
-        </div>
-
-        <button type="submit" class="btn btn-primary" 
-            [ngClass]="rolForm.invalid || isSubmiting ? 'disabled' : ''" 
-            [textContent]="isSubmiting ? 'Guardando...' : 'Guardar Cambios'"></button>
-        <button type="button" class="btn btn-secondary" 
-            [ngClass]="isSubmiting ? 'disabled' : ''"
-            (click)="cancelarEdicion()">Cancelar</button>
+  
+      <div class="form-group">
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label>Nombre</mat-label>
+          <input
+            matInput
+            formControlName="tipo"
+            type="text"
+            id="tipo"
+            placeholder="Nombre del rol"
+            readonly
+          />
+          <mat-error *ngIf="rolForm.get('tipo')?.hasError('required')">
+            El campo Nombre es obligatorio.
+          </mat-error>
+          <mat-error *ngIf="rolForm.get('tipo')?.hasError('minlength')">
+            El Nombre debe tener al menos 2 caracteres.
+          </mat-error>
+        </mat-form-field>
+      </div>
+  
+      <div class="form-group">
+        <mat-form-field appearance="fill" class="w-100">
+            <ngx-mat-file-input 
+              formControlName="imagen" 
+              [multiple]="false" 
+              placeholder="Elija una imagen" 
+              [accept]="getImageTypes()" 
+              [attr.disabled]="true"
+              >
+            </ngx-mat-file-input>
+            <mat-error *ngIf="rolForm.get('imagen')?.hasError('required')">
+              Debe subir una imagen.
+            </mat-error>
+            <mat-error *ngIf="rolForm.get('imagen')?.hasError('tipoArchivoInvalido')">
+              Tipo de archivo no permitido. Solo se aceptan imágenes.
+            </mat-error>
+          </mat-form-field>
+      </div>
+  
+      <div class="form-group d-flex justify-content-between">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [ngClass]="{ disabled: rolForm.invalid || isSubmiting }"
+          [attr.disabled]="rolForm.invalid || isSubmiting ? true : null"
+        >
+          {{ isSubmiting ? 'Guardando...' : 'Guardar Cambios' }}
+        </button>
+  
+        <button
+          type="button"
+          class="btn btn-secondary"
+          [ngClass]="{ disabled: isSubmiting }"
+          (click)="cancelarEdicion()"
+        >
+          Cancelar
+        </button>
+      </div>
     </form>
-</div>
+  </div>
+  

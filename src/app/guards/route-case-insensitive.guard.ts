@@ -10,6 +10,7 @@ export const routeCaseInsensitiveGuard: CanActivateFn = (route, state) => {
     router.navigateByUrl(lowerCasePath);
     return false;
   }
-
+  
+  router.navigateByUrl(originalPath);
   return true;
 };

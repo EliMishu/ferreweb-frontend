@@ -20,21 +20,8 @@
       min-width: 250px;
   }
   
-  .icon-info {
-    font-size: 4rem;
-  }
-  
   .almacenes-card {
     background-color: var(--almacenes-color-primary);
-  
-    .card-title {
-      font-size: 2rem;
-      color: var(--black);
-    }
-  
-    .card-subtitle {
-      color: var(--black);
-    }
   
     .icon-info {
       color: var(--almacenes-color-secondary);
@@ -59,15 +46,6 @@
   .categorias-card {
     background-color: var(--categorias-color-primary);
   
-    .card-title {
-      font-size: 2rem;
-      color: var(--black);
-    }
-  
-    .card-subtitle {
-      color: var(--black);
-    }
-  
     .icon-info {
       color: var(--categorias-color-secondary);
     }
@@ -90,15 +68,6 @@
   
   .productos-card {
     background-color: var(--productos-color-primary);
-  
-    .card-title {
-      font-size: 2rem;
-      color: var(--black);
-    }
-  
-    .card-subtitle {
-      color: var(--black);
-    }
   
     .icon-info {
       color: var(--productos-color-secondary);
@@ -123,15 +92,6 @@
   .bajo-stock-card {
     background-color: var(--bajo-stock-color-primary);
   
-    .card-title {
-      font-size: 2rem;
-      color: var(--black);
-    }
-  
-    .card-subtitle {
-      color: var(--black);
-    }
-  
     .icon-info {
       color: var(--bajo-stock-color-secondary);
     }
@@ -154,15 +114,6 @@
 
   .unidades-card {
     background-color: var(--unidades-color-primary);
-  
-    .card-title {
-      font-size: 2rem;
-      color: var(--black);
-    }
-  
-    .card-subtitle {
-      color: var(--black);
-    }
   
     .icon-info {
       color: var(--unidades-color-secondary);

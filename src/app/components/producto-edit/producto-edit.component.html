@@ -1,316 +1,228 @@
-<!-- <div class="container">
+<div class="container">
   <h2>Editar Producto</h2>
-  <form [formGroup]="productoForm" (ngSubmit)="actualizarProducto()">
 
+  <form [formGroup]="productoForm" (ngSubmit)="editarProducto()">
+
+    <!-- Nombre -->
     <div class="form-group">
-      <label for="nombre">Nombre</label>
-      <input
-        formControlName="nombre"
-        type="text"
-        class="form-control"
-        id="nombre"
-        placeholder="Nombre"
-      />
-      <div
-        *ngIf="
-          productoForm.get('nombre')?.invalid &&
-          (productoForm.get('nombre')?.touched ||
-            productoForm.get('nombre')?.dirty)
-        "
-      >
-        <small *ngIf="productoForm.get('nombre')?.errors?.['required']"
-          >El campo Nombre es obligatorio.</small
-        >
-        <small *ngIf="productoForm.get('nombre')?.errors?.['minlength']"
-          >El Nombre debe tener al menos 2 caracteres.</small
-        >
-      </div>
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Nombre</mat-label>
+        <input
+          matInput
+          formControlName="nombre"
+          type="text"
+          id="nombre"
+          placeholder="Nombre del producto"
+        />
+        <mat-error *ngIf="productoForm.get('nombre')?.hasError('required')">
+          El campo Nombre es obligatorio.
+        </mat-error>
+        <mat-error *ngIf="productoForm.get('nombre')?.hasError('minlength')">
+          El Nombre debe tener al menos 2 caracteres.
+        </mat-error>
+      </mat-form-field>
     </div>
 
+    <!-- Categoría -->
     <div class="form-group">
-      <label for="categoria">Categoría</label>
-      <select formControlName="categoria" class="form-control" id="categoria">
-        <option *ngFor="let categoria of categorias" [value]="categoria">
-          {{ categoria }}
-        </option>
-      </select>
-      <div
-        *ngIf="
-          productoForm.get('categoria')?.invalid &&
-          (productoForm.get('categoria')?.touched ||
-            productoForm.get('categoria')?.dirty)
-        "
-      >
-        <small *ngIf="productoForm.get('categoria')?.errors?.['required']"
-          >Debe seleccionar una categoría.</small
-        >
-      </div>
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Categoría</mat-label>
+        <mat-select formControlName="categoria" id="categoria">
+          <mat-option *ngFor="let categoria of categorias" [value]="categoria.nombre">
+            {{ categoria.nombre }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="productoForm.get('categoria')?.hasError('required')">
+          Debe seleccionar una categoría.
+        </mat-error>
+      </mat-form-field>
     </div>
 
+    <!-- Descripción -->
     <div class="form-group">
-      <label for="descripcion">Descripción</label>
-      <textarea
-        formControlName="descripcion"
-        class="form-control"
-        id="descripcion"
-      ></textarea>
-      <div
-        *ngIf="
-          productoForm.get('descripcion')?.invalid &&
-          (productoForm.get('descripcion')?.touched ||
-            productoForm.get('descripcion')?.dirty)
-        "
-      >
-        <small *ngIf="productoForm.get('descripcion')?.errors?.['required']"
-          >El campo Descripción es obligatorio.</small
-        >
-      </div>
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Descripción</mat-label>
+        <textarea
+          matInput
+          formControlName="descripcion"
+          id="descripcion"
+          placeholder="Descripción del producto"
+        ></textarea>
+        <mat-error *ngIf="productoForm.get('descripcion')?.hasError('required')">
+          El campo Descripción es obligatorio.
+        </mat-error>
+      </mat-form-field>
     </div>
 
+    <!-- Unidades Permitidas (Unidad por defecto | Precio) -->
     <div class="form-group">
-      <label for="unidadDef">Unidad por defecto</label>
+        <div formArrayName="unidadesPermitidas">
+            <div formGroupName="0">
+                <mat-form-field appearance="fill" class="w-50">
+                  <mat-label>Unidad por defecto</mat-label>
+                  <mat-select formControlName="nombreUnidad" (selectionChange)="onUnidadChange($event)">
+                    <mat-option value="" disabled>Elegir unidad</mat-option>
+                    <mat-option *ngFor="let unidad of unidades" [value]="unidad.nombre">{{ unidad.nombre }}</mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="productoForm.get('unidadPorDefecto')?.hasError('required')">
+                    La unidad por defecto es obligatoria.
+                  </mat-error>
+                </mat-form-field>
+          
+                <mat-form-field appearance="fill" class="w-50">
+                  <mat-label>Precio</mat-label>
+                  <input
+                    matInput
+                    type="number"
+                    formControlName="precioPorUnidad"
+                    placeholder="Precio"
+                  />
+                  <mat-error *ngIf="unidadesPermitidas.at(0).get('precioPorUnidad')?.hasError('required')">
+                    El precio es obligatorio.
+                  </mat-error>
+                  <mat-error *ngIf="unidadesPermitidas.at(0).get('precioPorUnidad')?.hasError('min')">
+                    El precio no puede ser negativo.
+                  </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+    <!-- Unidades Permitidas (Unidad | Precio | Equivalencia) -->
+    <div class="form-group">
       <div formArrayName="unidadesPermitidas">
-        <div formGroupName="0">
-          <div class="input-group">
-            <select
-              name="unidadDef"
-              class="form-control"
-              id="unidadDef"
-              formControlName="nombreUnidad"
-              (change)="onUnidadChange($event)"
-            >
-              <option value="" disabled selected>Elegir unidad</option>
-              <option *ngFor="let unidad of unidades" [value]="unidad.nombre">
-                {{ unidad.nombre }}
-              </option>
-            </select>
-            <input
-              type="number"
-              placeholder="Precio"
-              class="form-control"
-              formControlName="precioPorUnidad"
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        *ngIf="
-          unidadesPermitidas.at(0).get('nombreUnidad')?.invalid &&
-          (unidadesPermitidas.at(0).get('nombreUnidad')?.touched ||
-            unidadesPermitidas.at(0).get('nombreUnidad')?.dirty)
-        "
-      >
-        <small
-          *ngIf="unidadesPermitidas.at(0).get('nombreUnidad')?.errors?.['required']"
-          >La unidad por defecto es obligatoria.</small
-        >
-      </div>
-      <div
-        *ngIf="
-          unidadesPermitidas.at(0).get('precioPorUnidad')?.invalid &&
-          (unidadesPermitidas.at(0).get('precioPorUnidad')?.touched ||
-            unidadesPermitidas.at(0).get('precioPorUnidad')?.dirty)
-        "
-      >
-        <small
-          *ngIf="unidadesPermitidas.at(0).get('precioPorUnidad')?.errors?.['required']"
-          >El precio es obligatorio.</small
-        >
-        <small
-          *ngIf="unidadesPermitidas.at(0).get('precioPorUnidad')?.errors?.['min']"
-          >El precio no puede ser negativo.</small
-        >
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="unidadDef">Unidades permitidas</label>
-      <div formArrayName="unidadesPermitidas">
-        <div *ngFor="let unidad of unidadesPermitidas.controls; let i = index">
-          <div *ngIf="i != 0">
-            <div class="input-group" [formGroupName]="i">
-              <select
-                name="unidadDef"
-                class="form-control"
-                id="unidadDef"
-                formControlName="nombreUnidad"
-              >
-                <option value="" disabled selected>Elegir unidad</option>
-                <option *ngFor="let unidad of unidades" [value]="unidad.nombre">
-                  {{ unidad.nombre }}
-                </option>
-              </select>
-              <input
-                type="number"
-                placeholder="Precio"
-                class="form-control"
-                formControlName="precioPorUnidad"
-              />
-              <input
-                type="number"
-                placeholder="Equivalencia"
-                class="form-control"
-                formControlName="equivalencia"
-              />
-              <button
-                type="button"
-                class="btn btn-danger"
-                (click)="eliminarUnidad(i)"
-              >
-                <i class="bi bi-trash"></i>
-              </button>
-            </div>
-            <div
-              *ngIf="
-                unidad.get('nombreUnidad')?.invalid &&
-                (unidad.get('nombreUnidad')?.touched ||
-                  unidad.get('nombreUnidad')?.dirty)
-              "
-            >
-              <small *ngIf="unidad.get('nombreUnidad')?.errors?.['required']"
-                >Seleccione una unidad.</small
-              >
-              <small
-                *ngIf="unidad.get('nombreUnidad')?.errors?.['unidadRepetida']"
-                >La unidad ya existe.</small
-              >
-            </div>
-            <div
-              *ngIf="
-                unidad.get('precioPorUnidad')?.invalid &&
-                (unidad.get('precioPorUnidad')?.touched ||
-                  unidad.get('precioPorUnidad')?.dirty)
-              "
-            >
-              <small *ngIf="unidad.get('precioPorUnidad')?.errors?.['required']"
-                >El precio es obligatorio.</small
-              >
-              <small *ngIf="unidad.get('precioPorUnidad')?.errors?.['min']"
-                >El precio no puede ser negativo.</small
-              >
-            </div>
-            <div
-              *ngIf="
-                unidad.get('equivalencia')?.invalid &&
-                (unidad.get('equivalencia')?.touched ||
-                  unidad.get('equivalencia')?.dirty)
-              "
-            >
-              <small *ngIf="unidad.get('equivalencia')?.errors?.['required']"
-                >La equivalencia es obligatoria.</small
-              >
-              <small *ngIf="unidad.get('equivalencia')?.errors?.['min']"
-                >La equivalencia no puede ser negativa.</small
-              >
-            </div>
-          </div>
-        </div>
-      </div>
-      <button
-        type="button"
-        class="btn btn-secondary m-2"
-        (click)="agregarUnidad()"
-      >
-        Agregar Unidad
-      </button>
-    </div>
-
-    <div class="form-group">
-      <label for="almacen">Almacenes</label>
-      <div formArrayName="almacenes">
-        <div
-          *ngFor="let almacen of almacenesSeleccionados.controls; let i = index"
-        >
-          <div class="input-group" [formGroupName]="i">
-            <select
-              name="unidadDef"
-              class="form-control"
-              id="unidadDef"
-              formControlName="nombreAlmacen"
-            >
-              <option value="" disabled selected>Elegir almacen</option>
-              <option
-                *ngFor="let almacen of almacenes"
-                [value]="almacen.nombre"
-              >
-                {{ almacen.nombre }}
-              </option>
-            </select>
-            <input
-              type="number"
-              placeholder="Cantidad"
-              class="form-control"
-              formControlName="cantidadProductos"
-            />
-            <button
-              type="button"
-              class="btn btn-danger"
-              (click)="eliminarAlmacen(i)"
-            >
-              <i class="bi bi-trash"></i>
-            </button>
-          </div>
-          <div
-            *ngIf="
-              almacen.get('nombreAlmacen')?.invalid &&
-              (almacen.get('nombreAlmacen')?.touched ||
-                almacen.get('nombreAlmacen')?.dirty)
-            "
-          >
-            <small *ngIf="almacen.get('nombreAlmacen')?.errors?.['required']"
-              >Seleccione un almacén.</small
-            >
-            <small
-              *ngIf="almacen.get('nombreAlmacen')?.errors?.['almacenRepetido']"
-              >El almacén ya existe.</small
-            >
-          </div>
-          <div
-            *ngIf="
-              almacen.get('cantidadProductos')?.invalid &&
-              (almacen.get('cantidadProductos')?.touched ||
-                almacen.get('cantidadProductos')?.dirty)
-            "
-          >
-            <small
-              *ngIf="almacen.get('cantidadProductos')?.errors?.['required']"
-              >La cantidad es obligatoria.</small
-            >
-            <small *ngIf="almacen.get('cantidadProductos')?.errors?.['min']"
-              >La cantidad no puede ser negativa.</small
-            >
-          </div>
-        </div>
-      </div>
-      <button
-        type="button"
-        class="btn btn-secondary m-2"
-        (click)="agregarAlmacen()"
-      >
-        Agregar Almacén
-      </button>
-    </div>
-
-    <div class="form-group">
-      <label for="imagen">Imagen</label>
-      <input
-        type="file"
-        (change)="onFileChange($event)"
-        class="form-control"
-        id="imagen"
-      />
-    </div>
+        <div *ngFor="let unidadControl of unidadesPermitidas.controls; let i = index" [formGroupName]="i"
+            class="form-group d-flex">
+          @if (i>0) {
+              <!-- Unidad -->
+              <mat-form-field appearance="fill">
+                <mat-label>Unidad</mat-label>
+                <mat-select formControlName="nombreUnidad">
+                  <mat-option value="" disabled>Elegir unidad</mat-option>
+                  <mat-option *ngFor="let unidad of unidades" [value]="unidad.nombre">{{ unidad.nombre }}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="unidadControl.get('nombreUnidad')?.hasError('required')">
+                    Debe seleccionar una unidad.
+                  </mat-error>
+                <mat-error *ngIf="unidadControl.get('nombreUnidad')?.hasError('unidadRepetida')">
+                    Esta unidad ya ha sido seleccionada. Elija otra.
+                  </mat-error>
+              </mat-form-field>
     
+              <!-- Precio -->
+              <mat-form-field appearance="fill">
+                <mat-label>Precio</mat-label>
+                <input type="number" formControlName="precioPorUnidad" matInput placeholder="Precio" appLimitDecimal/>
+                <mat-error *ngIf="unidadControl.get('precioPorUnidad')?.hasError('required')">
+                  El precio es obligatorio.
+                </mat-error>
+                <mat-error *ngIf="unidadControl.get('precioPorUnidad')?.hasError('min')">
+                  El precio no puede ser negativo.
+                </mat-error>
+              </mat-form-field>
+    
+              <!-- Equivalencia (por defecto es 1) -->
+              <mat-form-field appearance="fill">
+                <mat-label>Equivalencia</mat-label>
+                <input type="number" formControlName="equivalencia" matInput placeholder="Equivalencia" appLimitDecimal/>
+                <mat-error *ngIf="unidadControl.get('equivalencia')?.hasError('required')">
+                    La equivalencia es obligatoria.
+                  </mat-error>
+                  <mat-error *ngIf="unidadControl.get('equivalencia')?.hasError('min')">
+                    La equivalencia no puede ser negativa.
+                  </mat-error>
+              </mat-form-field>
+    
+              <!-- Botón para eliminar unidad -->
+              <button type="button" (click)="eliminarUnidad(i)" mat-fab>
+                <mat-icon>delete</mat-icon>
+              </button>
+          }
+        </div>
+      </div>
+
+      <button type="button" class="btn btn-secondary m-2" (click)="agregarUnidad()">Agregar Unidad</button>
+    </div>
+
+    <!-- Almacenes -->
     <div class="form-group">
-      <button type="submit" class="btn btn-primary">Actualizar Producto</button>
+      <div formArrayName="almacenes">
+        <div *ngFor="let almacenControl of almacenesSeleccionados.controls; let i = index" [formGroupName]="i" class="d-flex">
+          
+          <!-- Almacén -->
+          <mat-form-field appearance="fill" class="w-50">
+            <mat-label>Almacén</mat-label>
+            <mat-select formControlName="nombreAlmacen">
+              <mat-option value="" disabled>Elegir almacén</mat-option>
+              <mat-option *ngFor="let almacen of almacenes" [value]="almacen.nombre">{{ almacen.nombre }}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="almacenControl.get('nombreAlmacen')?.hasError('required')">
+                Debe seleccionar un almacén.
+              </mat-error>
+              <mat-error *ngIf="almacenControl.get('nombreAlmacen')?.hasError('almacenRepetido')">
+                El almacén no puede estar repetido.
+              </mat-error>
+          </mat-form-field>
+
+          <!-- Cantidad -->
+          <mat-form-field appearance="fill" class="w-50">
+            <mat-label>Cantidad de producto</mat-label>
+            <input
+              type="number"
+              formControlName="cantidadProductos"
+              matInput
+              placeholder="Cantidad"
+              appLimitDecimal
+            />
+            <mat-error *ngIf="almacenControl.get('cantidadProductos')?.hasError('required')">
+                La cantidad de productos es obligatoria.
+              </mat-error>
+              <mat-error *ngIf="almacenControl.get('cantidadProductos')?.hasError('min')">
+                La cantidad de productos no puede ser negativa.
+              </mat-error>
+          </mat-form-field>
+
+          <button type="button" (click)="eliminarAlmacen(i)" mat-fab>
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <button type="button" class="btn btn-secondary m-2" (click)="agregarAlmacen()">Agregar Almacén</button>
+    </div>
+
+    <!-- Imagen -->
+    <div class="form-group">
+      <mat-form-field appearance="fill" class="w-100">
+        <ngx-mat-file-input
+          formControlName="imagen"
+          [multiple]="false"
+          placeholder="Elija una imagen"
+          [accept]="getImageTypes()"
+        ></ngx-mat-file-input>
+        <mat-error *ngIf="productoForm.get('imagen')?.hasError('tipoArchivoInvalido')">
+          Tipo de archivo no permitido. Solo se aceptan imágenes.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Botones -->
+    <div class="form-group d-flex justify-content-between">
       <button
-        type="button"
-        class="btn btn-secondary"
-        (click)="cancelarEdicion()"
+        type="submit"
+        class="btn btn-primary"
+        [ngClass]="{ disabled: productoForm.invalid || isSubmitting }"
+        [attr.disabled]="productoForm.invalid || isSubmitting ? true : null"
       >
-        Cancelar
+        {{ isSubmitting ? "Guardando..." : "Guardar Cambios" }}
       </button>
+      <button 
+          type="button" 
+          class="btn btn-secondary" 
+          [ngClass]="{'disabled': isSubmitting}" 
+          (click)="cancelarEdicion()">
+          Cancelar
+        </button>
     </div>
   </form>
 </div>
- -->

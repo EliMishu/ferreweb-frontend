@@ -4,17 +4,29 @@ import { Router } from '@angular/router';
 import { CategoriaService } from '../../services/categoria.service';
 import { CommonModule } from '@angular/common';
 import { AlertService } from '../../services/alert.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { NgxMatFileInputModule } from '@angular-material-components/file-input';
+import { getImageTypes } from '../../constants/image.constants';
+import { imagenValidator } from '../../validations/validations';
   
 @Component({
   selector: 'app-categoria-create',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, 
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    NgxMatFileInputModule
+  ],
   templateUrl: './categoria-create.component.html',
   styleUrl: './categoria-create.component.css'
 })
 export class CategoriaCreateComponent {
   categoriaForm: FormGroup;
-  isSubmiting: boolean = false;
+  isSubmitting: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -25,7 +37,7 @@ export class CategoriaCreateComponent {
     this.categoriaForm = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(2)]],
       descripcion: ['', [Validators.required]],
-      imagen: [null]
+      imagen: [null, [imagenValidator()]]
     });
   }
 
@@ -36,9 +48,13 @@ export class CategoriaCreateComponent {
     });
   }
 
+  get selectedFile(): any {
+    return this.categoriaForm.get('imagen') as unknown as File;
+  }
+
   crearCategoria(): void {
     if (this.categoriaForm.valid) {
-      this.isSubmiting = true;
+      this.isSubmitting = true;
       this.categoriaForm.disable();
 
       const request = this.categoriaForm.value;
@@ -47,14 +63,14 @@ export class CategoriaCreateComponent {
       this.categoriaService.crearCategoria(request, imagen).subscribe({
         next: () => this.router.navigate(['/categorias']),
         error: (err) => {
-          this.alertService.showErrorWithTitle(err.statusText, err.error.message);
-          this.isSubmiting = false;
+          this.alertService.showWarning(err.error.message);
+          this.isSubmitting = false;
           this.categoriaForm.enable();
         },
         complete: () => {
-          this.isSubmiting = false;
+          this.isSubmitting = false;
           this.categoriaForm.enable();
-          this.alertService.showSuccess("Categoría creade con éxito.")
+          this.alertService.showSuccess("Producto creado con éxito.")
         }
       });
     }
@@ -62,5 +78,9 @@ export class CategoriaCreateComponent {
 
   cancelarCreacion(): void {
     this.router.navigate(['/categorias']);
+  }
+
+  getImageTypes(): string {
+    return getImageTypes().join(', ')
   }
 }

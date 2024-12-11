@@ -9,12 +9,32 @@ import { AlmacenService } from '../../services/almacen.service';
 import { CategoriaService } from '../../services/categoria.service';
 import { Unidad } from '../../models/unidad.model';
 import { UnidadService } from '../../services/unidad.service';
-import { almacenUnicoValidator, unidadUnicaValidator } from '../../validations/validations';
+import { almacenUnicoValidator, imagenValidator, unidadUnicaValidator } from '../../validations/validations';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatOptionModule } from '@angular/material/core';
+import { MatIconModule } from '@angular/material/icon';
+import { getImageTypes } from '../../constants/image.constants';
+import { NgxMatFileInputModule } from '@angular-material-components/file-input';
+import { AlertService } from '../../services/alert.service';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { LimitDecimalDirective } from '../../directives/limit-decimal.directive';
 
 @Component({
   selector: 'app-producto-create',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, 
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatOptionModule,
+    MatIconModule,
+    MatSelectModule,
+    MatButtonModule,
+    NgxMatFileInputModule,
+    LimitDecimalDirective
+  ],
   templateUrl: './producto-create.component.html',
   styleUrl: './producto-create.component.css'
 })
@@ -23,11 +43,13 @@ export class ProductoCreateComponent implements OnInit  {
   categorias: Categoria[] = [];
   almacenes: Almacen[] = [];
   unidades: Unidad[] = [];
+  isSubmitting: boolean = false;
 
   constructor(
     private fb: FormBuilder,
     private productoService: ProductoService,
     private router: Router,
+    private alertService: AlertService,
     private almacenService: AlmacenService,
     private categoriaService: CategoriaService,
     private unidadService: UnidadService
@@ -44,7 +66,7 @@ export class ProductoCreateComponent implements OnInit  {
       categoria: ['', Validators.required],
       unidadesPermitidas: this.fb.array([controlUnidad]),
       almacenes: this.fb.array([this.crearControlAlmacenes()]),
-      imagen: [null]
+      imagen: [null, [Validators.required, imagenValidator()]]
     });
   }
 
@@ -95,7 +117,7 @@ export class ProductoCreateComponent implements OnInit  {
   }
 
   onUnidadChange(event: any): void {
-    const unidad = event.target.value;
+    const unidad = event.value;
     this.productoForm.patchValue({
       unidadPorDefecto: unidad
     });
@@ -103,15 +125,26 @@ export class ProductoCreateComponent implements OnInit  {
 
   crearProducto(): void {
     if (this.productoForm.valid) {
+      this.isSubmitting = true;
+      this.productoForm.disable();
+
       const request = this.productoForm.value;
       const imagen = this.productoForm.get('imagen')?.value;
 
       this.productoService.crearProducto(request, imagen).subscribe({
         next: () => this.router.navigate(['/productos']),
-        error: (err: Error) => console.error('Error al crear el producto', err)
+        error: (err) => {
+          this.alertService.showWarning(err.error.message);
+          this.isSubmitting = false;
+          this.productoForm.enable();
+        },
+        complete: () => {
+          this.isSubmitting = false;
+          this.productoForm.enable();
+          this.alertService.showSuccess("Producto creado con éxito.")
+        }
       });
     } 
-    console.log(this.productoForm);
   }
 
   cancelarCreacion(): void {
@@ -154,5 +187,9 @@ export class ProductoCreateComponent implements OnInit  {
 
   eliminarAlmacen(index: number): void {
     this.almacenesSeleccionados.removeAt(index);
+  }
+
+  getImageTypes(): string {
+    return getImageTypes().join(', ');
   }
 }

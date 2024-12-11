@@ -1,0 +1,96 @@
+<div class="container">
+    <h2>Enviar Detalles de Transferencia</h2>
+    <form [formGroup]="transferenciaForm" (ngSubmit)="registrarTransferencia()">
+      <!-- Entidad Bancaria -->
+      <div class="form-group">
+        <mat-form-field appearance="fill" style="width: 100%;">
+          <mat-label>Entidad Bancaria</mat-label>
+          <input matInput type="text" formControlName="entidadBancaria">
+          <mat-error *ngIf="transferenciaForm.get('entidadBancaria')?.errors?.['required']">
+            La entidad bancaria es obligatoria.
+          </mat-error>
+        </mat-form-field>
+      </div>
+  
+      <!-- Fecha de Transferencia -->
+      <div class="form-group">
+        <mat-form-field appearance="fill" style="width: 100%;">
+            <mat-label>Fecha de Transferencia</mat-label>
+            <input
+              matInput
+              [ngxMatDatetimePicker]="datetimePicker"
+              formControlName="fechaTransferencia"
+              placeholder="Selecciona fecha y hora"
+            />
+            <mat-datepicker-toggle matSuffix [for]="$any(datetimePicker)"></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker
+              #datetimePicker
+              [showSpinners]="showSpinners"
+              [showSeconds]="showSeconds"
+              [stepHour]="stepHour"
+              [stepMinute]="stepMinute"
+              [stepSecond]="stepSecond"
+              [touchUi]="touchUi"
+              [color]="color"
+              [enableMeridian]="enableMeridian"
+            ></ngx-mat-datetime-picker>
+            <mat-error *ngIf="transferenciaForm.get('fechaTransferencia')?.hasError('required')">
+              El campo Fecha es obligatorio.
+            </mat-error>
+            <mat-error *ngIf="transferenciaForm.get('fechaTransferencia')?.hasError('fechaInvalida')">
+              La fecha no puede ser superior a hoy.
+            </mat-error>
+          </mat-form-field>
+      </div>
+  
+      <!-- Monto Transferido -->
+      <div class="form-group">
+        <mat-form-field appearance="fill" style="width: 100%;">
+          <mat-label>Monto Transferido</mat-label>
+          <input matInput type="number" formControlName="montoTransferido" placeholder="0.00" step="0.01" appLimitDecimal>
+          <mat-error *ngIf="transferenciaForm.get('montoTransferido')?.errors?.['required']">
+            El monto transferido es obligatorio.
+          </mat-error>
+          <mat-error *ngIf="transferenciaForm.get('montoTransferido')?.errors?.['min']">
+            El monto debe ser mayor a cero.
+          </mat-error>
+        </mat-form-field>
+      </div>
+  
+      <!-- Número de Operación -->
+      <div class="form-group">
+        <mat-form-field appearance="fill" style="width: 100%;">
+          <mat-label>Número de Operación</mat-label>
+          <input matInput type="text" formControlName="numeroOperacion" maxlength="20">
+          <mat-error *ngIf="transferenciaForm.get('numeroOperacion')?.errors?.['required']">
+            El número de operación es obligatorio.
+          </mat-error>
+          <mat-error *ngIf="transferenciaForm.get('numeroOperacion')?.errors?.['maxlength']">
+            El número de operación no puede exceder los 20 caracteres.
+          </mat-error>
+        </mat-form-field>
+      </div>
+  
+      <mat-form-field appearance="fill" class="w-100">
+        <ngx-mat-file-input 
+          formControlName="archivo" 
+          [multiple]="false" 
+          placeholder="Elija una imagen o PDF" 
+          [accept]="getFileTypes()">
+        </ngx-mat-file-input>
+        <mat-error *ngIf="transferenciaForm.get('archivo')?.hasError('tipoArchivoInvalido')">
+          Solo se aceptan imágenes y archivos PDF.
+        </mat-error>
+      </mat-form-field>      
+
+      <!-- Botones de Acción -->
+      <div class="form-group text-center mt-4">
+        <button type="submit" class="btn btn-primary"
+                [ngClass]="transferenciaForm.invalid || isSubmitting ? 'disabled' : ''">
+          {{ isSubmitting ? 'Enviando...' : 'Enviar' }}
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="cancelarRegistro()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+  

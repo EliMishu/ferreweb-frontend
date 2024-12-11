@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.prod';
 import { Usuario } from '../models/usuario.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, Observable, of } from 'rxjs';
 import { UsuarioRequest } from '../models/usuario-req.model';
 
@@ -142,7 +142,6 @@ export class UsuarioService {
   obtenerUsuariosInactivos(): Observable<Usuario[]> {
     return this.obtenerUsuarios().pipe(
       map((usuarios) => {
-        console.log(usuarios)
         const inactivos = usuarios.filter((usuario) => {
           return (usuario.fechaEliminacion !== null && 
                   usuario.fechaEliminacion !== "" && 
@@ -168,25 +167,20 @@ export class UsuarioService {
     return this.http.get<Usuario>(`${this.apiUrl}/${id}`);
   }
 
-  crearUsuario(request: UsuarioRequest, imagen: File): Observable<Usuario> {
-    const formData: FormData = new FormData();
-    formData.append('request', new Blob([JSON.stringify(request)], { type: 'application/json' }));
-    if (imagen) {
-      formData.append('imagen', imagen, imagen.name);
-    }
-    return this.http.post<Usuario>(this.apiUrl, formData);
+  crearUsuario(request: UsuarioRequest): Observable<Usuario> {
+    return this.http.post<Usuario>(this.apiUrl, request);
   }
 
-  actualizarUsuario(id: number, request: UsuarioRequest, imagen: File): Observable<Usuario> {
-    const formData: FormData = new FormData();
-    formData.append('request', new Blob([JSON.stringify(request)], { type: 'application/json'}));
-    if (imagen) {
-      formData.append('imagen', imagen, imagen.name);
-    }
-    return this.http.put<Usuario>(`${this.apiUrl}/${id}`, formData);
+  actualizarUsuario(id: number, request: UsuarioRequest): Observable<Usuario> {
+    return this.http.put<Usuario>(`${this.apiUrl}/${id}`, request);
   }
 
-  eliminarUsuario(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  eliminarUsuario(id: number, motivo: string): Observable<void> {
+    const options = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+      body: motivo
+    };
+
+    return this.http.delete<void>(`${this.apiUrl}/${id}`, options);
   }
 }

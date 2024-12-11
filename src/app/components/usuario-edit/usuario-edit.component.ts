@@ -9,13 +9,21 @@ import {
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { UsuarioService } from '../../services/usuario.service';
 import { AlertService } from '../../services/alert.service';
-import { UsuarioRequest } from '../../models/usuario-req.model';
 import { RolService } from '../../services/rol.service';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-usuario-edit',
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule],
+  imports: [CommonModule, 
+    RouterModule, 
+    ReactiveFormsModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatCheckboxModule
+  ],
   templateUrl: './usuario-edit.component.html',
   styleUrl: './usuario-edit.component.css',
 })
@@ -41,8 +49,7 @@ export class UsuarioEditComponent {
       apellidoPat: ['', Validators.required],
       apellidoMat: ['', Validators.required],
       direccion: [''],
-      roles: [[], Validators.minLength(1)],
-      imagen: [null],
+      roles: [[], Validators.minLength(1)]
     });
   }
 
@@ -71,19 +78,19 @@ export class UsuarioEditComponent {
           direccion: data.direccion,
         });
 
+        this.usuarioForm.get('dni')?.disable();
+        this.usuarioForm.get('username')?.disable();
+        this.usuarioForm.get('nombre')?.disable();
+        this.usuarioForm.get('apellidoPat')?.disable();
+        this.usuarioForm.get('apellidoMat')?.disable();
+        this.usuarioForm.get('direccion')?.disable();
+
         this.rolesSeleccionados = data.roles.map((rol) => rol.tipo);
 
         if (!this.rolesSeleccionados.includes('USUARIO')) {
           this.rolesSeleccionados.push('USUARIO');
         }
       });
-  }
-
-  onFileChange(event: any): void {
-    const file = event.target.files[0];
-    this.usuarioForm.patchValue({
-      imagen: file,
-    });
   }
 
   onRolPressed(rolSeleccionado: string): void {
@@ -107,17 +114,14 @@ export class UsuarioEditComponent {
       this.usuarioForm.disable();
 
       const request = this.usuarioForm.value;
-      const imagen = this.usuarioForm.get('imagen')?.value;
 
       this.usuarioService
-        .actualizarUsuario(this.usuarioId, request, imagen)
+        .actualizarUsuario(this.usuarioId, request)
         .subscribe({
           next: () => this.router.navigate(['/usuarios']),
           error: (err) => {
-            this.alertService.showErrorWithTitle(
-              err.statusText,
-              err.error.message
-            );
+            console.log(err)
+            this.alertService.showError(err.error.message);
             this.isSubmiting = false;
             this.usuarioForm.enable();
           },

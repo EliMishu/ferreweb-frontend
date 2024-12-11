@@ -1,0 +1,198 @@
+<mat-stepper [linear]="true">
+
+    <mat-step [stepControl]="generalForm">
+      <ng-template matStepLabel>General</ng-template>
+
+      <form [formGroup]="generalForm">
+        <h3>Datos generales de la Venta</h3>
+    
+        <div class="stepcontent">
+
+          <mat-form-field>
+            <mat-label>Cliente</mat-label>
+            <input
+              type="text"
+              matInput
+              placeholder="Ingrese DNI del cliente"
+              formControlName="dniCliente"
+              maxlength="8"
+            />
+            <mat-error *ngIf="generalForm.get('dniCliente')?.hasError('required')">
+              El DNI es obligatorio.
+            </mat-error>
+            <mat-error *ngIf="generalForm.get('dniCliente')?.hasError('pattern')">
+              El DNI debe tener 8 carácteres.
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field>
+            <mat-label>Origen</mat-label>
+            <input
+              type="text"
+              matInput
+              placeholder="Seleccione un almacén"
+              formControlName="idAlmacen"
+              [matAutocomplete]="autoAlm"
+            />
+            <mat-autocomplete
+              #autoAlm="matAutocomplete"
+              [displayWith]="displayAlmacenFn(almacenes)"
+            >
+              <mat-option
+                *ngFor="let almacen of filteredAlmacenes | async"
+                [value]="almacen.idAlmacen"
+              >
+                {{ almacen.nombre }}
+              </mat-option>
+            </mat-autocomplete>
+            <mat-error *ngIf="generalForm.get('idAlmacen')?.hasError('required')">
+              El Almacén de destino es obligatorio.
+            </mat-error>
+            <mat-error *ngIf="generalForm.get('idAlmacen')?.hasError('isNumber')">
+              Ingrese un almacén válido.
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <button mat-raised-button matStepperNext class="mt-3">Continuar</button>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="detallesForm">
+      <ng-template matStepLabel>Productos</ng-template>
+
+      <form [formGroup]="detallesForm">
+        <h3>Seleccione los productos a comprar</h3>
+  
+        <div formArrayName="detalles">
+          <div *ngFor="let detalle of detallesFormArray.controls; let i = index" [formGroupName]="i">
+            <div class="producto-row">
+              <!-- Producto Seleccionado -->
+              <mat-form-field appearance="fill">
+                <mat-label>Producto</mat-label>
+                <mat-select formControlName="idProducto" (selectionChange)="onProductoSeleccionado($event, i)">
+                  <mat-option *ngFor="let producto of productos" [value]="producto.idProducto"
+                  [disabled]="esProductoRepetido(producto.idProducto, i)"
+                  >{{ producto.nombre }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+      
+              <!-- Unidad -->
+              <mat-form-field appearance="fill">
+                <mat-label>Unidad</mat-label>
+                <mat-select formControlName="idUnidad"
+                (selectionChange)="onUnidadSeleccionada($event, i)">
+                  <mat-option *ngFor="let unidad of unidadesPermitidas(i)" 
+                  [value]="unidad.unidad.idUnidad" >{{ unidad.unidad.nombre }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+      
+              <!-- Cantidad -->
+              <mat-form-field appearance="fill">
+                <mat-label>Cantidad</mat-label>
+                <input matInput formControlName="cantidad" type="number" min="1" appLimitDecimal/>
+              </mat-form-field>
+      
+              <!-- Precio -->
+              <mat-form-field appearance="fill">
+                <mat-label>Precio Unitario</mat-label>
+                <input matInput [value]="unidadSeleccionada(i)?.precio || 0" [disabled]="true"/>
+              </mat-form-field>
+      
+              <!-- Subtotal (Solo Referencia) -->
+              <mat-form-field appearance="fill">
+                <mat-label>Subtotal</mat-label>
+                <input matInput [value]="((unidadSeleccionada(i)?.precio || 0) * (detalle.value.cantidad || 0)).toFixed(2)" 
+                [disabled]="true"/>
+              </mat-form-field>
+              
+              <!-- Botón Eliminar -->
+              <button mat-icon-button (click)="eliminarProducto(i)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+            <mat-error *ngIf="detallesFormArray.at(i).get('cantidad')?.hasError('max')">
+              La cantidad excede el stock disponible: {{ obtenerStockDisponible(i) | number: '1.0-2' }}
+            </mat-error>
+          </div>
+        </div>
+      
+        <div class="botones">
+          <button type="button" mat-flat-button (click)="agregarProducto()">Agregar Producto</button>
+          <button type="button" mat-raised-button matStepperNext>Continuar</button>
+        </div>
+      </form>
+    
+    </mat-step>
+
+    <mat-step label="Resumen">
+      <ng-template matStepLabel>Resumen</ng-template>
+      <div class="resumen-contenedor">
+        <h3>Resumen de la Venta</h3>
+    
+        <div class="resumen-item">
+          <span>Subtotal ({{ detallesFormArray.length }} productos):</span>
+          <span>S/. {{ calcularSubtotalProductos() | number: '1.2-2' }}</span>
+        </div>
+    
+        <div class="resumen-item">
+          <span>IGV (18%):</span>
+          <span>S/. {{ calcularIGV() | number: '1.2-2' }}</span>
+        </div>
+    
+        <div class="resumen-item resumen-total">
+          <strong>Total:</strong>
+          <strong>S/. {{ calcularCostoTotal() | number: '1.2-2' }}</strong>
+        </div>
+    
+        <div class="botones">
+          <button mat-button matStepperPrevious>Volver</button>
+          <button mat-button color="primary" matStepperNext>Pagar</button>
+        </div>
+      </div>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>Pago</ng-template>
+
+      <form [formGroup]="pagoForm">
+        <h3>Pago</h3>
+    
+        <div class="stepcontent">
+          <mat-form-field>
+            <mat-label>Método de Pago</mat-label>
+            <input
+              type="text"
+              matInput
+              placeholder="Seleccione un método de pago"
+              formControlName="idMetodoPago"
+              [matAutocomplete]="autoMetodo"
+            />
+            <mat-autocomplete
+              #autoMetodo="matAutocomplete"
+              [displayWith]="displayMetodoFn(metodos)"
+            >
+              <mat-option
+                *ngFor="let metodo of filteredMetodos | async"
+                [value]="metodo.idMetodoPago"
+              >
+                {{ metodo.nombre }}
+              </mat-option>
+            </mat-autocomplete>
+            <mat-error *ngIf="generalForm.get('idMetodoPago')?.hasError('required')">
+              El Método de pago es obligatorio.
+            </mat-error>
+            <mat-error *ngIf="generalForm.get('idMetodoPago')?.hasError('isNumber')">
+              Ingrese un método de pago válido.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="botones">
+          <button mat-button matStepperPrevious>Volver</button>
+          <button mat-button color="primary" (click)="confirmarVenta()"
+          [disabled]="isSubmiting">Confirmar Venta</button>
+        </div>
+      </form>
+    </mat-step>
+    
+  </mat-stepper>

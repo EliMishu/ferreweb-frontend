@@ -1,58 +1,78 @@
 <div class="container">
     <h2>Editar Usuario</h2>
     <form [formGroup]="usuarioForm" (ngSubmit)="guardarUsuario()">
-
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input formControlName="username" type="text" class="form-control opacity-50" id="username" placeholder="Username" [readOnly]="true">
+  
+      <!-- Username -->
+      <div class="form-group">
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label>Username</mat-label>
+          <input matInput formControlName="username" type="text" id="username" placeholder="Username" [readonly]="true"/>
+        </mat-form-field>
+      </div>
+  
+      <!-- DNI -->
+      <div class="form-group">
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label>DNI</mat-label>
+          <input matInput formControlName="dni" type="text" id="dni" placeholder="DNI" [readonly]="true"/>
+        </mat-form-field>
+      </div>
+  
+      <!-- Nombre -->
+      <div class="form-group">
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="nombre" type="text" id="nombre" placeholder="Nombre" [readonly]="true"/>
+        </mat-form-field>
+      </div>
+  
+      <!-- Apellido Paterno -->
+      <div class="form-group">
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label>Apellido Paterno</mat-label>
+          <input matInput formControlName="apellidoPat" type="text" id="apellidoPat" placeholder="Apellido Paterno" [readonly]="true"/>
+        </mat-form-field>
+      </div>
+  
+      <!-- Apellido Materno -->
+      <div class="form-group">
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label>Apellido Materno</mat-label>
+          <input matInput formControlName="apellidoMat" type="text" id="apellidoMat" placeholder="Apellido Materno" [readonly]="true"/>
+        </mat-form-field>
+      </div>
+  
+      <!-- Roles -->
+      <div class="form-group">
+        <mat-label>Roles</mat-label>
+        <div *ngFor="let rol of roles">
+          <mat-checkbox
+            (change)="onRolPressed(rol)"
+            [value]="rol"
+            [checked]="rolesSeleccionados.includes(rol)"
+            [disabled]="rol === 'USUARIO'">
+            {{ rol }}
+          </mat-checkbox>
         </div>
-
-        <div class="form-group">
-            <label for="dni">DNI</label>
-            <input formControlName="dni" type="text" class="form-control opacity-50" id="dni" placeholder="DNI" [readonly]="true">
-        </div>
-
-        <div class="form-group">
-            <label for="nombre">Nombre</label>
-            <input formControlName="nombre" type="text" class="form-control opacity-50" id="nombre" placeholder="Nombre" [readonly]="true">
-        </div>
-
-        <div class="form-group">
-            <label for="apellidoPat">Apellido Paterno</label>
-            <input formControlName="apellidoPat" type="text" class="form-control opacity-50" id="apellidoPat" placeholder="Apellido Paterno" [readonly]="true">
-        </div>
-
-        <div class="form-group">
-            <label for="apellidoMat">Apellido Materno</label>
-            <input formControlName="apellidoMat" type="text" class="form-control opacity-50" id="apellidoMat" placeholder="Apellido Materno" [readonly]="true">
-        </div>
-
-        <div class="form-group">
-            <label>Roles</label>
-            <div *ngFor="let rol of roles">
-                <div class="form-check">
-                    <input 
-                        type="checkbox" 
-                        class="form-check-input"
-                        (change)="onRolPressed(rol)"
-                        [value]="rol" 
-                        [checked]="rolesSeleccionados.includes(rol)"
-                        [disabled]="rol === 'USUARIO'">
-                    <label class="form-check-label">{{ rol }}</label>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="imagen">Imagen</label>
-            <input type="file" (change)="onFileChange($event)" class="form-control" id="imagen">
-        </div>
-
-        <button type="submit" class="btn btn-primary" 
-            [ngClass]="usuarioForm.invalid || isSubmiting ? 'disabled' : ''" 
-            [textContent]="isSubmiting ? 'Guardando...' : 'Guardar Cambios'">Guardar Cambios</button>
-        <button type="button" class="btn btn-secondary" 
-            [ngClass]="isSubmiting ? 'disabled' : ''" 
-            (click)="cancelarEdicion()">Cancelar</button>
+      </div>
+  
+      <!-- Botones -->
+      <div class="form-group d-flex justify-content-between">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [ngClass]="{ disabled: usuarioForm.invalid || isSubmiting }"
+          [attr.disabled]="usuarioForm.invalid || isSubmiting ? true : null">
+          {{ isSubmiting ? "Guardando..." : "Guardar Cambios" }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          [ngClass]="{ 'disabled': isSubmiting }"
+          (click)="cancelarEdicion()">
+          Cancelar
+        </button>
+      </div>
     </form>
-</div>
+  </div>
+  

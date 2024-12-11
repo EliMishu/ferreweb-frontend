@@ -21,7 +21,29 @@
         <p>{{ producto.unidadPorDefecto.nombre }}</p>
       </div>
       <div class="form-group">
-        <label>Stock:</label>
+        <div class="d-flex flex-row">
+          <label class="w-50">Unidades:</label>
+          <label class="w-50">Precios:</label>
+        </div>
+        <div *ngFor="let unidad of producto.unidadesPermitidas" 
+          class="d-flex flex-row">
+          <p class="w-50">{{ unidad.unidad.nombre }}</p>
+          <p class="w-50">S/. {{ unidad.precio }}</p>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="d-flex flex-row">
+          <label class="w-50">Almacenes:</label>
+          <label class="w-50">Stock:</label>
+        </div>
+        <div *ngFor="let almacen of producto.almacenes" 
+          class="d-flex flex-row">
+          <p class="w-50">{{ almacen.almacen.nombre }}</p>
+          <p class="w-50">{{ almacen.cantidad }}</p>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Stock Total:</label>
         <p>{{ producto.stock }}</p>
       </div>
       <button class="btn btn-secondary" (click)="regresar()">Volver a la lista</button>

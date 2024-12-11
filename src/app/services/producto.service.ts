@@ -80,6 +80,22 @@ export class ProductoService {
     return productos;
   }
 
+  buscarProductosPorNombre(query: string) {
+    let productos = this.obtenerProductos();
+
+    if (query.trim() !== '') {
+      productos = productos.pipe(
+        map((productos) => {
+          return productos.filter((producto) => {
+            return (producto.nombre.toLowerCase().includes(query.toLowerCase()));
+          })
+        })
+      )
+    }
+
+    return productos;
+  }
+
   obtenerProducto(id: number): Observable<Producto> {
     return this.http.get<Producto>(`${this.apiUrl}/${id}`);
   }
@@ -124,12 +140,12 @@ export class ProductoService {
 
   actualizarProducto(id: number, request: ProductoRequest, imagen: File): Observable<Producto> {
     const formData: FormData = new FormData();
-    formData.append('request', new Blob([JSON.stringify(request)], { type: 'application/json'}));
+    formData.append('request', new Blob([JSON.stringify(request)], { type: 'application/json' }));
     if (imagen) {
       formData.append('imagen', imagen, imagen.name);
     }
-
-    return this.http.put<Producto>(`${this.apiUrl}/${id}`, request);
+    
+    return this.http.put<Producto>(`${this.apiUrl}/${id}`, formData);
   }
 
   eliminarProducto(id: number): Observable<void> {

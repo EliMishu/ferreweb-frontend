@@ -1,0 +1,58 @@
+<div class="venta-list">
+    <div class="container subheader-table">
+      <h3>Ventas</h3>
+      <div class="d-flex flex-row gap-3">
+        <button [routerLink]="['/ventas/new']" class="btn btn-primary">
+          <i class="bi bi-plus-square"></i>
+          Nueva Venta
+        </button>
+      </div>
+    </div>
+  
+    <div class="container">
+      <div class="filters mb-4">
+        <div class="input-group">
+          <span class="input-group-text" id="search-addon">
+            <i class="bi bi-search"></i>
+          </span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Buscar"
+            [(ngModel)]="searchTerm"
+            (ngModelChange)="obtenerVentas()"
+            id="searchInput"
+          />
+        </div>
+      </div>
+  
+      <div class="table-responsive">
+        <table class="table table-primary table-bordered">
+          <thead>
+            <tr>
+              <th scope="col" class="text-center">ID</th>
+              <th scope="col" class="text-center">Fecha</th>
+              <th scope="col" class="text-center">DNI Cliente</th>
+              <th scope="col" class="text-center">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let venta of ventas">
+              <th scope="row" class="text-center">{{ venta.idVenta.toString().padStart(8, '0') }}</th>
+              <td class="text-center">{{ venta.fecha | date:'dd/MM/yyyy' }}</td>
+              <td class="text-center">{{ venta.dniCliente }}</td>
+              <td class="table-actions text-center">
+                <button
+                  class="btn btn-secondary"
+                  title="Detalles"
+                  [routerLink]="['/ventas', venta.idVenta]"
+                >
+                  <i class="bi bi-info-square"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>

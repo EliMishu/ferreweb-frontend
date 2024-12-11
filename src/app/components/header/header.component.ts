@@ -41,6 +41,7 @@ export class HeaderComponent implements OnInit {
   obtenerInicio(): string {
     if (this.rol) {
       if (this.rol === "ADMIN") return "admin";
+      if (this.rol === "COMPRAS") return "compras";
     } 
 
     return "/";

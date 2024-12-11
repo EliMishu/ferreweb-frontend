@@ -59,17 +59,17 @@ export class RegisterComponent implements OnInit {
       });
     }
   }
-
+  
   private redirect(usuario: Usuario) {
     if (usuario.roles.length > 1) {
       this.router.navigate(['/rol/selection'])
         .then(()=> {
-          this.alertService.showSuccessWithTitle("Registro Exitoso", `Bienvenido ${usuario.nombre} ${usuario.apellidoPat}`);
+          window.location.reload();
         });
     } else {
       this.router.navigate(['/'])
         .then(()=> {
-          this.alertService.showSuccessWithTitle("Registro Exitoso", `Bienvenido ${usuario.nombre} ${usuario.apellidoPat}`);
+          window.location.reload();
         });
     }
   }

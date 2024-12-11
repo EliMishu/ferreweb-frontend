@@ -1,67 +1,126 @@
 <div class="container">
-  <h2>Crear Nuevo Proveedor</h2>
-  <form [formGroup]="proveedorForm" (ngSubmit)="crearProveedor()">
+    <h2>Crear Nuevo Proveedor</h2>
+  
+    <form [formGroup]="proveedorForm" (ngSubmit)="crearProveedor()">
+  
       <div class="form-group">
-          <label for="ruc">RUC</label>
-          <input formControlName="ruc" type="text" class="form-control" id="ruc" placeholder="RUC">
-          <div
-              *ngIf="proveedorForm.get('ruc')?.invalid && (proveedorForm.get('ruc')?.touched || proveedorForm.get('ruc')?.dirty)">
-              <small *ngIf="proveedorForm.get('ruc')?.errors?.['required']">El campo RUC es obligatorio.</small>
-              <small *ngIf="proveedorForm.get('ruc')?.errors?.['pattern']">El RUC debe tener un formato válido.</small>
-          </div>
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label>RUC</mat-label>
+          <input 
+            matInput 
+            formControlName="ruc" 
+            type="text" 
+            id="ruc" 
+            maxlength="11"
+            placeholder="RUC del proveedor" />
+          <mat-error *ngIf="proveedorForm.get('ruc')?.hasError('required')">
+            El campo RUC es obligatorio.
+          </mat-error>
+          <mat-error *ngIf="proveedorForm.get('ruc')?.hasError('pattern')">
+            El RUC debe tener 11 caractéres.
+          </mat-error>
+        </mat-form-field>
       </div>
-
+  
       <div class="form-group">
-          <label for="nombre">Nombre</label>
-          <input formControlName="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre">
-          <div
-              *ngIf="proveedorForm.get('nombre')?.invalid && (proveedorForm.get('nombre')?.touched || proveedorForm.get('nombre')?.dirty)">
-              <small *ngIf="proveedorForm.get('nombre')?.errors?.['required']">El campo Nombre es obligatorio.</small>
-          </div>
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label>Nombre</mat-label>
+          <input 
+            matInput 
+            formControlName="nombre" 
+            type="text" 
+            id="nombre" 
+            placeholder="Nombre o Razón Social del proveedor" />
+          <mat-error *ngIf="proveedorForm.get('nombre')?.hasError('required')">
+            El campo Nombre es obligatorio.
+          </mat-error>
+        </mat-form-field>
       </div>
-
+  
       <div class="form-group">
-          <label for="nombreComercial">Nombre Comercial</label>
-          <input formControlName="nombreComercial" type="text" class="form-control" id="nombreComercial" placeholder="Nombre Comercial">
-          <div
-              *ngIf="proveedorForm.get('nombreComercial')?.invalid && (proveedorForm.get('nombreComercial')?.touched || proveedorForm.get('nombreComercial')?.dirty)">
-              <small *ngIf="proveedorForm.get('nombreComercial')?.errors?.['required']">El campo Nombre Comercial es obligatorio.</small>
-          </div>
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label>Nombre Comercial</mat-label>
+          <input 
+            matInput 
+            formControlName="nombreComercial" 
+            type="text" 
+            id="nombreComercial" 
+            placeholder="Nombre comercial del proveedor" />
+          <mat-error *ngIf="proveedorForm.get('nombreComercial')?.hasError('required')">
+            El campo Nombre Comercial es obligatorio.
+          </mat-error>
+        </mat-form-field>
       </div>
-
+  
       <div class="form-group">
-          <label for="email">Email</label>
-          <input formControlName="email" type="email" class="form-control" id="email" placeholder="Email">
-          <div
-              *ngIf="proveedorForm.get('email')?.invalid && (proveedorForm.get('email')?.touched || proveedorForm.get('email')?.dirty)">
-              <small *ngIf="proveedorForm.get('email')?.errors?.['required']">El campo Email es obligatorio.</small>
-              <small *ngIf="proveedorForm.get('email')?.errors?.['email']">El formato del email no es válido.</small>
-          </div>
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label>Email</mat-label>
+          <input 
+            matInput 
+            formControlName="email" 
+            type="email" 
+            id="email" 
+            placeholder="Email del proveedor" />
+          <mat-error *ngIf="proveedorForm.get('email')?.hasError('required')">
+            El campo Email es obligatorio.
+          </mat-error>
+          <mat-error *ngIf="proveedorForm.get('email')?.hasError('email')">
+            El formato del email no es válido.
+          </mat-error>
+        </mat-form-field>
       </div>
-
+  
       <div class="form-group">
-          <label for="telefono">Teléfono</label>
-          <input formControlName="telefono" type="text" class="form-control" id="telefono" placeholder="Teléfono">
-          <div
-              *ngIf="proveedorForm.get('telefono')?.invalid && (proveedorForm.get('telefono')?.touched || proveedorForm.get('telefono')?.dirty)">
-              <small *ngIf="proveedorForm.get('telefono')?.errors?.['required']">El campo Teléfono es obligatorio.</small>
-          </div>
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label>Teléfono</mat-label>
+          <input 
+            matInput 
+            formControlName="telefono" 
+            type="text" 
+            id="telefono" 
+            maxlength="9"
+            placeholder="Teléfono del proveedor" />
+          <mat-error *ngIf="proveedorForm.get('telefono')?.hasError('required')">
+            El campo Teléfono es obligatorio.
+          </mat-error>
+          <mat-error *ngIf="proveedorForm.get('telefono')?.hasError('pattern')">
+            El teléfono debe empezar en 9 y tener 9 dígitos.
+          </mat-error>
+        </mat-form-field>
       </div>
-
+  
       <div class="form-group">
-          <label for="direccion">Dirección</label>
-          <input formControlName="direccion" type="text" class="form-control" id="direccion" placeholder="Dirección">
-          <div
-              *ngIf="proveedorForm.get('direccion')?.invalid && (proveedorForm.get('direccion')?.touched || proveedorForm.get('direccion')?.dirty)">
-              <small *ngIf="proveedorForm.get('direccion')?.errors?.['required']">El campo Dirección es obligatorio.</small>
-          </div>
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label>Dirección</mat-label>
+          <input 
+            matInput 
+            formControlName="direccion" 
+            type="text" 
+            id="direccion" 
+            placeholder="Dirección del proveedor" />
+          <mat-error *ngIf="proveedorForm.get('direccion')?.hasError('required')">
+            El campo Dirección es obligatorio.
+          </mat-error>
+        </mat-form-field>
       </div>
-
-      <button type="submit" class="btn btn-primary"
-        [ngClass]="proveedorForm.invalid || isSubmiting ? 'disabled' : ''" 
-        [textContent]="isSubmiting ? 'Guardando...' : 'Guardar Cambios'">Crear Proveedor</button>
-      <button type="button" class="btn btn-secondary" 
-        [ngClass]="isSubmiting ? 'disabled' : ''"
-        (click)="cancelarCreacion()">Cancelar</button>
-  </form>
-</div>
+  
+      <div class="form-group d-flex justify-content-between">
+        <button 
+          type="submit" 
+          class="btn btn-primary" 
+          [ngClass]="{ disabled: proveedorForm.invalid || isSubmitting }" 
+          [attr.disabled]="proveedorForm.invalid || isSubmitting ? true : null">
+          {{ isSubmitting ? "Creando..." : "Crear Proveedor" }}
+        </button>
+  
+        <button 
+          type="button" 
+          class="btn btn-secondary" 
+          [ngClass]="{ disabled: isSubmitting }" 
+          (click)="cancelarCreacion()">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+  

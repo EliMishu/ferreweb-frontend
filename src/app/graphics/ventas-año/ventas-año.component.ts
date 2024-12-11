@@ -19,7 +19,8 @@ export class VentasAñoComponent {
   constructor(private ventaService: VentaService) {}
 
   ngOnInit() {
-    this.ventaService.obtenerVentas().subscribe(ventas => {
+    this.ventaService.obtenerVentasAnuales().subscribe(ventas => {
+      console.log(ventas);
       this.ventasData = this.convertirVentas(ventas);
     });
   }

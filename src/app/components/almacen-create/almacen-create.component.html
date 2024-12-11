@@ -1,32 +1,49 @@
 <div class="container">
-    <h2>Crear Nuevo Almacen</h2>
-    <form [formGroup]="almacenForm" (ngSubmit)="crearAlmacen()">
-        <div class="form-group">
-            <label for="nombre">Nombre</label>
-            <input formControlName="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre">
-            <div
-                *ngIf="almacenForm.get('nombre')?.invalid && (almacenForm.get('nombre')?.touched || almacenForm.get('nombre')?.dirty)">
-                <small *ngIf="almacenForm.get('nombre')?.errors?.['required']">El campo Nombre es obligatorio.</small>
-                <small *ngIf="almacenForm.get('nombre')?.errors?.['minlength']">El Nombre debe tener al menos 2
-                    caracteres.</small>
-            </div>
-        </div>
+    <h2>Crear Nuevo Almacén</h2>
   
+    <form [formGroup]="almacenForm" (ngSubmit)="crearAlmacen()">
+      
         <div class="form-group">
-            <label for="direccion">Dirección</label>
-            <textarea formControlName="direccion" class="form-control" id="direccion"
-                placeholder="Dirección"></textarea>
-            <div
-                *ngIf="almacenForm.get('direccion')?.invalid && (almacenForm.get('direccion')?.touched || almacenForm.get('direccion')?.dirty)">
-                <small *ngIf="almacenForm.get('direccion')?.errors?.['required']">El campo Dirección es
-                    obligatorio.</small>
-            </div>
-        </div>
-        <button type="submit" class="btn btn-primary" 
-            [ngClass]="almacenForm.invalid || isSubmiting ? 'disabled' : ''" 
-            [textContent]="isSubmiting ? 'Creando...' : 'Crear Almacen'"></button>
-        <button type="button" class="btn btn-secondary" 
-            [ngClass]="isSubmiting ? 'disabled' : ''"
-            (click)="cancelarCreacion()">Cancelar</button>
+            <mat-form-field appearance="fill" class="w-100">
+                <mat-label>Nombre</mat-label>
+                <input matInput formControlName="nombre" type="text" id="nombre" placeholder="Nombre del almacén">
+                <mat-error *ngIf="almacenForm.get('nombre')?.hasError('required')">
+                  El campo Nombre es obligatorio.
+                </mat-error>
+                <mat-error *ngIf="almacenForm.get('nombre')?.hasError('minlength')">
+                  El Nombre debe tener al menos 2 caracteres.
+                </mat-error>
+              </mat-form-field>
+          </div>
+      
+          <div class="form-group">
+            <mat-form-field appearance="fill" class="w-100">
+                <mat-label>Dirección</mat-label>
+                <textarea matInput formControlName="direccion" id="direccion" placeholder="Dirección del almacén"></textarea>
+                <mat-error *ngIf="almacenForm.get('direccion')?.hasError('required')">
+                  El campo Dirección es obligatorio.
+                </mat-error>
+              </mat-form-field>
+          </div>
+  
+      <div class="form-group d-flex justify-content-between">
+        <button 
+          type="submit" 
+          class="btn btn-primary" 
+          [ngClass]="{'disabled': almacenForm.invalid || isSubmitting}" 
+          [attr.disabled]="almacenForm.invalid || isSubmitting ? true : null">
+          {{ isSubmitting ? 'Creando...' : 'Crear Almacén' }}
+        </button>
+  
+        <button 
+          type="button" 
+          class="btn btn-secondary" 
+          [ngClass]="{'disabled': isSubmitting}" 
+          (click)="cancelarCreacion()">
+          Cancelar
+        </button>
+      </div>
+  
     </form>
-</div>
+  </div>
+  

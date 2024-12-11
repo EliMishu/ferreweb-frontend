@@ -1,44 +1,110 @@
 import { Injectable } from '@angular/core';
-import { EstadoVenta, Venta } from '../models/venta.model';
-import { Observable, of } from 'rxjs';
+import { Venta } from '../models/venta.model';
+import { map, Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment.prod';
+import { VentaPresencialRequest } from '../models/venta-pres-req.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VentaService {
+  apiUrl = environment.apiUrl + "/ventas";
 
-  private estadosVenta: EstadoVenta[] = [
-    { idEstadoVenta: 1, estado: 'Pendiente' },
-    { idEstadoVenta: 2, estado: 'En Proceso' },
-    { idEstadoVenta: 3, estado: 'Finalizado' },
-    { idEstadoVenta: 4, estado: 'Cancelado' }
-  ];
-
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   obtenerVentas(): Observable<Venta[]> {
-    const ventas: Venta[] = [
-      { idVenta: 1, estado: this.estadosVenta[2], fecha: '2023-01-15', total: 150 },
-      { idVenta: 2, estado: this.estadosVenta[2], fecha: '2024-01-22', total: 200 },
-      { idVenta: 3, estado: this.estadosVenta[2], fecha: '2023-02-05', total: 350 },
-      { idVenta: 4, estado: this.estadosVenta[2], fecha: '2024-02-18', total: 450 },
-      { idVenta: 5, estado: this.estadosVenta[2], fecha: '2023-03-03', total: 300 },
-      { idVenta: 6, estado: this.estadosVenta[2], fecha: '2024-03-12', total: 100 },
-      { idVenta: 7, estado: this.estadosVenta[2], fecha: '2023-04-25', total: 600 },
-      { idVenta: 8, estado: this.estadosVenta[2], fecha: '2023-05-25', total: 400 },
-      { idVenta: 9, estado: this.estadosVenta[2], fecha: '2023-06-25', total: 500 },
-      { idVenta: 10, estado: this.estadosVenta[2], fecha: '2023-07-25', total: 400 },
-      { idVenta: 11, estado: this.estadosVenta[2], fecha: '2023-08-25', total: 300 },
-      { idVenta: 12, estado: this.estadosVenta[2], fecha: '2023-09-25', total: 700 },
-      { idVenta: 13, estado: this.estadosVenta[2], fecha: '2023-10-25', total: 600 },
-      { idVenta: 14, estado: this.estadosVenta[2], fecha: '2023-11-25', total: 500 },
-      { idVenta: 14, estado: this.estadosVenta[2], fecha: '2023-12-25', total: 600 },
-    ];
+    return this.http.get<Venta[]>(this.apiUrl);
+  }
 
-    // Filtramos las ventas para eliminar las que están en estado "Cancelado"
-    const ventasFinalizadas = ventas.filter(venta => venta.estado.estado === "Finalizado"); // Estado "Entregado"
+  contarVentas(): Observable<number> {
+    return this.obtenerVentas().pipe(
+      map(ventas => ventas.length)
+    );
+  }
 
-    // Usamos `of` para devolver los datos como un Observable
-    return of(ventasFinalizadas);
+  filtrarVentasPresenciales(searchTerm: string): Observable<Venta[]> {
+    let ventas = this.obtenerVentas();
+
+    if (searchTerm !== '') {
+      ventas = this.obtenerVentas().pipe(
+        map(ventas => {
+          return ventas.filter(venta => {
+            return (
+              venta.idVenta.toString().padStart(8, '0').includes(searchTerm.toLowerCase()) ||
+              venta.fecha.toLowerCase().includes(searchTerm.toLowerCase()) ||
+              venta.dniCliente.includes(searchTerm.toLowerCase())
+            )
+          })
+        })
+      )
+    }
+
+    return ventas;
+  }
+
+  obtenerVentasFinalizadas(): Observable<Venta[]> {
+    return this.obtenerVentas().pipe(
+      map((ventas) => {
+        return ventas.filter((venta) => {
+          return venta.estado === "FINALIZADA"
+        });
+      })
+    );
+  }
+
+  obtenerVentasDiarias(): Observable<Venta[]> {
+    return this.obtenerVentasFinalizadas().pipe(
+      map((ventas) => {
+        console.log(ventas);
+        return ventas.filter((venta) => {
+          let fecha = new Date(venta.fecha);
+          let hoy = new Date();
+
+          return (
+            fecha.getFullYear() === hoy.getFullYear() &&
+            fecha.getMonth() === hoy.getMonth() &&
+            fecha.getDate() === hoy.getDate()
+          );
+        })
+      })
+    )
+  }
+
+  obtenerGananciaDiaria(): Observable<number> {
+    return this.obtenerVentasDiarias().pipe(
+      map((ventas) => {
+        return ventas.reduce((total, venta) => total + venta.total, 0);
+      })
+    )
+  }
+
+  obtenerVentasAnuales(): Observable<Venta[]> {
+    return this.obtenerVentasFinalizadas().pipe(
+      map((ventas) => {
+        return ventas.filter((venta) => {
+          let fecha = new Date(venta.fecha);
+          let hoy = new Date();
+
+          return fecha.getFullYear() === hoy.getFullYear();
+        })
+      })
+    )
+  }
+
+  obtenerGananciaAnual(): Observable<number> {
+    return this.obtenerVentasAnuales().pipe(
+      map((ventas) => {
+        return ventas.reduce((total, venta) => total + venta.total, 0);
+      })
+    )
+  }
+
+  obtenerVentaPorId(id: number): Observable<Venta> {
+    return this.http.get<Venta>(`${this.apiUrl}/${id}`);
+  }
+
+  registrarVenta(request: VentaPresencialRequest): Observable<Venta> {
+    return this.http.post<Venta>(this.apiUrl, request);
   }
 }

@@ -1,0 +1,47 @@
+<div class="compras-list">
+    <div class="subheader">
+      <h3>MODULO DE VENTAS</h3>
+    </div>
+  
+    <div class="container">
+      <div
+        class="d-flex flex-row flex-wrap justify-content-center align-items-center gap-2 p-3"
+      >
+        <div class="card ventas-card">
+          <div class="card-body">
+            <div class="d-flex flex-row justify-content-between">
+              <div>
+                <h5 class="card-title">
+                  {{ ventasInfo }}
+                </h5>
+                <h6 class="card-subtitle mb-2">Ventas</h6>
+              </div>
+              <i class="icon-info bi bi-cash-stack"></i>
+            </div>
+          </div>
+          <a [routerLink]="['/ventas']" class="btn card-link mb-0 mx-0">
+            Más info &rarr;
+          </a>
+        </div>
+
+        <div class="card product-card">
+          <div class="card-body">
+            <div class="d-flex flex-row justify-content-between">
+              <div>
+                <h5 class="card-title">
+                  {{ productosInfo }}
+                </h5>
+                <h6 class="card-subtitle mb-2">Productos</h6>
+              </div>
+              <i class="icon-info bi bi-box-seam-fill"></i>
+            </div>
+          </div>
+          <a [routerLink]="['/productos']" class="btn card-link mb-0 mx-0">
+            Más info &rarr;
+          </a>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  

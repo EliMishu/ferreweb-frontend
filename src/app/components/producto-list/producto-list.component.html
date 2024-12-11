@@ -1,94 +1,139 @@
 <div class="productos-list">
-    <div class="container subheader-table">
-      <h3>Productos</h3>
-      <button [routerLink]="['/productos/new']" class="btn btn-primary">
-        <i class="bi bi-plus-square"></i>
-        Nuevo Producto
-      </button>
-    </div>
-  
-    <div class="container">
-      <div class="filters mb-4">
-          <div class="input-group">
-              <span class="input-group-text" id="search-addon">
-                <i class="bi bi-search"></i>
-              </span>
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Buscar"
-                [(ngModel)]="searchTerm"
-                (ngModelChange)="obtenerProductos()"
-                id="searchInput"
-              />
-            </div>
-            <label for="categoria">Categoria:</label>
-          <select name="categoria" id="categoria"
-              [(ngModel)] = "categoria" (ngModelChange)="obtenerProductos()">
-              <option value="">Todas</option>
-              <option *ngFor="let categoria of categorias" [value]="categoria.nombre">{{ categoria.nombre }}</option>
-          </select>  
-          <label for="unidad">Unidad:</label>
-          <select name="unidad" id="unidad"
-              [(ngModel)] = "unidad" (ngModelChange)="obtenerProductos()">
-              <option value="">Todas</option>
-              <option *ngFor="let unidad of unidades" [value]="unidad.nombre">{{ unidad.nombre }}</option>
-          </select>
-          <label for="estado">Estado:</label>
-          <select name="estado" id="estado"
-              [(ngModel)] = "estado" (ngModelChange)="obtenerProductos()">
-              <option value="">Todos</option>
-              <option value="stockBajo">Bajo Stock</option>
-          </select>
+  <div class="container subheader-table">
+    <h3>Productos</h3>
+    <button [routerLink]="['/productos/new']" class="btn btn-primary">
+      <i class="bi bi-plus-square"></i>
+      Nuevo Producto
+    </button>
+  </div>
+
+  <div class="container">
+    <div class="filters mb-4">
+      <div class="input-group">
+        <span class="input-group-text" id="search-addon">
+          <i class="bi bi-search"></i>
+        </span>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Buscar"
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="obtenerProductos()"
+          id="searchInput"
+        />
       </div>
-  
-      <div class="table-responsive">
-        <table class="table table-primary table-bordered">
-          <thead>
-            <tr>
-              <th scope="col" class="text-center">No.</th>
-              <th scope="col" class="text-center">Nombre</th>
-              <th scope="col" class="text-center">Categoria</th>
-              <th scope="col" class="text-center">Unidad</th>
-              <th scope="col" class="text-center">Precio</th>
-              <th scope="col" class="text-center">Stock</th>
-              <th scope="col" class="text-center"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="" *ngFor="let producto of productos">
-              <th scope="row" class="text-center">{{ producto.idProducto }}</th>
-              <td class="text-center">{{ producto.nombre }}</td>
-              <td class="text-center">{{ producto.categoria.nombre }}</td>
-              <td class="text-center">{{ producto.unidadPorDefecto.nombre }}</td>
-              <td class="text-center">{{ obtenerPrecio(producto.unidadesPermitidas, producto.unidadPorDefecto) }}</td>
-              <td class="text-center">{{ producto.stock }}</td>
-              <td class="table-actions text-center">
-                <button
-                    [routerLink]="['/producto', producto.idProducto]"
-                    class="btn btn-secondary"
-                    title="Detalles">
-                    <i class="bi bi-info-square"></i>
-                </button>
-                <button
-                  [routerLink]="['/producto/edit', producto.idProducto]"
-                  class="btn btn-primary"
-                  title="Editar"
-                >
-                  <i class="bi bi-pencil-square"></i>
-                </button>
-                <button
-                  (click)="eliminarProductoPorID(producto.idProducto)"
-                  class="btn btn-danger"
-                  title="Eliminar"
-                >
-                  <i class="bi bi-trash3"></i>
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <label for="categoria">Categoria:</label>
+      <select name="categoria" id="categoria" [(ngModel)]="categoria" (ngModelChange)="obtenerProductos()">
+        <option value="">Todas</option>
+        <option *ngFor="let categoria of categorias" [value]="categoria.nombre">{{ categoria.nombre }}</option>
+      </select>
+      <label for="unidad">Unidad:</label>
+      <select name="unidad" id="unidad" [(ngModel)]="unidad" (ngModelChange)="obtenerProductos()">
+        <option value="">Todas</option>
+        <option *ngFor="let unidad of unidades" [value]="unidad.nombre">{{ unidad.nombre }}</option>
+      </select>
+      <label for="estado">Estado:</label>
+      <select name="estado" id="estado" [(ngModel)]="estado" (ngModelChange)="obtenerProductos()">
+        <option value="">Todos</option>
+        <option value="stockBajo">Bajo Stock</option>
+      </select>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-primary table-bordered">
+        <thead>
+          <tr>
+            <th scope="col" class="text-center">No.</th>
+            <th scope="col" class="text-center">Nombre</th>
+            <th scope="col" class="text-center">Categoria</th>
+            <th scope="col" class="text-center">Unidad</th>
+            <th scope="col" class="text-center">Precio</th>
+            <th scope="col" class="text-center">Stock</th>
+            <th scope="col" class="text-center"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let producto of productos">
+            <th scope="row" class="text-center">{{ producto.idProducto }}</th>
+            <td class="text-center">{{ producto.nombre }}</td>
+            <td class="text-center">{{ producto.categoria.nombre }}</td>
+            <td class="text-center">{{ producto.unidadPorDefecto.nombre }}</td>
+            <td class="text-center">{{ obtenerPrecio(producto.unidadesPermitidas, producto.unidadPorDefecto) }}</td>
+            <td class="text-center">{{ producto.stock }}</td>
+            <td class="table-actions text-center">
+              <button
+                [routerLink]="['/producto', producto.idProducto]"
+                class="btn btn-secondary"
+                title="Detalles"
+              >
+                <i class="bi bi-info-square"></i>
+              </button>
+              <button
+                *ngIf="rol === 'ADMIN' || rol === 'INVENTARIO'"
+                [routerLink]="['/producto/edit', producto.idProducto]"
+                class="btn btn-primary"
+                title="Editar"
+              >
+                <i class="bi bi-pencil-square"></i>
+              </button>
+              <button
+                *ngIf="rol === 'ADMIN' || rol === 'INVENTARIO'"
+                (click)="selectProducto(producto)"
+                class="btn btn-danger"
+                title="Eliminar"
+                data-bs-toggle="modal" 
+                data-bs-target="#deleteModal"
+              >
+                <i class="bi bi-trash3"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="deleteModal"
+  tabindex="-1"
+  aria-labelledby="deleteModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Confirmar Eliminación</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        ¿Estás seguro de que deseas eliminar el producto
+        <strong>{{ productoSeleccionado?.nombre }}</strong>?
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+        >
+          Cancelar
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="confirmarEliminacion()"
+          data-bs-dismiss="modal"
+        >
+          Eliminar
+        </button>
       </div>
     </div>
   </div>
-  
+</div>

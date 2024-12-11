@@ -5,11 +5,21 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Rol } from '../../models/rol.model';
 import { AlertService } from '../../services/alert.service';
 import { CommonModule } from '@angular/common';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { NgxMatFileInputModule } from '@angular-material-components/file-input';
+import { getImageTypes } from '../../constants/image.constants';
 
 @Component({
   selector: 'app-rol-edit',
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule],
+  imports: [CommonModule, 
+    RouterModule, 
+    ReactiveFormsModule,
+    MatInputModule,
+    MatFormFieldModule,
+    NgxMatFileInputModule
+  ],
   templateUrl: './rol-edit.component.html',
   styleUrl: './rol-edit.component.css'
 })
@@ -41,6 +51,7 @@ export class RolEditComponent {
       this.rolForm.patchValue({
         tipo: data.tipo
       });
+      this.rolForm.get('tipo')?.disable();
     });
   }
 
@@ -62,7 +73,7 @@ export class RolEditComponent {
       this.rolService.actualizarRol(this.rolId, request, imagen).subscribe({
         next: () => this.router.navigate(['/roles']),
         error: (err) => {
-          this.alertService.showErrorWithTitle(err.statusText, err.error.message);
+          this.alertService.showWarning(err.error.message);
           this.isSubmiting = false;
           this.rolForm.enable();
         },
@@ -77,5 +88,9 @@ export class RolEditComponent {
 
   cancelarEdicion(): void {
     this.router.navigate(['/roles']);
+  }
+
+  getImageTypes(): string {
+    return getImageTypes().join(', ');
   }
 }

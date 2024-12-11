@@ -8,6 +8,8 @@ import { Unidad } from '../../models/unidad.model';
 import { CategoriaService } from '../../services/categoria.service';
 import { UnidadService } from '../../services/unidad.service';
 import { Categoria } from '../../models/categoria.model';
+import { AlertService } from '../../services/alert.service';
+import { RolService } from '../../services/rol.service';
  
 @Component({
   selector: 'app-producto-list',
@@ -24,9 +26,12 @@ export class ProductoListComponent implements OnInit {
   categoria: string = '';
   unidad: string = '';
   estado: string = '';
+  productoSeleccionado: Producto | null = null;
 
   constructor(
+    private rolService: RolService,
     private route: ActivatedRoute,
+    private alertService: AlertService,
     private productoService: ProductoService,
     private categoriaService: CategoriaService,
     private unidadService: UnidadService
@@ -66,8 +71,16 @@ export class ProductoListComponent implements OnInit {
   }
 
   eliminarProductoPorID(id: number): void {
-    this.productoService.eliminarProducto(id).subscribe(() => {
-      this.obtenerProductos();
+    this.productoService.eliminarProducto(id).subscribe({
+      next: () => {
+        this.obtenerProductos();
+      },
+      error: (err) => {
+        this.alertService.showError(err.error.message);
+      },
+      complete: () => {
+        this.alertService.showSuccess('Unidad eliminada con éxito.');
+      }
     });
   }
 
@@ -81,5 +94,20 @@ export class ProductoListComponent implements OnInit {
     }
 
     return 0;
+  }
+
+  selectProducto(producto: Producto): void {
+    this.productoSeleccionado = producto;
+  }
+
+  confirmarEliminacion(): void {
+    if (this.productoSeleccionado) {
+      this.eliminarProductoPorID(this.productoSeleccionado.idProducto);
+      this.productoSeleccionado = null;
+    }
+  }
+
+  get rol() {
+    return this.rolService.obtenerRolSeleccionado();
   }
 }

@@ -20,21 +20,8 @@
     min-width: 250px;
 }
 
-.icon-info {
-  font-size: 4rem;
-}
-
 .employees-card {
   background-color: var(--employees-color-primary);
-
-  .card-title {
-    font-size: 2rem;
-    color: var(--black);
-  }
-
-  .card-subtitle {
-    color: var(--black);
-  }
 
   .icon-info {
     color: var(--employees-color-secondary);
@@ -59,15 +46,6 @@
 .products-card {
   background-color: var(--products-color-primary);
 
-  .card-title {
-    font-size: 2rem;
-    color: var(--black);
-  }
-
-  .card-subtitle {
-    color: var(--black);
-  }
-
   .icon-info {
     color: var(--products-color-secondary);
   }
@@ -91,15 +69,6 @@
 .ventas-card {
   background-color: var(--ventas-color-primary);
 
-  .card-title {
-    font-size: 2rem;
-    color: var(--black);
-  }
-
-  .card-subtitle {
-    color: var(--black);
-  }
-
   .icon-info {
     color: var(--ventas-color-secondary);
   }
@@ -122,15 +91,6 @@
 
 .total-ventas-card {
   background-color: var(--total-ventas-color-primary);
-
-  .card-title {
-    font-size: 2rem;
-    color: var(--black);
-  }
-
-  .card-subtitle {
-    color: var(--black);
-  }
 
   .icon-info {
     color: var(--total-ventas-color-secondary);

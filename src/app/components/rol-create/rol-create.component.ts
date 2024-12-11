@@ -4,11 +4,21 @@ import { RolService } from '../../services/rol.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AlertService } from '../../services/alert.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { NgxMatFileInputModule } from '@angular-material-components/file-input';
+import { imagenValidator } from '../../validations/validations';
+import { getImageTypes } from '../../constants/image.constants';
 
 @Component({
   selector: 'app-rol-create',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, 
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    NgxMatFileInputModule
+  ],
   templateUrl: './rol-create.component.html',
   styleUrl: './rol-create.component.css'
 })
@@ -24,7 +34,7 @@ export class RolCreateComponent {
   ) {
     this.rolForm = this.fb.group({
       tipo: ['', [Validators.required, Validators.minLength(2)]],
-      imagen: [null]
+      imagen: [null, [Validators.required, imagenValidator()]]
     });
   }
 
@@ -60,5 +70,9 @@ export class RolCreateComponent {
 
   cancelarCreacion(): void {
     this.router.navigate(['/roles']);
+  }
+
+  getImageTypes(): string {
+    return getImageTypes().join(', ');
   }
 }

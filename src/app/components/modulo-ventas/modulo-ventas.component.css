@@ -1,0 +1,121 @@
+:host {
+    --proveedores-color-primary: #1fa70d;
+    --proveedores-color-secondary: #0f7e00;
+    --proveedores-color-hover: #0d5f02;
+    --compras-color-primary: #ffd723;
+    --compras-color-secondary: #e0a708;
+    --compras-color-hover: #d49c02;
+    --product-color-primary:  #fc802e;
+    --product-color-secondary: #eb530d;
+    --product-color-hover: #d64604;
+    --almacenes-color-primary: #fc802e;
+    --almacenes-color-secondary: #eb530d;
+    --almacenes-color-hover: #d64604;
+  }
+  
+  .card {
+      min-width: 250px;
+  }
+  
+  .proveedores-card {
+    background-color: var(--proveedores-color-primary);
+  
+    .icon-info {
+      color: var(--proveedores-color-secondary);
+    }
+  
+    .card-link {
+      text-decoration: none;
+      color: var(--black);
+      background-color: var(--proveedores-color-secondary);
+      padding: 0.5rem;
+      text-align: center;
+      border-radius: 0 0 0.25rem 0.25rem;
+      width: 100%;
+  
+      &:hover {
+        background-color: var(--proveedores-color-hover);
+        transition: all 0.4s ease;
+      }
+    }
+  }
+  
+  .ventas-card {
+    background-color: var(--compras-color-primary);
+  
+    .icon-info {
+      color: var(--compras-color-secondary);
+    }
+  
+    .card-link {
+      text-decoration: none;
+      color: var(--black);
+      background-color: var(--compras-color-secondary);
+      padding: 0.5rem;
+      text-align: center;
+      border-radius: 0 0 0.25rem 0.25rem;
+      width: 100%;
+  
+      &:hover {
+        background-color: var(--compras-color-hover);
+        transition: all 0.4s ease;
+      }
+    }
+  }
+  
+  .product-card {
+    background-color: var(--product-color-primary);
+  
+    .icon-info {
+      color: var(--product-color-secondary);
+    }
+  
+    .card-link {
+      text-decoration: none;
+      color: var(--black);
+      background-color: var(--product-color-secondary);
+      padding: 0.5rem;
+      text-align: center;
+      border-radius: 0 0 0.25rem 0.25rem;
+      width: 100%;
+  
+      &:hover {
+        background-color: var(--product-color-hover);
+        transition: all 0.4s ease;
+      }
+    }
+  }
+  
+  .almacenes-card {
+    background-color: var(--almacenes-color-primary);
+  
+    .icon-info {
+      color: var(--almacenes-color-secondary);
+    }
+  
+    .card-link {
+      text-decoration: none;
+      color: var(--black);
+      background-color: var(--almacenes-color-secondary);
+      padding: 0.5rem;
+      text-align: center;
+      border-radius: 0 0 0.25rem 0.25rem;
+      width: 100%;
+  
+      &:hover {
+        background-color: var(--almacenes-color-hover);
+        transition: all 0.4s ease;
+      }
+    }
+  }
+  
+  img {
+    max-width: 200px;
+    max-height: 200px;
+    padding: 10px;
+  }
+  
+  .card {
+    min-width: 250px;
+  }
+  

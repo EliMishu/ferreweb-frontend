@@ -4,17 +4,23 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AlmacenService } from '../../services/almacen.service';
 import { Router } from '@angular/router';
 import { AlertService } from '../../services/alert.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-almacen-create',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, 
+    ReactiveFormsModule, 
+    MatFormFieldModule,
+    MatInputModule,
+  ],
   templateUrl: './almacen-create.component.html',
   styleUrl: './almacen-create.component.css'
 })
 export class AlmacenCreateComponent implements OnInit {
   almacenForm: FormGroup;
-  isSubmiting: boolean = false;
+  isSubmitting: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -39,7 +45,7 @@ export class AlmacenCreateComponent implements OnInit {
 
   crearAlmacen(): void {
     if (this.almacenForm.valid) {
-      this.isSubmiting = true;
+      this.isSubmitting = true;
       this.almacenForm.disable();
 
       const request = this.almacenForm.value;
@@ -47,12 +53,12 @@ export class AlmacenCreateComponent implements OnInit {
       this.almacenService.crearAlmacen(request).subscribe({
         next: () => this.router.navigate(['/almacenes']),
         error: (err) => {
-          this.alertService.showErrorWithTitle(err.statusText, err.error.message);
-          this.isSubmiting = false;
+          this.alertService.showWarning(err.error.message);
+          this.isSubmitting = false;
           this.almacenForm.enable();
         },
         complete: () => {
-          this.isSubmiting = false;
+          this.isSubmitting = false;
           this.almacenForm.enable();
           this.alertService.showSuccess("Almacen creado exitosamente.");
         }

@@ -5,18 +5,28 @@ import { Categoria } from '../../models/categoria.model';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AlertService } from '../../services/alert.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { NgxMatFileInputModule } from '@angular-material-components/file-input';
+import { getImageTypes } from '../../constants/image.constants';
+import { imagenValidator } from '../../validations/validations';
 
 @Component({
   selector: 'app-categoria-edit',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, 
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    NgxMatFileInputModule
+  ],
   templateUrl: './categoria-edit.component.html',
   styleUrl: './categoria-edit.component.css'
 })
 export class CategoriaEditComponent implements OnInit {
   categoriaForm: FormGroup;
   categoriaId!: number;
-  isSubmiting: boolean = false;
+  isSubmitting: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -28,7 +38,7 @@ export class CategoriaEditComponent implements OnInit {
     this.categoriaForm = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(2)]],
       descripcion: ['', [Validators.required]],
-      imagen: [null]
+      imagen: [null, [imagenValidator()]]
     });
   }
 
@@ -38,7 +48,7 @@ export class CategoriaEditComponent implements OnInit {
   }
 
   cargarCategoria(): void {
-    this.categoriaService.obtenerCategoria(this.categoriaId).subscribe((data: Categoria) => {
+    this.categoriaService.obtenerCategoria(this.categoriaId).subscribe((data) => {
       this.categoriaForm.patchValue({
         nombre: data.nombre,
         descripcion: data.descripcion,
@@ -61,12 +71,12 @@ export class CategoriaEditComponent implements OnInit {
       this.categoriaService.actualizarCategoria(this.categoriaId, request, imagen).subscribe({
         next: () => this.router.navigate(['/categorias']),
         error: (err) => {
-          this.alertService.showErrorWithTitle(err.statusText, err.error.message);
-          this.isSubmiting = false;
+          this.alertService.showWarning(err.error.message);
+          this.isSubmitting = false;
           this.categoriaForm.enable();
         },
         complete: () => {
-          this.isSubmiting = false;
+          this.isSubmitting = false;
           this.categoriaForm.enable();
           this.alertService.showSuccess("Categoría actualizada con éxito.")
         }
@@ -76,5 +86,9 @@ export class CategoriaEditComponent implements OnInit {
 
   cancelarEdicion(): void {
     this.router.navigate(['/categorias']);
+  }
+
+  getImageTypes(): string {
+    return getImageTypes().join(', ');
   }
 }

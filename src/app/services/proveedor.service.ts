@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, Observable, of } from 'rxjs';
 import { Proveedor } from '../models/proveedor.model';
 import { ProveedorRequest } from '../models/proveedor-req.model';
-import { CotizacionRequest } from '../models/cotizacion-req.model';
 import { environment } from '../../environments/environment.prod';
 
 @Injectable({
@@ -58,10 +57,6 @@ export class ProveedorService {
     return this.http.get<Proveedor>(`${this.apiUrl}/${id}`)
   }
 
-  solicitarCotizaciones(request: CotizacionRequest): Observable<string> {
-    return this.http.post<string>(`${this.apiUrl}/cotizacion`, request, { responseType: 'text' as 'json'});
-  }
-
   crearProveedor(request: ProveedorRequest): Observable<Proveedor> {
     return this.http.post<Proveedor>(this.apiUrl, request);
   }
@@ -70,7 +65,12 @@ export class ProveedorService {
     return this.http.put<Proveedor>(`${this.apiUrl}/${id}`, request);
   }
 
-  eliminarProveedor(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  eliminarProveedor(id: number, motivo: string): Observable<void> {
+    const options = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+      body: motivo
+    };
+
+    return this.http.delete<void>(`${this.apiUrl}/${id}`, options);
   }
 }

@@ -1,0 +1,36 @@
+<div class="container">
+    <h2>Crear Nueva Unidad</h2>
+
+    <form [formGroup]="unidadForm" (ngSubmit)="guardarUnidad()">
+        <div class="form-group">
+            <mat-form-field appearance="fill" class="w-100">
+                <mat-label>Nombre</mat-label>
+                <input matInput formControlName="nombre" type="text" id="nombre" placeholder="Nombre de la unidad">
+                <mat-error *ngIf="unidadForm.get('nombre')?.hasError('required')">
+                    El campo Nombre es obligatorio.
+                </mat-error>
+                <mat-error *ngIf="unidadForm.get('nombre')?.hasError('minlength')">
+                    El Nombre debe tener al menos 2 caracteres.
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="form-group d-flex justify-content-between">
+            <button 
+                type="submit" 
+                class="btn btn-primary" 
+                [ngClass]="{'disabled': unidadForm.invalid || isSubmitting}" 
+                [attr.disabled]="unidadForm.invalid || isSubmitting ? true : null">
+                {{ isSubmitting ? 'Guardando...' : 'Guardar Unidad' }}
+            </button>
+
+            <button 
+                type="button" 
+                class="btn btn-secondary" 
+                [ngClass]="{'disabled': isSubmitting}" 
+                (click)="cancelarCreacion()">
+                Cancelar
+            </button>
+        </div>
+    </form>
+</div>

@@ -39,6 +39,16 @@ export class RolSelectionComponent implements OnInit {
         this.router.navigate(['/admin'])
         .then(() => window.location.reload());
         break;
+      case "COMPRAS":
+        this.router.navigate(['/modulo/compras'])
+        .then(() => window.location.reload())
+        break;
+      case "CAJERO":
+        this.router.navigate(['/modulo/ventas'])
+        break;
+      case "INVENTARIO":
+        this.router.navigate(['/modulo/productos'])
+        break;
       default: 
         this.router.navigate(['/'])
         .then(() => window.location.reload());

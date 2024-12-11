@@ -1,0 +1,49 @@
+.stepcontent {
+    display: flex;
+    flex-direction: row;
+    gap: 0;
+
+    mat-form-field {
+        width: 100%;
+    }
+}
+
+.producto-row {
+    display: flex;
+    flex-direction: row;
+
+    mat-form-field {
+        width: 100%;
+    }
+}
+
+.resumen-contenedor {
+    max-width: 600px;
+    margin: auto;
+  }
+  
+  .resumen-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+  }
+  
+  .resumen-total {
+    margin-top: 15px;
+    border-top: 2px solid #ccc;
+    padding-top: 10px;
+    font-size: 1.2em;
+  }
+  
+  .botones {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+
+@media (max-width: 500px) {
+    .stepcontent {
+        flex-direction: column;
+    }
+}
